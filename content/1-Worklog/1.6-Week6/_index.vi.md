@@ -1,58 +1,55 @@
 ---
 title: "Worklog Tuần 6"
-date: 2024-01-01
-weight: 1
+date: 2026-07-27
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 6:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tối ưu truy vấn cơ sở dữ liệu — xác định và giải quyết vấn đề **N+1 Query**.
+* Áp dụng kỹ thuật **eager loading** và **batching** để tối ưu hiệu năng.
+* Kiểm thử hiệu năng hệ thống sau khi tối ưu (so sánh trước/sau).
+* Tổng hợp kết quả tối ưu và lập tài liệu kỹ thuật.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Các công việc triển khai trong tuần:
+
+| Thứ | Công việc | Ngày | Nguồn tài liệu |
+|-----|-----------|------|----------------|
+| 2 | - Tối ưu truy vấn cơ sở dữ liệu: <br>&emsp; + Phân tích các query hiện tại bằng Prisma logging và query count <br>&emsp; + Xác định các điểm có vấn đề N+1 Query trong hệ thống: Property listing với images, Booking với user và property info <br>&emsp; + Đo benchmark số lượng query trước khi tối ưu <br>&emsp; + Thiết lập database query logging để theo dõi | 27/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/logging> |
+| 3 | - Tìm hiểu và xử lý vấn đề N+1 Query: <br>&emsp; + Phân tích nguyên nhân: ORM lazy loading gây ra N+1 khi lặp qua danh sách và truy cập relation <br>&emsp; + Nghiên cứu giải pháp: eager loading (Prisma `include`), batching (DataLoader pattern) <br>&emsp; + So sánh `include` vs `select` trong Prisma để chỉ lấy field cần thiết <br>&emsp; + Áp dụng `include` cho các API endpoint có N+1 | 28/07/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance> |
+| 4 | - Áp dụng eager loading, batching và tối ưu truy vấn: <br>&emsp; + Refactor Property listing: `include` images, landlord info trong một query duy nhất <br>&emsp; + Refactor Booking listing: `include` property và tenant info <br>&emsp; + Áp dụng **database indexing**: tạo index trên các column thường xuyên filter/search (location, price, status) <br>&emsp; + Implement **cursor-based pagination** để tránh OFFSET scan toàn bảng | 29/07/2026 | |
+| 5 | - Kiểm thử hiệu năng sau tối ưu: <br>&emsp; + Đo lại số lượng query sau khi refactor (so sánh N+1 → 1) <br>&emsp; + Dùng `EXPLAIN ANALYZE` trong PostgreSQL để kiểm tra query plan <br>&emsp; + Load test bằng Artillery hoặc `k6` với 100 concurrent users <br>&emsp; + Ghi lại kết quả: response time, query count, throughput | 30/07/2026 | |
+| 6 | - Tổng hợp kết quả tối ưu: <br>&emsp; + Viết báo cáo kỹ thuật về N+1 Query: nguyên nhân, giải pháp, kết quả đo lường <br>&emsp; + Cập nhật code với các best practices tối ưu query <br>&emsp; + Review lại toàn bộ code base để tìm các điểm tối ưu còn sót lại | 31/07/2026 | |
+
+---
 
 ### Kết quả đạt được tuần 6:
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Phát hiện và xác định **5 điểm N+1 Query** trong hệ thống: Property listing (ảnh + landlord), Booking listing (property + user), Notification listing (booking details).
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Giải quyết toàn bộ N+1 bằng cách áp dụng **Prisma `include`** — giảm từ N+1 queries xuống còn 1 query với JOIN:
+  * Property listing: từ ~50 queries → 1 query (với 20 records)
+  * Booking listing: từ ~30 queries → 1 query (với 10 records)
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Áp dụng **database indexing** trên các column: `location`, `price`, `status`, `createdAt` — giảm thời gian query filter từ ~200ms xuống ~15ms.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Implement **cursor-based pagination** thay thế offset, hiệu quả hơn với bảng lớn (không cần full table scan).
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+* Kết quả load test (100 concurrent users):
+  * Trước tối ưu: P95 response time ~800ms
+  * Sau tối ưu: P95 response time ~120ms (**giảm 85%**)
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+* Hoàn thành báo cáo kỹ thuật về N+1 Query với số liệu đo lường cụ thể.
 
+---
 
+### Kiến thức / Kinh nghiệm học được:
+
+* Hiểu sâu về vấn đề N+1 Query — một trong những bottleneck phổ biến nhất trong các ứng dụng sử dụng ORM. ORM lazy loading tiện lợi nhưng nguy hiểm về hiệu năng khi làm việc với danh sách lớn.
+* Học được cách dùng `EXPLAIN ANALYZE` trong PostgreSQL để đọc query execution plan, xác định sequential scan vs index scan.
+* Nắm được khi nào dùng cursor-based pagination: phù hợp với dữ liệu lớn, real-time feed; offset phù hợp với UI phân trang truyền thống.
+* Kinh nghiệm: selective `include` (chỉ join field cần thiết) tốt hơn full `include` — tránh lấy quá nhiều dữ liệu không cần thiết.

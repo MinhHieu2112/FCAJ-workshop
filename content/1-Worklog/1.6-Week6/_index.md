@@ -1,57 +1,55 @@
 ---
 title: "Week 6 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-07-27
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 6 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Optimize database queries — identify and resolve **N+1 Query** problems.
+* Apply **eager loading** and **batching** techniques to improve performance.
+* Benchmark system performance after optimization (before/after comparison).
+* Document technical findings and optimization results.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Database query optimization: <br>&emsp; + Analyze existing queries using Prisma logging and query counting <br>&emsp; + Identify N+1 Query hotspots: Property listing with images, Booking with user and property info <br>&emsp; + Benchmark query counts before optimization <br>&emsp; + Set up database query logging | 27/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/logging> |
+| Tue | - Study and address N+1 Query problems: <br>&emsp; + Analyze root cause: ORM lazy loading triggers N+1 when iterating lists and accessing relations <br>&emsp; + Research solutions: eager loading (Prisma `include`), batching (DataLoader pattern) <br>&emsp; + Compare `include` vs `select` in Prisma to fetch only required fields <br>&emsp; + Apply `include` to API endpoints with N+1 issues | 28/07/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance> |
+| Wed | - Apply eager loading, batching and query optimization: <br>&emsp; + Refactor Property listing: `include` images and landlord info in a single query <br>&emsp; + Refactor Booking listing: `include` property and tenant info <br>&emsp; + Apply **database indexing**: create indexes on frequently filtered/searched columns (location, price, status) <br>&emsp; + Implement **cursor-based pagination** to avoid full table OFFSET scans | 29/07/2026 | |
+| Thu | - Post-optimization performance testing: <br>&emsp; + Re-measure query count after refactoring (N+1 → 1) <br>&emsp; + Use `EXPLAIN ANALYZE` in PostgreSQL to inspect query plans <br>&emsp; + Load test with Artillery or `k6` using 100 concurrent users <br>&emsp; + Record results: response time, query count, throughput | 30/07/2026 | |
+| Fri | - Consolidate optimization results: <br>&emsp; + Write a technical report on N+1 Query: causes, solutions, and measured results <br>&emsp; + Update the codebase with query optimization best practices <br>&emsp; + Review the entire codebase for any remaining optimization opportunities | 31/07/2026 | |
+
+---
 
 ### Week 6 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Identified **5 N+1 Query hotspots** in the system: Property listing (images + landlord), Booking listing (property + user), Notification listing (booking details).
 
-* Successfully created and configured an AWS Free Tier account.
+* Resolved all N+1 issues by applying **Prisma `include`** — reducing from N+1 queries to a single query with JOIN:
+  * Property listing: from ~50 queries → 1 query (for 20 records)
+  * Booking listing: from ~30 queries → 1 query (for 10 records)
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Applied **database indexing** on columns: `location`, `price`, `status`, `createdAt` — reduced filter query time from ~200ms to ~15ms.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Implemented **cursor-based pagination** to replace offset pagination, more efficient for large tables (no full table scan required).
 
-* Used AWS CLI to perform basic operations such as:
+* Load test results (100 concurrent users):
+  * Before optimization: P95 response time ~800ms
+  * After optimization: P95 response time ~120ms (**85% reduction**)
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Completed a technical report on N+1 Query with concrete measurement data.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+---
+
+### Knowledge / Experience Gained:
+
+* Gained a deep understanding of N+1 Query — one of the most common bottlenecks in ORM-based applications. ORM lazy loading is convenient but dangerous for performance when working with large lists.
+* Learned how to use `EXPLAIN ANALYZE` in PostgreSQL to read query execution plans and identify sequential scans vs. index scans.
+* Understood when to use cursor-based pagination: ideal for large datasets and real-time feeds; offset pagination is better for traditional page-number UIs.
+* Practical lesson: selective `include` (only joining required fields) outperforms full `include` — avoids fetching unnecessarily large data payloads.

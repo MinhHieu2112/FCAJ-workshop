@@ -1,57 +1,57 @@
 ---
 title: "Week 4 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-07-13
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 4 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Design the database and define the Prisma schema for the system.
+* Build the user authentication and authorization module.
+* Integrate the database and set up file storage with AWS S3.
+* Integrate AWS services: S3, SES, and Cognito into the backend.
+* Test and fix built features.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Design the database and API: <br>&emsp; + Draw ERD (Entity Relationship Diagram) for the entire system <br>&emsp; + Define entities: User, Property, Booking, Contract, Payment, Notification <br>&emsp; + Write Prisma schema: models, relations, enums <br>&emsp; + Design detailed API endpoints (method, path, request/response body) <br>&emsp; + Create migrations and seed data | 13/07/2026 | <https://www.prisma.io/docs/> |
+| Tue | - Build user authentication module: <br>&emsp; + Implement JWT-based authentication (Access Token + Refresh Token) <br>&emsp; + Build Auth module: register, login, logout, refresh token <br>&emsp; + Implement bcrypt for password hashing <br>&emsp; + Write AuthGuard and RolesGuard for authorization <br>&emsp; + Implement Google OAuth2 login (Passport.js) | 14/07/2026 | <https://docs.nestjs.com/security/authentication> |
+| Wed | - Integrate database and file storage: <br>&emsp; + Connect Prisma with PostgreSQL (local + AWS RDS) <br>&emsp; + Implement repository pattern for each module <br>&emsp; + Integrate AWS S3: upload property images, generate presigned URLs <br>&emsp; + Configure Multer for handling file uploads from the client | 15/07/2026 | <https://docs.aws.amazon.com/s3/> |
+| Thu | - Integrate AWS services into the system: <br>&emsp; + **AWS SES**: send account verification and booking notification emails <br>&emsp; + **AWS Cognito**: integrate User Pool, configure App Client <br>&emsp; + **AWS S3**: finalize upload/delete image logic, organize folders by property ID <br>&emsp; + Write unit tests for the Auth module | 16/07/2026 | <https://docs.aws.amazon.com/ses/> |
+| Fri | - Test and fix features: <br>&emsp; + Test all API endpoints with Postman/Thunder Client <br>&emsp; + Fix bugs related to token refresh and role guards <br>&emsp; + Test S3 upload with large files (multipart upload) <br>&emsp; + Code review and refactor following NestJS best practices | 17/07/2026 | |
+
+---
 
 ### Week 4 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed the **ERD** and full **Prisma schema** for 6 core entities: User, Property, Booking, Contract, Payment, Notification; successfully ran migrations on PostgreSQL.
 
-* Successfully created and configured an AWS Free Tier account.
+* Built a complete **Authentication** system:
+  * JWT with Access Token (15 minutes) and Refresh Token (7 days)
+  * Bcrypt password hashing
+  * AuthGuard and RolesGuard correctly enforced for 3 roles: TENANT, LANDLORD, ADMIN
+  * Google OAuth2 login successfully integrated
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Successfully integrated **AWS S3**: upload and delete property images, generate presigned URLs for secure client access.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Integrated **AWS SES**: send account verification emails and booking notification emails.
 
-* Used AWS CLI to perform basic operations such as:
+* Integrated **AWS Cognito**: configured User Pool and App Client, synchronized with the NestJS Auth module.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Tested all Authentication APIs with Postman, confirmed the full flow: register → verify email → login works correctly.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+---
+
+### Knowledge / Experience Gained:
+
+* Gained deep understanding of JWT mechanics: short-lived Access Tokens (stateless) combined with long-lived Refresh Tokens balance security and user experience.
+* Learned how to design Prisma schemas with 1-N and N-N relationships, and use enums to manage state (BookingStatus, PropertyStatus).
+* Learned how to integrate AWS SDK v3 into NestJS: configuring credentials, region, and using commands (PutObjectCommand, GetObjectCommand).
+* Understood the difference between public S3 URLs and presigned URLs — presigned URLs are more secure and have expiration times.
+* Debugging experience: CORS errors when integrating Cognito required correctly configuring the App Client callback URL.

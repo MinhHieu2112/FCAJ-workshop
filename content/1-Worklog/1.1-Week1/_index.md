@@ -1,57 +1,56 @@
 ---
 title: "Week 1 Worklog"
-date: 2024-01-01
+date: 2026-06-22
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 1 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Complete onboarding and understand company policies and workflows at First Cloud AI Journey.
+* Gain an overview of cloud computing and the AWS service ecosystem.
+* Successfully register for an AWS Free Tier account and get familiar with the AWS Console.
+* Complete required tasks to receive **$200 USD AWS Credits** through the AWS Credits program.
+* Set up AWS Budget to monitor and control costs throughout the internship.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Onboarding: company policies, internal Portal, workflow introduction <br> - Review all internship rules and regulations <br> - Read internship guidance documentation <br> - Register schedule for office visits | 22/06/2026 | FCAJ Internal Portal |
+| Tue | - Overview of Cloud Computing concepts <br>&emsp; + Deployment models: Public, Private, Hybrid Cloud <br>&emsp; + Service models: IaaS, PaaS, SaaS <br> - Introduction to AWS and its core service groups: <br>&emsp; + Compute (EC2, Lambda) <br>&emsp; + Storage (S3, EBS, EFS) <br>&emsp; + Networking (VPC, Route 53, CloudFront) <br>&emsp; + Database (RDS, DynamoDB) <br>&emsp; + Security (IAM, KMS) | 23/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Wed | - Register for AWS Free Tier account <br> - Explore AWS Management Console <br>&emsp; + Navigation bar and service search <br>&emsp; + Access and explore key AWS services <br>&emsp; + Enable MFA for Root Account | 24/06/2026 | <https://aws.amazon.com/free/> |
+| Thu | - Participate in the AWS Credits program: <br>&emsp; + Review terms and conditions <br>&emsp; + Complete required tasks (AWS Academy / AWS Skill Builder) <br>&emsp; + Confirm $200 USD AWS Credits credited to account <br> - Introduction to AWS Billing & Cost Management | 25/06/2026 | https://000001.awsstudygroup.com |
+| Fri | - Explore AWS Billing Dashboard in detail <br>&emsp; + Free Tier usage alerts <br>&emsp; + Cost Explorer <br> - Create AWS Budget: <br>&emsp; + Monthly cost budget <br>&emsp; + Configure email alerts when threshold is exceeded <br> - Review and consolidate Week 1 knowledge | 26/06/2026 | <https://docs.aws.amazon.com/cost-management/> |
+
+---
 
 ### Week 1 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed the full onboarding process, understood company policies and FCAJ workflows, successfully registered for office visits.
 
-* Successfully created and configured an AWS Free Tier account.
+* Understood cloud computing concepts and distinguished between deployment models (Public/Private/Hybrid) and service models (IaaS/PaaS/SaaS).
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Gained an overview of the AWS ecosystem with its core service groups:
+  * **Compute**: EC2 (virtual machines), Lambda (serverless)
+  * **Storage**: S3 (object storage), EBS (block storage)
+  * **Networking**: VPC, Route 53, CloudFront
+  * **Database**: RDS (relational), DynamoDB (NoSQL)
+  * **Security**: IAM (identity and access management)
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Successfully registered for an **AWS Free Tier** account, enabled MFA for Root Account, and explored the AWS Management Console.
 
-* Used AWS CLI to perform basic operations such as:
+* Completed all required tasks in the AWS Credits program and successfully received **$200 USD AWS Credits** into the account.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Created an **AWS Budget** with email alert thresholds to proactively monitor costs throughout the internship.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+---
+
+### Knowledge / Experience Gained:
+
+* Understood the critical importance of cloud cost control from day one — setting up Budget and alerts is a mandatory step before using any AWS services.
+* Experienced real-world onboarding at a tech company: reading internal documentation, registering in systems, and getting familiar with project management tools.
+* Began forming a cloud architecture mindset — each AWS service group addresses a different infrastructure challenge.

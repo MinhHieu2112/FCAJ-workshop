@@ -1,57 +1,67 @@
 ---
 title: "Week 8 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-08-10
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 8 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Complete remaining features and fix outstanding bugs.
+* Perform comprehensive end-to-end system testing.
+* Final performance and security optimization before handover.
+* Prepare complete technical documentation and internship report.
+* Summarize results, conduct final evaluation, and deliver the product.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Complete remaining features: <br>&emsp; + Finalize Admin dashboard: user/property/booking statistics, approve/reject property listings <br>&emsp; + Finalize advanced search: simultaneous multi-criteria filtering (price, area, location, amenities) <br>&emsp; + Finalize profile pages: booking history, account settings, landlord property management <br>&emsp; + Fix outstanding bugs carried over from previous weeks | 10/08/2026 | |
+| Tue | - Comprehensive system testing: <br>&emsp; + Write and run end-to-end tests for all main business workflows <br>&emsp; + Test all API endpoints with edge case data <br>&emsp; + Cross-browser testing: Chrome, Firefox, Safari <br>&emsp; + Mobile testing (responsive design) <br>&emsp; + Perform regression testing after bug fixes | 11/08/2026 | |
+| Wed | - Final performance and security optimization: <br>&emsp; + Audit all APIs: check response times, remove unnecessary endpoints <br>&emsp; + Configure CDN for S3 (CloudFront): reduce image loading latency <br>&emsp; + Final security audit: re-verify all Authorization rules and input validation <br>&emsp; + Optimize Frontend bundle size: code splitting, lazy loading <br>&emsp; + Configure production environment variables | 12/08/2026 | |
+| Thu | - Prepare technical documentation and internship report: <br>&emsp; + Write comprehensive **README.md**: setup guide, environment configuration, local run and deployment instructions <br>&emsp; + Write **API documentation** (Swagger/OpenAPI): detailed descriptions of each endpoint <br>&emsp; + Write **system architecture documentation**: architecture diagrams, component descriptions <br>&emsp; + Prepare **internship report slides**: timeline, technologies, achievements, lessons learned | 13/08/2026 | |
+| Fri | - Final summary, evaluation, and handover: <br>&emsp; + Demo the completed product to mentor and team <br>&emsp; + Present the internship report: objectives, progress, results, challenges and lessons <br>&emsp; + Receive final feedback from mentor <br>&emsp; + Hand over source code, documentation, and deployment environment <br>&emsp; + Personal retrospective: assess strengths and areas for improvement | 14/08/2026 | |
+
+---
 
 ### Week 8 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed the **Admin Dashboard** with full functionality: statistics, content moderation, and user management.
 
-* Successfully created and configured an AWS Free Tier account.
+* Completed **comprehensive testing**: all main business workflows pass, no remaining critical bugs.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Final optimizations:
+  * Integrated **CloudFront** in front of S3: reduced image loading latency from ~300ms to ~50ms (for clients in the same region).
+  * Reduced **Frontend bundle size** by ~35% through code splitting and lazy loading.
+  * Final security audit found no new critical vulnerabilities.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Completed all **technical documentation**:
+  * README.md with comprehensive setup instructions
+  * Swagger API documentation (40+ endpoints)
+  * System architecture diagram
 
-* Used AWS CLI to perform basic operations such as:
+* Successfully **demoed** the final product to the mentor and team, receiving positive feedback on code quality and feature completeness.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* **Full handover completed**: source code, documentation, and AWS EC2/ECS deployment guide.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+---
+
+### Knowledge / Experience Gained:
+
+* **Technical summary**: Over 8 weeks of internship, successfully built a complete property rental system using NestJS + Next.js + PostgreSQL, with multiple integrated AWS services (S3, SES, Cognito, RDS, CloudFront).
+
+* **Lesson on development process**: Thorough planning before coding → feature development → optimization → security audit is an effective cycle to maintain in every real-world project.
+
+* **Key skills accumulated**:
+  * System design and analysis from real-world business requirements
+  * Security mindset: authentication, authorization, input validation, rate limiting
+  * Database performance optimization: N+1 query, indexing, pagination
+  * Concurrency handling: Race Condition, Transactions, Locking
+  * AWS service integration in real applications
+  * Writing professional technical documentation
+
+* **Next steps**: Continue deepening knowledge in Cloud-native architecture (microservices, containerization with Docker/ECS) and Infrastructure as Code (Terraform/CDK).

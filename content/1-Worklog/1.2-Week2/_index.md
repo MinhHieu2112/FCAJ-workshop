@@ -1,57 +1,61 @@
 ---
 title: "Week 2 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-06-29
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 2 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Study AWS Compute and Storage services in depth.
+* Study AWS Database, Networking, and IAM.
+* Practice using core AWS services via Console and CLI.
+* Complete AWS Academy / AWS Skill Builder assignments.
+* Consolidate knowledge and check in with mentor at end of week.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Study AWS Compute: <br>&emsp; + **EC2**: Instance types (General Purpose, Compute Optimized, Memory Optimized), AMI, User Data, Placement Groups <br>&emsp; + **Auto Scaling Group (ASG)**: scaling policies, health checks <br>&emsp; + **Elastic Load Balancer (ELB)**: ALB vs NLB <br>&emsp; + **AWS Lambda**: serverless functions, event triggers, execution environment | 29/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Tue | - Study AWS Storage and Database: <br>&emsp; + **S3**: bucket policies, versioning, lifecycle rules, presigned URLs <br>&emsp; + **EBS**: volume types (gp3, io2), snapshots <br>&emsp; + **RDS**: Multi-AZ, Read Replicas, backups <br>&emsp; + **DynamoDB**: partition key, sort key, GSI <br> - Study AWS Networking: <br>&emsp; + **VPC**: public/private subnets, Internet Gateway, NAT Gateway <br>&emsp; + **Security Group vs NACL** <br>&emsp; + **Route Tables** | 30/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Wed | - Deep dive into AWS IAM: <br>&emsp; + Users, Groups, Roles, Policies <br>&emsp; + Policy evaluation logic (Allow/Deny) <br>&emsp; + IAM best practices: least privilege, MFA, access key rotation <br> - Practice: create IAM Users, assign policies, create IAM Roles for EC2 <br> - Practice: create VPC with public/private subnets, configure Security Groups | 01/07/2026 | <https://docs.aws.amazon.com/IAM/> |
+| Thu | - Practice core AWS services: <br>&emsp; + Launch EC2 instance, SSH connection, install Nginx <br>&emsp; + Create S3 bucket, upload files, configure public access <br>&emsp; + Create RDS instance (MySQL), connect from EC2 <br> - Complete lab assignments in AWS Academy / Skill Builder | 02/07/2026 | AWS Academy / Skill Builder |
+| Fri | - Consolidate Week 2 knowledge into personal notes <br> - Check in with mentor on learning progress and plan for next week <br> - Read additional documentation on AWS Well-Architected Framework | 03/07/2026 | <https://aws.amazon.com/architecture/well-architected/> |
+
+---
 
 ### Week 2 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Mastered AWS **Compute** services:
+  * EC2 with various instance types, AMIs, User Data, and SSH access
+  * Auto Scaling Group with scale-out/scale-in policies
+  * Elastic Load Balancer (ALB) and traffic distribution mechanisms
+  * AWS Lambda and the serverless event-driven model
 
-* Successfully created and configured an AWS Free Tier account.
+* Understood and practiced **Storage & Database** services:
+  * S3 with bucket policies, versioning, and lifecycle rules
+  * EBS snapshots and volume type selection
+  * RDS with Multi-AZ failover and Read Replica configurations
+  * DynamoDB with key-value model and Global Secondary Index
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Understood **AWS Networking** architecture:
+  * Designed VPCs with public/private subnets
+  * Configured Security Groups (stateful) and NACLs (stateless)
+  * Distinguished between Internet Gateway and NAT Gateway
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Mastered **IAM**: created users, groups, roles, and policies following the principle of least privilege.
 
-* Used AWS CLI to perform basic operations such as:
+* Completed AWS Academy lab assignments and accumulated additional learning credits.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+---
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+### Knowledge / Experience Gained:
+
+* Understood the critical difference between Security Groups (stateful, instance-level) and NACLs (stateless, subnet-level).
+* Internalized the principle of least privilege in IAM — only granting the minimum permissions necessary for each entity.
+* Learned how to read and apply the AWS Well-Architected Framework as a system design guideline.
+* Hands-on practice reinforced theoretical knowledge far more effectively than reading documentation alone.

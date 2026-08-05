@@ -1,57 +1,57 @@
 ---
 title: "Week 5 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-07-20
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 5 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Develop the core business features of the system (Property, Booking, Payment, Notification).
+* Complete the API and handle complex business logic (booking state management, payment processing).
+* Integrate the Frontend (Next.js) with the Backend API.
+* Test features and fix bugs.
+* Evaluate progress with mentor at the end of the week.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Develop core system features: <br>&emsp; + **Property module**: full CRUD, filter/search by price, area, location, property type <br>&emsp; + **Booking module**: schedule property viewings, update statuses (PENDING → CONFIRMED → CANCELLED) <br>&emsp; + **Contract module**: create rental contracts, store contract details <br>&emsp; + Validate input data with class-validator | 20/07/2026 | <https://docs.nestjs.com/> |
+| Tue | - Finalize API and business logic: <br>&emsp; + Implement Notification module: create notifications when booking status changes <br>&emsp; + Implement Payment flow: integrate payment gateway (mock), update contract status <br>&emsp; + Implement pagination and sorting for property listing API <br>&emsp; + Write Swagger documentation for all API endpoints | 21/07/2026 | <https://docs.nestjs.com/openapi/introduction> |
+| Wed | - Integrate Frontend with Backend: <br>&emsp; + Configure Next.js App Router, create main pages: Home, Property List, Property Detail, Booking <br>&emsp; + Call APIs from Frontend: axios/fetch with JWT interceptor <br>&emsp; + Implement global state management (Zustand or React Context) for auth state <br>&emsp; + Build components: PropertyCard, BookingForm, NavigationBar | 22/07/2026 | <https://nextjs.org/docs> |
+| Thu | - Full system feature testing: <br>&emsp; + Test workflow: register → login → create listing → search → book a viewing <br>&emsp; + Verify role-based access: TENANT cannot create listings, LANDLORD cannot self-confirm bookings <br>&emsp; + Fix bugs found during testing <br>&emsp; + Test responsive design on mobile | 23/07/2026 | |
+| Fri | - Overall progress review with mentor: <br>&emsp; + Demo completed features <br>&emsp; + Receive feedback on code quality and UX <br>&emsp; + Plan for Week 6: performance optimization | 24/07/2026 | |
+
+---
 
 ### Week 5 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed all core business modules:
+  * **Property**: full CRUD with filter/search, S3 image upload
+  * **Booking**: lifecycle management with state machine (PENDING → CONFIRMED/CANCELLED)
+  * **Contract**: rental contract creation and storage
+  * **Notification**: automatic notifications when booking status changes
 
-* Successfully created and configured an AWS Free Tier account.
+* Completed **Swagger documentation** for all API endpoints, enabling direct API testing via the UI.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Successfully integrated **Next.js Frontend** with Backend API:
+  * Main pages functional: Home, Property Listing (with filters), Property Detail, Booking Form
+  * JWT interceptor automatically refreshes tokens when expired
+  * Auth state managed globally via context
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Confirmed role-based authorization works correctly across the full business workflow.
 
-* Used AWS CLI to perform basic operations such as:
+* Received positive feedback from mentor, with a suggestion to optimize the number of database queries.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+---
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+### Knowledge / Experience Gained:
+
+* Gained a deep understanding of state machine patterns in booking management — clearly defining valid transitions is essential to prevent data inconsistencies.
+* Learned how to implement standard pagination (cursor-based vs. offset-based): offset suits paginated UI, cursor suits infinite scroll.
+* Understood Next.js App Router organization: Server Components vs. Client Components, and when to use `use client`.
+* Practical experience: JWT interceptors need to handle race conditions when multiple requests simultaneously call the refresh token endpoint.

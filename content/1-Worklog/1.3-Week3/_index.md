@@ -1,57 +1,57 @@
 ---
 title: "Week 3 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-07-06
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 3 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Study the business domain of a real estate system — identify actors, use cases, and core business workflows.
+* Analyze requirements and build a feature list for the system.
+* Design the overall system architecture (high-level architecture).
+* Select appropriate technologies for Backend, Frontend, and Database.
+* Identify AWS services to be integrated into the system.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+---
 
+### Tasks carried out this week:
+
+| Day | Task | Date | Reference |
+|-----|------|------|-----------|
+| Mon | - Research real estate business domain: <br>&emsp; + Identify actors: Tenant, Landlord, Admin <br>&emsp; + Analyze core business workflows: listing, search, viewing appointment, contract signing, payment <br>&emsp; + Study real-world real estate platforms (Mogi, Batdongsan) for reference | 06/07/2026 | Real-world reference |
+| Tue | - Analyze system requirements: <br>&emsp; + Write Use Case Diagrams for each actor <br>&emsp; + List functional and non-functional requirements <br>&emsp; + Identify business rules and constraints <br> - Discuss system scope with mentor | 07/07/2026 | Business Analysis Doc |
+| Wed | - Design high-level system architecture: <br>&emsp; + Draw high-level architecture diagram <br>&emsp; + Identify core modules: Auth, Property, Booking, Payment, Notification <br>&emsp; + Define inter-module communication (REST API, message queue) <br>&emsp; + Draft initial API endpoints following RESTful conventions | 08/07/2026 | |
+| Thu | - Select technology stack: <br>&emsp; + **Backend**: NestJS (TypeScript) — modular architecture, dependency injection <br>&emsp; + **Frontend**: Next.js (React) — SSR/SSG, routing, TailwindCSS <br>&emsp; + **Database**: PostgreSQL + Prisma ORM <br>&emsp; + Document rationale for each technology choice (trade-off analysis) | 09/07/2026 | |
+| Fri | - Identify AWS services to integrate: <br>&emsp; + **S3**: store real estate listing images <br>&emsp; + **SES**: send notification and verification emails <br>&emsp; + **Cognito**: user authentication management <br>&emsp; + **RDS**: production database <br>&emsp; + **EC2 / ECS**: deploy backend services <br> - Consolidate design documentation and push to repository | 10/07/2026 | |
+
+---
 
 ### Week 3 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Thoroughly understood the business domain of a property rental system with 3 main actors: **Tenant**, **Landlord**, and **Admin**.
 
-* Successfully created and configured an AWS Free Tier account.
+* Completed the requirements analysis document including:
+  * Use Case Diagrams for each actor
+  * Functional Requirements list (listing, search, scheduling, payment, notifications)
+  * Non-Functional Requirements (performance, security, scalability)
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Completed the high-level system architecture design with modules: **Auth**, **Property**, **Booking**, **Payment**, **Notification**, **Admin**.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Finalized technology stack decision:
+  * Backend: **NestJS** (TypeScript, modular, DI)
+  * Frontend: **Next.js** (App Router, SSR)
+  * ORM: **Prisma** with **PostgreSQL**
+  * Styling: **TailwindCSS**
 
-* Used AWS CLI to perform basic operations such as:
+* Completed a comprehensive list of AWS services to integrate: S3, SES, Cognito, RDS, EC2/ECS.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+---
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+### Knowledge / Experience Gained:
+
+* Learned the methodology for real-world business domain analysis: starting from actors → use cases → business rules → functional requirements.
+* Understood the critical importance of architectural design before coding — preventing costly refactors down the line.
+* Grasped technology selection trade-offs: NestJS suits modular backend architecture; Prisma enables type-safe database access.
+* Learned to incorporate AWS services into system design during the planning phase rather than retrofitting them later.

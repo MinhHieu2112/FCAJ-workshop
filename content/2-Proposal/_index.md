@@ -1,115 +1,230 @@
 ---
 title: "Proposal"
-date: 2024-01-01
+date: 2026-06-22
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
+# Real Estate Rental Management System
+## An Integrated Software Solution with AWS for the Residential Rental Market
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+---
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+
+The Real Estate Rental Management System is a web-based platform that manages the full lifecycle of a residential rental transaction — from property listing and search, to viewing appointment scheduling, contract creation, payment tracking, and automated notifications — within a unified system.
+
+The platform serves three primary user groups: **Landlords** who manage their property portfolios and process rental applications; **Tenants** who search for properties, book viewings, and sign contracts online; and **Administrators** who moderate content and monitor overall system activity.
+
+Technically, the system is built on a monorepo architecture with a **NestJS** (TypeScript) backend, a **Next.js** (App Router) frontend, a **PostgreSQL** database accessed via **Prisma ORM**, and integrated AWS services including **Amazon S3**, **Amazon SES**, **Amazon Cognito**, **Amazon RDS**, and **Amazon CloudFront**. The objective is to deliver a fully functional, scalable system that meets foundational security standards in a cloud environment.
+
+---
 
 ### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+#### Background
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+The residential rental market still relies heavily on informal channels: Facebook groups, messaging apps, physical flyers, and real estate brokers. The process from listing a property to signing a lease is typically lengthy and opaque, creating friction for both landlords and tenants.
+
+Specific pain points include:
+
+- **For landlords**: No centralized tool to manage multiple properties; vacancy status, viewing schedules, and contracts must be tracked manually through spreadsheets or personal notes.
+- **For tenants**: No multi-criteria search filters (price, area, location, amenities); no mechanism to confirm viewing appointments or track the status of rental applications.
+- **Regarding data security**: Contracts and personal information are often exchanged through unsecured channels, creating potential data exposure risks.
+
+#### Proposed Solution
+
+The system addresses each of these issues through a centralized web platform where:
+
+- Landlords have a dashboard to manage all properties, viewing schedules, and contracts.
+- Tenants have a search interface with multi-criteria filters, online booking, and real-time application status tracking.
+- Authentication and authorization ensure each role can only access data within its permitted scope.
+- Critical notifications (appointment confirmations, contract updates) are sent automatically via email.
+
+---
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+The system is organized as a **monorepo**, with clear separation between the backend, frontend, and a shared library (`@shared/types`).
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+#### High-Level Architecture Diagram
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        Client Layer                         │
+│              Next.js App (App Router, SSR/CSR)              │
+│         React Components · Zustand · Axios Interceptor       │
+└────────────────────────┬────────────────────────────────────┘
+                         │ HTTPS / REST API
+┌────────────────────────▼────────────────────────────────────┐
+│                       Backend Layer                         │
+│              NestJS (TypeScript · Modular DI)               │
+│  Auth · Property · Booking · Contract · Notification · Admin │
+│         JWT Guards · Role Guards · Class-Validator           │
+└────┬──────────────┬──────────────┬──────────────────────────┘
+     │              │              │
+┌────▼────┐   ┌─────▼─────┐  ┌────▼────────────────────────┐
+│ AWS RDS │   │ Amazon S3 │  │  AWS Services                │
+│PostgreSQL│  │+CloudFront│  │  SES · Cognito               │
+└─────────┘   └───────────┘  └─────────────────────────────┘
+```
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+#### AWS Services Used
+
+| Service | Role in the System |
+|---------|--------------------|
+| **Amazon RDS (PostgreSQL)** | Primary database storing all business data |
+| **Amazon S3** | Property image storage; accessed via presigned URLs |
+| **Amazon CloudFront** | CDN distributing images from S3, reducing client latency |
+| **Amazon SES** | Sending account verification and business notification emails |
+| **Amazon Cognito** | User authentication management, integrated with the JWT flow |
+
+#### Backend Module Design
+
+The NestJS backend is organized into independent modules, each responsible for a distinct business domain:
+
+- **Auth Module**: Registration, login, token refresh, Google OAuth2, Refresh Token Rotation.
+- **Property Module**: Property CRUD, S3 image upload, multi-criteria filter and search.
+- **Booking Module**: Viewing appointment management with a state machine (PENDING → CONFIRMED/CANCELLED).
+- **Contract Module**: Rental contract creation and storage.
+- **Notification Module**: Email notifications via SES when booking status changes.
+- **Admin Module**: Statistics dashboard, property listing approval/rejection.
+
+---
 
 ### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+#### Technology Stack and Rationale
+
+**Backend — NestJS (TypeScript)**
+
+NestJS was selected for its clearly modular architecture, which suits a system with multiple business domains. Its Dependency Injection mechanism facilitates unit testing and enforces separation of concerns between layers (Controller → Service → Repository). TypeScript provides end-to-end type safety, reducing runtime errors, particularly when integrating with Prisma ORM.
+
+**Frontend — Next.js (App Router)**
+
+Next.js with the App Router allows flexible use of Server Components (faster initial load, better SEO) alongside Client Components (interactive UI). An Axios interceptor handles automatic JWT refresh, providing a seamless user experience even when access tokens expire.
+
+**Database — PostgreSQL + Prisma ORM**
+
+PostgreSQL is a natural fit for the system's relational data model (User ↔ Property ↔ Booking ↔ Contract). Prisma provides a type-safe database client, schema migrations, and a query builder — eliminating manual SQL errors and accelerating development.
+
+#### Key Technical Problems Addressed
+
+**Authentication and Authorization**
+
+The system uses JWT with two token types: short-lived Access Tokens (15 minutes) and long-lived Refresh Tokens (7 days). Refresh Token Rotation ensures each token is single-use, preventing replay attacks. AuthGuard and RolesGuard are applied at the controller level to enforce role-based access control (TENANT/LANDLORD/ADMIN).
+
+**N+1 Query Problem**
+
+During development, querying a list of properties with their associated images and landlord information initially triggered N+1 queries — with 20 properties, the system was executing approximately 50 separate database queries. This was resolved by applying Prisma `include` to eager-load relations in a single JOIN query, combined with database indexing on frequently filtered columns (price, location, status). The result was a reduction in P95 response time from approximately 800ms to 120ms.
+
+**Race Condition**
+
+The scenario where two users simultaneously book the same viewing slot was handled using Pessimistic Locking (`SELECT FOR UPDATE` within a Prisma `$transaction`). This ensures only one booking is created successfully; concurrent requests receive a meaningful error response rather than producing inconsistent data.
+
+**Property Image Storage**
+
+Images are uploaded directly to Amazon S3 and served through CloudFront CDN. The frontend accesses images via time-limited presigned URLs rather than public URLs — reducing the risk of unauthorized access and providing control over bandwidth usage.
+
+#### Development Phases
+
+| Week | Phase | Key Deliverables |
+|------|-------|-----------------|
+| 1–2 | Preparation & Research | Onboarding, AWS fundamentals, Free Tier setup, Credits |
+| 3 | Analysis & Design | Business domain, Use Cases, architecture, tech stack |
+| 4 | Foundation | Database schema, Auth, S3/SES/Cognito integration |
+| 5 | Feature Development | Property, Booking, Contract, Notification, Frontend |
+| 6 | Performance Optimization | N+1 Query fix, indexing, cursor-based pagination |
+| 7 | Security & Hardening | Race Condition, Transactions, OWASP, Token Rotation |
+| 8 | Completion & Handover | E2E testing, CloudFront, documentation, product demo |
+
+---
 
 ### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+
+```
+Week 1–2  │ ████ Preparation & AWS Fundamentals
+Week 3    │ ██   Business Analysis & System Design
+Week 4    │ ███  Database · Auth · AWS Integration
+Week 5    │ ████ Core Feature Development · Frontend
+Week 6    │ ██   N+1 Query Optimization & DB Performance
+Week 7    │ ███  Race Condition · Security · Hardening
+Week 8    │ ███  Completion · Testing · Docs · Handover
+```
+
+**Key Milestones:**
+
+- **Week 2**: $200 AWS Credits received; AWS Budget configured.
+- **Week 4**: Full authentication flow operational (register → verify → login); S3 upload functional.
+- **Week 5**: Internal demo of core business features with mentor.
+- **Week 6**: P95 response time improvement confirmed after N+1 optimization.
+- **Week 8**: Final product demo; source code and documentation handover complete.
+
+---
 
 ### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+Operating costs during the development and demo environment are managed through the **AWS Free Tier** and the **$200 USD AWS Credits** received through the student support program.
 
-Total: $0.7/month, $8.40/12 months
+#### AWS Infrastructure Costs (Development Environment Estimate)
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+| Service | Configuration | Estimated Cost |
+|---------|--------------|----------------|
+| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~$15/month |
+| Amazon S3 | ~5 GB storage, ~10,000 requests/month | ~$0.15/month |
+| Amazon CloudFront | ~10 GB transfer/month | ~$0.85/month |
+| Amazon SES | ~500 emails/month (sandbox) | $0 (Free Tier) |
+| Amazon Cognito | <50,000 MAU | $0 (Free Tier) |
+| **Total Estimate** | | **~$16/month** |
+
+> All costs during the 8-week internship period fall within the $200 AWS Credits allocation, resulting in zero actual out-of-pocket expenses.
+
+#### Cost Control Strategy
+
+- Create **AWS Budget** with email alerts at $50 and $100 thresholds.
+- Use **RDS Single-AZ** instead of Multi-AZ in the development environment to reduce costs.
+- Configure **S3 Lifecycle Policy** to automatically delete test upload files after 30 days.
+- Stop the RDS instance outside working hours when access is not required.
+
+---
 
 ### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+#### Risk Matrix
+
+| Risk | Impact | Probability | Mitigation Strategy |
+|------|--------|-------------|---------------------|
+| Exceeding AWS Credits | Medium | Low | AWS Budget alerts; stop unused resources |
+| Authentication security vulnerability | High | Low | Refresh Token Rotation, rate limiting, account lockout |
+| Race Condition in Booking | High | Medium | Pessimistic Locking with `SELECT FOR UPDATE` |
+| Database performance degradation | Medium | Medium | N+1 fix, indexing, cursor-based pagination |
+| S3 presigned URL abuse | Low | Low | Short URL expiration; ownership verification before generation |
 
 #### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+
+- **RDS failure**: Restore from automated snapshots (enabled by default on RDS).
+- **S3 upload failure**: Retry logic with exponential backoff at the backend layer.
+- **SES throttling**: Queue emails and retry — this does not block the core business workflow.
+- **Cognito outage**: Fall back to the JWT-only internal Auth module flow; system remains functional.
+
+---
 
 ### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+
+#### Technical Outcomes
+
+By the end of the development phase, the system is expected to achieve:
+
+- All core business workflows operating stably: registration, login, property listing, search, viewing bookings, and contract creation.
+- An authentication system meeting foundational security standards: JWT Rotation, rate limiting, input validation, OWASP Top 10 compliance.
+- Optimized database query performance: P95 response time under 200ms for paginated list APIs.
+- Comprehensive technical documentation: README, Swagger API docs (40+ endpoints), architecture diagrams.
+
+#### Learning Value and Skill Development
+
+The project is structured to reflect a real-world software development environment — from business analysis and architecture design through implementation, performance optimization, security hardening, and formal handover. Core skills developed include: designing REST APIs to industry standards, integrating AWS services into production-grade applications, handling concurrency issues, and optimizing database performance — all of which have direct applicability to a software engineering career.
+
+#### Extension Roadmap
+
+The modular architecture of NestJS allows the system to scale without major refactoring. Potential future directions include: integrating an online payment gateway, adding real-time chat between landlords and tenants, or containerizing the entire system with Docker/ECS to support more flexible deployment on a production environment.
