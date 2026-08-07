@@ -8,11 +8,11 @@ pre: " <b> 1.2. </b> "
 
 ### Week 2 Objectives:
 
-* Study AWS Compute and Storage services in depth.
-* Study AWS Database, Networking, and IAM.
-* Practice using core AWS services via Console and CLI.
-* Complete AWS Academy / AWS Skill Builder assignments.
-* Consolidate knowledge and check in with mentor at end of week.
+* Analyze business requirements for the real estate rental management system and define user roles (tenant, manager).
+* Design overall system architecture and refactor the repository into a monorepo structure (pnpm workspaces).
+* Integrate Amazon Cognito service to manage user identities and issue JWT authentication tokens.
+* Build authentication and authorization mechanisms in the NestJS backend using `AuthGuard` and `RolesGuard`.
+* Test user registration, login, and role-based access control flows before developing core business modules.
 
 ---
 
@@ -20,42 +20,31 @@ pre: " <b> 1.2. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Study AWS Compute: <br>&emsp; + **EC2**: Instance types (General Purpose, Compute Optimized, Memory Optimized), AMI, User Data, Placement Groups <br>&emsp; + **Auto Scaling Group (ASG)**: scaling policies, health checks <br>&emsp; + **Elastic Load Balancer (ELB)**: ALB vs NLB <br>&emsp; + **AWS Lambda**: serverless functions, event triggers, execution environment | 29/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| Tue | - Study AWS Storage and Database: <br>&emsp; + **S3**: bucket policies, versioning, lifecycle rules, presigned URLs <br>&emsp; + **EBS**: volume types (gp3, io2), snapshots <br>&emsp; + **RDS**: Multi-AZ, Read Replicas, backups <br>&emsp; + **DynamoDB**: partition key, sort key, GSI <br> - Study AWS Networking: <br>&emsp; + **VPC**: public/private subnets, Internet Gateway, NAT Gateway <br>&emsp; + **Security Group vs NACL** <br>&emsp; + **Route Tables** | 30/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| Wed | - Deep dive into AWS IAM: <br>&emsp; + Users, Groups, Roles, Policies <br>&emsp; + Policy evaluation logic (Allow/Deny) <br>&emsp; + IAM best practices: least privilege, MFA, access key rotation <br> - Practice: create IAM Users, assign policies, create IAM Roles for EC2 <br> - Practice: create VPC with public/private subnets, configure Security Groups | 01/07/2026 | <https://docs.aws.amazon.com/IAM/> |
-| Thu | - Practice core AWS services: <br>&emsp; + Launch EC2 instance, SSH connection, install Nginx <br>&emsp; + Create S3 bucket, upload files, configure public access <br>&emsp; + Create RDS instance (MySQL), connect from EC2 <br> - Complete lab assignments in AWS Academy / Skill Builder | 02/07/2026 | AWS Academy / Skill Builder |
-| Fri | - Consolidate Week 2 knowledge into personal notes <br> - Check in with mentor on learning progress and plan for next week <br> - Read additional documentation on AWS Well-Architected Framework | 03/07/2026 | <https://aws.amazon.com/architecture/well-architected/> |
+| Mon | - Analyze real estate rental system requirements: <br>&emsp; + Define primary user roles: tenant and manager <br>&emsp; + Map out core business flows: property listing, application submission, approval, lease contract <br> - Refactor project repository into a monorepo using pnpm workspaces (`apps/server`, `apps/client`, `packages/types`) | 29/06/2026 | <https://cloudjourney.awsstudygroup.com/1-explore/> |
+| Tue | - Design high-level system architecture: <br>&emsp; + Backend: NestJS (TypeScript, modular architecture, DI) <br>&emsp; + Frontend: Next.js (App Router, Redux Toolkit / RTK Query) <br>&emsp; + Database: PostgreSQL with Prisma ORM <br>&emsp; + Define integration diagram for AWS services (Cognito, S3, RDS, Location Service) | 30/06/2026 | <https://docs.nestjs.com/> |
+| Wed | - Integrate Amazon Cognito and JWT Authentication: <br>&emsp; + Create and configure Amazon Cognito User Pool & App Client <br>&emsp; + Set up registration, email verification, and login authentication flows via Cognito <br>&emsp; + Synchronize user profiles from Cognito to backend using `cognitoId` | 01/07/2026 | <https://docs.aws.amazon.com/cognito/> |
+| Thu | - Implement authentication and authorization mechanisms in NestJS backend: <br>&emsp; + Build `AuthGuard` to verify JWT signature and expiration <br>&emsp; + Build `RolesGuard` to check role-based permissions (TENANT, MANAGER) <br>&emsp; + Apply role decorators to initial controller endpoints | 02/07/2026 | <https://docs.nestjs.com/guards> |
+| Fri | - Test and review Week 2 progress: <br>&emsp; + Test authentication and authorization APIs using Postman (register, login, token verification) <br>&emsp; + Verify restriction of invalid or unauthorized requests <br>&emsp; + Report progress and discuss Week 3 roadmap with mentor | 03/07/2026 | |
 
 ---
 
 ### Week 2 Achievements:
 
-* Mastered AWS **Compute** services:
-  * EC2 with various instance types, AMIs, User Data, and SSH access
-  * Auto Scaling Group with scale-out/scale-in policies
-  * Elastic Load Balancer (ALB) and traffic distribution mechanisms
-  * AWS Lambda and the serverless event-driven model
+* Completed system requirements analysis, defining two main user roles: **tenant** and **manager**.
 
-* Understood and practiced **Storage & Database** services:
-  * S3 with bucket policies, versioning, and lifecycle rules
-  * EBS snapshots and volume type selection
-  * RDS with Multi-AZ failover and Read Replica configurations
-  * DynamoDB with key-value model and Global Secondary Index
+* Successfully refactored project architecture to a **monorepo** structure with pnpm workspaces (`apps/server`, `apps/client`, `packages/types`), facilitating type sharing between frontend and backend.
 
-* Understood **AWS Networking** architecture:
-  * Designed VPCs with public/private subnets
-  * Configured Security Groups (stateful) and NACLs (stateless)
-  * Distinguished between Internet Gateway and NAT Gateway
+* Finalized the high-level system architecture combining NestJS, Next.js, PostgreSQL, and AWS services.
 
-* Mastered **IAM**: created users, groups, roles, and policies following the principle of least privilege.
+* Integrated **Amazon Cognito** successfully: configured User Pool, App Client, authentication flow, and JWT token issuance.
 
-* Completed AWS Academy lab assignments and accumulated additional learning credits.
+* Built and applied **`AuthGuard`** and **`RolesGuard`** in NestJS backend, securing controller endpoints and enforcing role-based permissions (TENANT, MANAGER).
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* Understood the critical difference between Security Groups (stateful, instance-level) and NACLs (stateless, subnet-level).
-* Internalized the principle of least privilege in IAM — only granting the minimum permissions necessary for each entity.
-* Learned how to read and apply the AWS Well-Architected Framework as a system design guideline.
-* Hands-on practice reinforced theoretical knowledge far more effectively than reading documentation alone.
+* Learned monorepo organization using pnpm workspaces, keeping shared DTOs and interfaces consistent across client and server.
+* Mastered delegating authentication management to Amazon Cognito, reducing risks associated with managing user credentials in an in-house database.
+* Understood how to write custom Guards in NestJS (using ExecutionContext and Reflector) to implement Authentication & Role-based Access Control (RBAC).
+* Developed an architectural mindset of modular system design prior to feature implementation.

@@ -8,10 +8,11 @@ pre: " <b> 1.6. </b> "
 
 ### Mục tiêu tuần 6:
 
-* Tối ưu truy vấn cơ sở dữ liệu — xác định và giải quyết vấn đề **N+1 Query**.
-* Áp dụng kỹ thuật **eager loading** và **batching** để tối ưu hiệu năng.
-* Kiểm thử hiệu năng hệ thống sau khi tối ưu (so sánh trước/sau).
-* Tổng hợp kết quả tối ưu và lập tài liệu kỹ thuật.
+* Phát triển module **message**: xây dựng tính năng trò chuyện (chat) thời gian thực giữa người thuê và chủ nhà qua WebSocket.
+* Xây dựng giao diện trò chuyện gắn theo từng bất động sản và lưu trữ lịch sử tin nhắn vào CSDL.
+* Phát triển module **notification**: tạo hệ thống thông báo trong ứng dụng cho tenant và manager.
+* Tích hợp dịch vụ **Amazon SES** để tự động gửi email thông báo khi trạng thái đơn thuê hoặc hợp đồng thay đổi.
+* Kiểm thử luồng giao tiếp thời gian thực và gửi email thông báo qua Amazon SES.
 
 ---
 
@@ -19,37 +20,31 @@ pre: " <b> 1.6. </b> "
 
 | Thứ | Công việc | Ngày | Nguồn tài liệu |
 |-----|-----------|------|----------------|
-| 2 | - Tối ưu truy vấn cơ sở dữ liệu: <br>&emsp; + Phân tích các query hiện tại bằng Prisma logging và query count <br>&emsp; + Xác định các điểm có vấn đề N+1 Query trong hệ thống: Property listing với images, Booking với user và property info <br>&emsp; + Đo benchmark số lượng query trước khi tối ưu <br>&emsp; + Thiết lập database query logging để theo dõi | 27/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/logging> |
-| 3 | - Tìm hiểu và xử lý vấn đề N+1 Query: <br>&emsp; + Phân tích nguyên nhân: ORM lazy loading gây ra N+1 khi lặp qua danh sách và truy cập relation <br>&emsp; + Nghiên cứu giải pháp: eager loading (Prisma `include`), batching (DataLoader pattern) <br>&emsp; + So sánh `include` vs `select` trong Prisma để chỉ lấy field cần thiết <br>&emsp; + Áp dụng `include` cho các API endpoint có N+1 | 28/07/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance> |
-| 4 | - Áp dụng eager loading, batching và tối ưu truy vấn: <br>&emsp; + Refactor Property listing: `include` images, landlord info trong một query duy nhất <br>&emsp; + Refactor Booking listing: `include` property và tenant info <br>&emsp; + Áp dụng **database indexing**: tạo index trên các column thường xuyên filter/search (location, price, status) <br>&emsp; + Implement **cursor-based pagination** để tránh OFFSET scan toàn bảng | 29/07/2026 | |
-| 5 | - Kiểm thử hiệu năng sau tối ưu: <br>&emsp; + Đo lại số lượng query sau khi refactor (so sánh N+1 → 1) <br>&emsp; + Dùng `EXPLAIN ANALYZE` trong PostgreSQL để kiểm tra query plan <br>&emsp; + Load test bằng Artillery hoặc `k6` với 100 concurrent users <br>&emsp; + Ghi lại kết quả: response time, query count, throughput | 30/07/2026 | |
-| 6 | - Tổng hợp kết quả tối ưu: <br>&emsp; + Viết báo cáo kỹ thuật về N+1 Query: nguyên nhân, giải pháp, kết quả đo lường <br>&emsp; + Cập nhật code với các best practices tối ưu query <br>&emsp; + Review lại toàn bộ code base để tìm các điểm tối ưu còn sót lại | 31/07/2026 | |
+| 2 | - Phát triển WebSocket Gateway cho module **message**: <br>&emsp; + Khởi tạo WebSocket Gateway bằng NestJS WebSockets (`@nestjs/websockets`) <br>&emsp; + Xây dựng middleware xác thực kết nối WebSocket bằng JWT token <br>&emsp; + Quản lý danh sách kết nối (socket instances) của tenant và manager | 27/07/2026 | <https://docs.nestjs.com/websockets/gateways> |
+| 3 | - Hoàn thiện chức năng trò chuyện thời gian thực (Real-time Chat): <br>&emsp; + Định nghĩa Prisma model Message và API lấy lịch sử trò chuyện theo `propertyId` <br>&emsp; + Xây dựng giao diện khung chat trò chuyện thời gian thực ở frontend Next.js <br>&emsp; + Xử lý sự kiện gửi/nhận tin nhắn tức thì và tự động cuộn đến tin nhắn mới nhất | 28/07/2026 | <https://socket.io/docs/v4/> |
+| 4 | - Tích hợp dịch vụ **Amazon SES** gửi email tự động: <br>&emsp; + Cấu hình Amazon SES (Simple Email Service) trên AWS Console, xác minh email người gửi <br>&emsp; + Xây dựng `SesService` trong NestJS sử dụng AWS SDK v3 `SendEmailCommand` <br>&emsp; + Tạo mẫu template email: thông báo nộp đơn xin thuê, thông báo đơn thuê được duyệt/từ chối | 29/07/2026 | <https://docs.aws.amazon.com/ses/> |
+| 5 | - Xây dựng module **notification** (thông báo in-app): <br>&emsp; + Định nghĩa Prisma model Notification và các type thông báo (APPLICATION_SUBMITTED, APPLICATION_APPROVED, LEASE_CREATED) <br>&emsp; + Xây dựng API lấy danh sách thông báo và đánh dấu đã đọc <br>&emsp; + Hiển thị badge số thông báo chưa đọc trên thanh thanh menu giao diện | 30/07/2026 | |
+| 6 | - Kiểm thử luồng giao tiếp và thông báo: <br>&emsp; + Kiểm thử trò chuyện thời gian thực giữa người thuê và chủ nhà trên 2 trình duyệt khác nhau <br>&emsp; + Xử lý cơ chế tự động kết nối lại (reconnect) khi rớt mạng WebSocket <br>&emsp; + Kiểm thử việc nhận email thông báo thực tế từ Amazon SES khi thực hiện các thao tác duyệt đơn thuê | 31/07/2026 | |
 
 ---
 
 ### Kết quả đạt được tuần 6:
 
-* Phát hiện và xác định **5 điểm N+1 Query** trong hệ thống: Property listing (ảnh + landlord), Booking listing (property + user), Notification listing (booking details).
+* Phát triển hoàn thành **Message module**: hỗ trợ trò chuyện thời gian thực giữa tenant và manager qua WebSocket với xác thực JWT an toàn.
 
-* Giải quyết toàn bộ N+1 bằng cách áp dụng **Prisma `include`** — giảm từ N+1 queries xuống còn 1 query với JOIN:
-  * Property listing: từ ~50 queries → 1 query (với 20 records)
-  * Booking listing: từ ~30 queries → 1 query (với 10 records)
+* Xây dựng thành công **giao diện khung chat** thời gian thực ở ứng dụng Next.js, hiển thị lịch sử trò chuyện chính xác theo từng bất động sản.
 
-* Áp dụng **database indexing** trên các column: `location`, `price`, `status`, `createdAt` — giảm thời gian query filter từ ~200ms xuống ~15ms.
+* Tích hợp thành công **Amazon SES**: hệ thống tự động gửi email thông báo chuẩn định dạng HTML tới người dùng khi đơn thuê được duyệt hoặc khởi tạo hợp đồng.
 
-* Implement **cursor-based pagination** thay thế offset, hiệu quả hơn với bảng lớn (không cần full table scan).
+* Xây dựng xong **Notification module**: cung cấp hệ thống thông báo trực tiếp trên giao diện (in-app notification) kèm trạng thái đã đọc/chưa đọc.
 
-* Kết quả load test (100 concurrent users):
-  * Trước tối ưu: P95 response time ~800ms
-  * Sau tối ưu: P95 response time ~120ms (**giảm 85%**)
-
-* Hoàn thành báo cáo kỹ thuật về N+1 Query với số liệu đo lường cụ thể.
+* Kiểm thử luồng giao tiếp hoàn tất: đảm bảo tin nhắn truyền tải thời gian thực mượt mà và email gửi qua Amazon SES đến hòm thư người nhận ổn định.
 
 ---
 
 ### Kiến thức / Kinh nghiệm học được:
 
-* Hiểu sâu về vấn đề N+1 Query — một trong những bottleneck phổ biến nhất trong các ứng dụng sử dụng ORM. ORM lazy loading tiện lợi nhưng nguy hiểm về hiệu năng khi làm việc với danh sách lớn.
-* Học được cách dùng `EXPLAIN ANALYZE` trong PostgreSQL để đọc query execution plan, xác định sequential scan vs index scan.
-* Nắm được khi nào dùng cursor-based pagination: phù hợp với dữ liệu lớn, real-time feed; offset phù hợp với UI phân trang truyền thống.
-* Kinh nghiệm: selective `include` (chỉ join field cần thiết) tốt hơn full `include` — tránh lấy quá nhiều dữ liệu không cần thiết.
+* Nắm vững kiến trúc WebSocket trong NestJS Gateway: phân biệt giữa HTTP REST API (stateless) và WebSocket Connection (stateful).
+* Hiểu cách xác thực kết nối WebSocket bằng JWT bearer token ngay từ bước handshake để bảo mật kênh giao tiếp.
+* Học cách tích hợp AWS SDK v3 cho Amazon SES để gửi email giao dịch (transactional email) trong ứng dụng backend.
+* Kinh nghiệm xử lý giao diện trò chuyện: quản lý tin nhắn thời gian thực với React state, xử lý tự động cuộn trang (scroll to bottom) và trạng thái online/offline.

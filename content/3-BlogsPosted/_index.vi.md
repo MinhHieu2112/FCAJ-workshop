@@ -1,22 +1,19 @@
 ---
-title: "Các bài blogs đã đăng"
+title: "Các bài blog đã đăng"
 date: 2024-01-01
 weight: 3
 chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}  
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+### [Blog 1 - Hệ thống xác thực với Amazon Cognito](3.1-Blog1/)
 
-Tại đây sẽ là phần liệt kê, giới thiệu các blogs mà các bạn đã đăng trên [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). Ví dụ:
+Blog giới thiệu quá trình tích hợp **Amazon Cognito** vào hệ thống quản lý cho thuê bất động sản, từ cơ chế xác thực bằng JWT đến phân quyền theo vai trò (**Manager** và **Tenant**) với `JwtAuthGuard` và `RolesGuard`. Bài viết cũng chia sẻ những vấn đề gặp phải khi làm việc với Access Token, ID Token và cách tối ưu quy trình xác thực trong ứng dụng Next.js và NestJS.
 
-###  [Blog 1 - SESSION POLICIES TRONG AMAZON EKS POD IDENTITY](3.1-Blog1/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+### [Blog 2 - Quản lý hình ảnh với Amazon S3](3.2-Blog2/)
 
-###  [Blog 2 - ...](3.2-Blog2/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Blog trình bày cách sử dụng **Amazon S3** để lưu trữ hình ảnh bất động sản, tối ưu quá trình tải lên và hiển thị ảnh trong ứng dụng. Nội dung bao gồm cơ chế tải ảnh bằng Presigned URL, quản lý quyền truy cập thông qua AWS IAM, lưu trữ đường dẫn ảnh trong PostgreSQL và tối ưu hiển thị bằng thành phần `Image` của Next.js.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+### [Blog 3 - Bản đồ và định vị với Amazon Location Service](3.3-Blog3/)
+
+Blog giới thiệu việc tích hợp **Amazon Location Service** và **MapLibre GL JS** để xây dựng chức năng bản đồ trong hệ thống. Bài viết trình bày quy trình chuyển đổi địa chỉ thành tọa độ, hiển thị vị trí bất động sản trên bản đồ, quản lý quyền truy cập bằng AWS IAM và những kinh nghiệm khi xử lý SigV4 cũng như tối ưu Geocoding trong quá trình phát triển.

@@ -8,11 +8,11 @@ pre: " <b> 1.3. </b> "
 
 ### Week 3 Objectives:
 
-* Study the business domain of a real estate system — identify actors, use cases, and core business workflows.
-* Analyze requirements and build a feature list for the system.
-* Design the overall system architecture (high-level architecture).
-* Select appropriate technologies for Backend, Frontend, and Database.
-* Identify AWS services to be integrated into the system.
+* Design relational database schema and define Prisma models for the real estate rental management system (PostgreSQL + PostGIS).
+* Develop **tenant** and **manager** modules: build APIs for user profile and account management by role.
+* Develop **application** module: build APIs for tenants to submit and track rental applications.
+* Develop **lease** module: build APIs for managers to approve applications, automatically generate leases, and track payments.
+* Test API endpoints for user, application, and lease management, and complete Swagger API documentation.
 
 ---
 
@@ -20,38 +20,31 @@ pre: " <b> 1.3. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Research real estate business domain: <br>&emsp; + Identify actors: Tenant, Landlord, Admin <br>&emsp; + Analyze core business workflows: listing, search, viewing appointment, contract signing, payment <br>&emsp; + Study real-world real estate platforms (Mogi, Batdongsan) for reference | 06/07/2026 | Real-world reference |
-| Tue | - Analyze system requirements: <br>&emsp; + Write Use Case Diagrams for each actor <br>&emsp; + List functional and non-functional requirements <br>&emsp; + Identify business rules and constraints <br> - Discuss system scope with mentor | 07/07/2026 | Business Analysis Doc |
-| Wed | - Design high-level system architecture: <br>&emsp; + Draw high-level architecture diagram <br>&emsp; + Identify core modules: Auth, Property, Booking, Payment, Notification <br>&emsp; + Define inter-module communication (REST API, message queue) <br>&emsp; + Draft initial API endpoints following RESTful conventions | 08/07/2026 | |
-| Thu | - Select technology stack: <br>&emsp; + **Backend**: NestJS (TypeScript) — modular architecture, dependency injection <br>&emsp; + **Frontend**: Next.js (React) — SSR/SSG, routing, TailwindCSS <br>&emsp; + **Database**: PostgreSQL + Prisma ORM <br>&emsp; + Document rationale for each technology choice (trade-off analysis) | 09/07/2026 | |
-| Fri | - Identify AWS services to integrate: <br>&emsp; + **S3**: store real estate listing images <br>&emsp; + **SES**: send notification and verification emails <br>&emsp; + **Cognito**: user authentication management <br>&emsp; + **RDS**: production database <br>&emsp; + **EC2 / ECS**: deploy backend services <br> - Consolidate design documentation and push to repository | 10/07/2026 | |
+| Mon | - ERD design and Prisma schema definition: <br>&emsp; + Create schemas for tables: User, Tenant, Manager, Application, Lease, Payment <br>&emsp; + Establish relationships (1-1, 1-N, N-N) and status enums (ApplicationStatus, LeaseStatus) <br>&emsp; + Execute Prisma migrations to initialize PostgreSQL database structure | 06/07/2026 | <https://www.prisma.io/docs/> |
+| Tue | - Develop **tenant** module and **manager** module: <br>&emsp; + Build APIs to fetch and update profile details for tenants and managers <br>&emsp; + Build service to sync user data from Amazon Cognito to PostgreSQL via `cognitoId` <br>&emsp; + Validate request payloads using class-validator DTOs | 07/07/2026 | <https://docs.nestjs.com/techniques/validation> |
+| Wed | - Develop **application** module (rental application management): <br>&emsp; + Build API for tenants to submit rental applications with personal details and requested lease dates <br>&emsp; + Build API for tenants to view submitted applications and cancel PENDING applications <br>&emsp; + Build API for managers to view and process applications per property | 08/07/2026 | |
+| Thu | - Develop **lease** module (contract & payment management): <br>&emsp; + Build API for managers to review applications (APPROVED / DENIED) <br>&emsp; + Implement automatic lease creation upon application approval inside a `prisma.$transaction` <br>&emsp; + Build API to view lease contracts and associated payment history | 09/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/transactions> |
+| Fri | - API testing and documentation: <br>&emsp; + Test application creation, approval, and lease generation flows with Postman <br>&emsp; + Verify business constraint enforcement (e.g. preventing duplicate active lease dates) <br>&emsp; + Integrate Swagger (OpenAPI) to document endpoints across the 4 modules | 10/07/2026 | <https://docs.nestjs.com/openapi/introduction> |
 
 ---
 
 ### Week 3 Achievements:
 
-* Thoroughly understood the business domain of a property rental system with 3 main actors: **Tenant**, **Landlord**, and **Admin**.
+* Completed **ERD** design and **Prisma schema** definitions for core entities: User, Tenant, Manager, Application, Lease, Payment; ran database migrations successfully on PostgreSQL.
 
-* Completed the requirements analysis document including:
-  * Use Case Diagrams for each actor
-  * Functional Requirements list (listing, search, scheduling, payment, notifications)
-  * Non-Functional Requirements (performance, security, scalability)
+* Completed **Tenant module** and **Manager module**: delivered full APIs for managing user profiles, account settings, and syncing with Amazon Cognito.
 
-* Completed the high-level system architecture design with modules: **Auth**, **Property**, **Booking**, **Payment**, **Notification**, **Admin**.
+* Completed **Application module**: enabled tenants to submit and track applications, while allowing managers to review incoming rental applications.
 
-* Finalized technology stack decision:
-  * Backend: **NestJS** (TypeScript, modular, DI)
-  * Frontend: **Next.js** (App Router, SSR)
-  * ORM: **Prisma** with **PostgreSQL**
-  * Styling: **TailwindCSS**
+* Completed **Lease module**: enabled managers to approve applications and automatically generate corresponding lease records inside an atomic database transaction.
 
-* Completed a comprehensive list of AWS services to integrate: S3, SES, Cognito, RDS, EC2/ECS.
+* Tested all APIs across the 4 modules using Postman and generated **Swagger API documentation** for all implemented endpoints.
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* Learned the methodology for real-world business domain analysis: starting from actors → use cases → business rules → functional requirements.
-* Understood the critical importance of architectural design before coding — preventing costly refactors down the line.
-* Grasped technology selection trade-offs: NestJS suits modular backend architecture; Prisma enables type-safe database access.
-* Learned to incorporate AWS services into system design during the planning phase rather than retrofitting them later.
+* Gained deep insight into designing relational database schemas for rental property lifecycles: Application → Lease → Payment.
+* Mastered defining 1-N, 1-1 relations and enums in Prisma schemas, managing migration histories using Prisma CLI.
+* Understood how to leverage `prisma.$transaction` to guarantee atomicity during multi-step database operations (application approval + lease creation).
+* Learned best practices for DTO input validation to reject malformed requests at the Controller layer.

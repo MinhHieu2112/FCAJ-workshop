@@ -8,10 +8,11 @@ pre: " <b> 1.6. </b> "
 
 ### Week 6 Objectives:
 
-* Optimize database queries — identify and resolve **N+1 Query** problems.
-* Apply **eager loading** and **batching** techniques to improve performance.
-* Benchmark system performance after optimization (before/after comparison).
-* Document technical findings and optimization results.
+* Develop **message** module: build real-time chat functionality between tenants and managers using WebSockets.
+* Build property-specific chat user interfaces and persist conversation histories in the database.
+* Develop **notification** module: create in-app notification mechanisms for tenants and managers.
+* Integrate **Amazon SES** service to send automated emails when rental application or lease statuses change.
+* Test real-time messaging flows and email notification delivery via Amazon SES.
 
 ---
 
@@ -19,37 +20,31 @@ pre: " <b> 1.6. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Database query optimization: <br>&emsp; + Analyze existing queries using Prisma logging and query counting <br>&emsp; + Identify N+1 Query hotspots: Property listing with images, Booking with user and property info <br>&emsp; + Benchmark query counts before optimization <br>&emsp; + Set up database query logging | 27/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/logging> |
-| Tue | - Study and address N+1 Query problems: <br>&emsp; + Analyze root cause: ORM lazy loading triggers N+1 when iterating lists and accessing relations <br>&emsp; + Research solutions: eager loading (Prisma `include`), batching (DataLoader pattern) <br>&emsp; + Compare `include` vs `select` in Prisma to fetch only required fields <br>&emsp; + Apply `include` to API endpoints with N+1 issues | 28/07/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance> |
-| Wed | - Apply eager loading, batching and query optimization: <br>&emsp; + Refactor Property listing: `include` images and landlord info in a single query <br>&emsp; + Refactor Booking listing: `include` property and tenant info <br>&emsp; + Apply **database indexing**: create indexes on frequently filtered/searched columns (location, price, status) <br>&emsp; + Implement **cursor-based pagination** to avoid full table OFFSET scans | 29/07/2026 | |
-| Thu | - Post-optimization performance testing: <br>&emsp; + Re-measure query count after refactoring (N+1 → 1) <br>&emsp; + Use `EXPLAIN ANALYZE` in PostgreSQL to inspect query plans <br>&emsp; + Load test with Artillery or `k6` using 100 concurrent users <br>&emsp; + Record results: response time, query count, throughput | 30/07/2026 | |
-| Fri | - Consolidate optimization results: <br>&emsp; + Write a technical report on N+1 Query: causes, solutions, and measured results <br>&emsp; + Update the codebase with query optimization best practices <br>&emsp; + Review the entire codebase for any remaining optimization opportunities | 31/07/2026 | |
+| Mon | - Develop WebSocket Gateway for **message** module: <br>&emsp; + Initialize WebSocket Gateway using NestJS WebSockets (`@nestjs/websockets`) <br>&emsp; + Build middleware to authenticate WebSocket handshake connections using JWT tokens <br>&emsp; + Manage active socket instances for tenants and managers | 27/07/2026 | <https://docs.nestjs.com/websockets/gateways> |
+| Tue | - Complete Real-time Chat functionality: <br>&emsp; + Define Prisma model for Message and build API to fetch conversation history by `propertyId` <br>&emsp; + Build real-time chat widget UI in Next.js frontend <br>&emsp; + Handle instant message emission/reception events and auto-scroll to latest messages | 28/07/2026 | <https://socket.io/docs/v4/> |
+| Wed | - Integrate **Amazon SES** service for automated email delivery: <br>&emsp; + Configure Amazon SES (Simple Email Service) on AWS Console and verify sender email <br>&emsp; + Build `SesService` in NestJS using AWS SDK v3 `SendEmailCommand` <br>&emsp; + Create HTML email templates: rental application submitted, application approved/denied | 29/07/2026 | <https://docs.aws.amazon.com/ses/> |
+| Thu | - Develop **notification** module (in-app notifications): <br>&emsp; + Define Prisma model for Notification and status event types (APPLICATION_SUBMITTED, APPLICATION_APPROVED, LEASE_CREATED) <br>&emsp; + Build APIs to fetch notifications and mark items as read <br>&emsp; + Display unread notification count badge on the main navbar | 30/07/2026 | |
+| Fri | - Test messaging and notification workflows: <br>&emsp; + Test real-time chat between tenant and manager across different browser sessions <br>&emsp; + Handle automatic reconnection logic upon WebSocket disconnection <br>&emsp; + Verify actual email delivery from Amazon SES upon rental application approval operations | 31/07/2026 | |
 
 ---
 
 ### Week 6 Achievements:
 
-* Identified **5 N+1 Query hotspots** in the system: Property listing (images + landlord), Booking listing (property + user), Notification listing (booking details).
+* Completed **Message module**: supported real-time messaging between tenants and managers via WebSockets secured with JWT authentication.
 
-* Resolved all N+1 issues by applying **Prisma `include`** — reducing from N+1 queries to a single query with JOIN:
-  * Property listing: from ~50 queries → 1 query (for 20 records)
-  * Booking listing: from ~30 queries → 1 query (for 10 records)
+* Successfully built **real-time chat interface** in Next.js frontend, accurately organizing conversation history per property listing.
 
-* Applied **database indexing** on columns: `location`, `price`, `status`, `createdAt` — reduced filter query time from ~200ms to ~15ms.
+* Integrated **Amazon SES** successfully: the system automatically sends styled HTML transactional email notifications upon application approval or lease generation.
 
-* Implemented **cursor-based pagination** to replace offset pagination, more efficient for large tables (no full table scan required).
+* Completed **Notification module**: provided an in-app notification system with read/unread tracking.
 
-* Load test results (100 concurrent users):
-  * Before optimization: P95 response time ~800ms
-  * After optimization: P95 response time ~120ms (**85% reduction**)
-
-* Completed a technical report on N+1 Query with concrete measurement data.
+* Completed messaging flow testing: ensured smooth real-time chat transmission and reliable email delivery via Amazon SES.
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* Gained a deep understanding of N+1 Query — one of the most common bottlenecks in ORM-based applications. ORM lazy loading is convenient but dangerous for performance when working with large lists.
-* Learned how to use `EXPLAIN ANALYZE` in PostgreSQL to read query execution plans and identify sequential scans vs. index scans.
-* Understood when to use cursor-based pagination: ideal for large datasets and real-time feeds; offset pagination is better for traditional page-number UIs.
-* Practical lesson: selective `include` (only joining required fields) outperforms full `include` — avoids fetching unnecessarily large data payloads.
+* Mastered WebSocket architecture in NestJS Gateways: distinguishing stateful WebSocket connections from stateless HTTP REST APIs.
+* Understood how to authenticate WebSocket connections via JWT bearer tokens during initial connection handshakes.
+* Learned how to integrate AWS SDK v3 for Amazon SES to send transactional emails in a backend application.
+* Gained frontend real-time chat implementation skills: managing messages with React state, auto-scrolling UI, and handling socket connection states.

@@ -1,37 +1,63 @@
 ---
-title : "Dọn dẹp tài nguyên"
-date : 2024-01-01
-weight : 6
-chapter : false
-pre : " <b> 5.6. </b> "
+title: "Dọn dẹp tài nguyên"
+date: 2026-08-06
+weight: 6
+chapter: false
+pre: " <b> 5.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+Xin chúc mừng bạn đã hoàn thành bài thực hành **Xây dựng Hệ thống quản lý bất động sản cho thuê trên AWS**!
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+Qua bài lab này, bạn đã tích hợp thành công các dịch vụ đám mây AWS tiêu chuẩn doanh nghiệp vào ứng dụng monorepo NestJS và Next.js:
+- **Amazon Cognito User Pool**: Xây dựng luồng xác thực đăng nhập JWT và phân quyền vai trò (`TENANT` / `MANAGER`).
+- **Amazon S3**: Tải ảnh trực tiếp an toàn thông qua Presigned URL.
+- **Amazon Location Service**: Chuyển đổi địa chỉ văn bản thành tọa độ địa lý và lưu trữ PostGIS.
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+---
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+#### Dọn dẹp tài nguyên AWS
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+Để tránh phát sinh chi phí ngoài ý muốn trên tài khoản AWS, hãy thực hiện xóa các tài nguyên đã tạo theo thứ tự sau:
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+#### 1. Xóa Amazon S3 Media Bucket
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+1. Truy cập [Bảng điều khiển Amazon S3](https://s3.console.aws.amazon.com/s3/home).
+2. Chọn bucket `real-estate-rental-media-dev`.
+3. Nhấn **Empty** và xác nhận xóa toàn bộ ảnh bên trong bucket.
+4. Sau khi bucket rỗng, nhấn **Delete** và nhập lại tên bucket để xóa vĩnh viễn.
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+![Delete S3 Bucket](/images/5-Workshop/5.6-Cleanup/5.6.1-bucket.png)
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+---
 
-5. Xóa các S3 bucket
+#### 2. Xóa Amazon Cognito User Pool
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+1. Truy cập [Bảng điều khiển Amazon Cognito](https://console.aws.amazon.com/cognito/v2/home).
+2. Chọn `real-estate-rental-user-pool`.
+3. Nhấn **Delete user pool** và nhập từ khóa `delete` để xác nhận xóa.
+
+![Delete Cognito User Pool](/images/5-Workshop/5.6-Cleanup/5.6.2-aws-cognito.png)
+
+---
+
+#### 3. Xóa Amazon Location Service
+
+1. Truy cập [Bảng điều khiển Amazon Location Service](https://console.aws.amazon.com/location/home).
+2. Điều hướng và click vào mục **API key** bên tab trái.
+
+![Delete Place Index](/images/5-Workshop/5.6-Cleanup/5.6.3-aws-location.png)
+
+3. Nhấn **Deactivate** để vô hiệu hóa API Key, sau đó nhấn **Delete** để xóa vĩnh viễn.
+
+![Delete Place Index](/images/5-Workshop/5.6-Cleanup/5.6.3-aws-location-delete.png)
+![Delete Place Index](/images/5-Workshop/5.6-Cleanup/5.6.3-aws-location-delete(1).png)
+---
+
+#### 4. Xóa IAM User
+
+1. Truy cập [Bảng điều khiển IAM](https://console.aws.amazon.com/iam/home#/users).
+2. Nhấn **IAM users** ở tab trái
+3. Chọn user cần xóa 
+4. Nhấn **Delete** và nhập từ khóa `delete` để xác nhận xóa.
+
+![Delete IAM User](/images/5-Workshop/5.6-Cleanup/5.6.4-aws-iam.png)

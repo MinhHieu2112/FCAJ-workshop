@@ -1,31 +1,33 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-08-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+# AUTHENTICATION WITH AWS COGNITO
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+During the development of the Real Estate Rental Management System, our team chose **Amazon Cognito** to handle user authentication instead of building a custom JWT-based authentication solution. Beyond enabling user sign-in, the integration also had to address role-based access control (RBAC) for two different user roles: **Manager** and **Tenant**.
 
-Key points to know:
+One of the main challenges was determining which token should be used when communicating with the Backend. Initially, only the **Access Token** was sent with each request. However, the Access Token did not include the `custom:role` attribute configured in Amazon Cognito. As a result, the `RolesGuard` could not identify the user's role, causing many protected endpoints to return **401 Unauthorized** or **403 Forbidden** responses.
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+After several rounds of research, testing, and optimization, the authentication and authorization workflow was refined as follows:
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+- Use the **Access Token** as the Bearer Token to authenticate every request sent from the Frontend to the Backend through `JwtAuthGuard`.
+- Extract the user's role (`custom:role`) from the **ID Token** on the Frontend and pass it to the Backend through `X-User-Role` or the token payload for authorization.
+- Implement a multi-layer validation mechanism in `JwtAuthGuard`, which prioritizes reading the role from the token payload, then falls back to querying the database via Prisma, and finally checks the `X-User-Role` header when necessary.
+- Apply `RolesGuard` to verify whether the authenticated user has sufficient permissions (**Manager** or **Tenant**) before accessing protected API endpoints.
+- Configure CORS in the NestJS Backend to allow the `X-User-Role` header, preventing Preflight (`OPTIONS`) request issues when communicating with the Frontend.
+- Use `fetchAuthSession()` from Amplify v6 to automatically manage the user session and refresh expired Access Tokens, providing a seamless user experience without requiring users to sign in again while the Refresh Token remains valid.
 
-...Image...
+## Architecture Overview
 
-...Link...
+![Overview](/images/3-BlogsPosted/Cognito_Auth_Architecture.png)
 
-...Guide...
+## References
+
+- https://docs.aws.amazon.com/cognito/
+- https://docs.aws.amazon.com/amplify/
+- https://docs.nestjs.com/security/authentication
+- https://docs.nestjs.com/security/authorization

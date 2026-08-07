@@ -8,11 +8,11 @@ pre: " <b> 1.7. </b> "
 
 ### Week 7 Objectives:
 
-* Study and handle **Race Condition** issues in the system.
-* Apply **Transactions** and **Locking** (Optimistic/Pessimistic) to ensure data consistency.
-* Research and implement system security measures.
-* Harden **Authentication**, **Authorization**, and **Input Validation**.
-* Perform security testing and fix vulnerabilities.
+* System optimization: identify and eliminate **N+1 Query** bottlenecks in database queries.
+* Analyze and resolve **Race Condition** scenarios in application approval and lease generation using **Transactions** and **Pessimistic Locking**.
+* Enhance overall system security: audit role authorization, implement Refresh Token Rotation, Rate Limiting, and HTTP security headers.
+* Complete integration of **Amazon Location Service** for property address geocoding and interactive map rendering.
+* Optimize PostGIS spatial data queries combined with Amazon Location Service.
 
 ---
 
@@ -20,39 +20,31 @@ pre: " <b> 1.7. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Study Race Condition in the system: <br>&emsp; + Identify Race Condition risk points: simultaneous bookings for the same property, concurrent payment balance updates <br>&emsp; + Analyze scenario: 2 users booking the same room at the same time <br>&emsp; + Research handling mechanisms: Optimistic Locking (version field), Pessimistic Locking (SELECT FOR UPDATE) <br>&emsp; + Compare trade-offs between Optimistic and Pessimistic Locking | 03/08/2026 | <https://www.postgresql.org/docs/current/explicit-locking.html> |
-| Tue | - Apply Transactions and Locking: <br>&emsp; + Implement **Prisma Transaction** (`$transaction`) for operations requiring atomicity <br>&emsp; + Apply **Pessimistic Locking** (`SELECT FOR UPDATE`) for Booking creation to prevent double-booking <br>&emsp; + Apply **Optimistic Locking** with version field for Payment updates <br>&emsp; + Write integration tests to verify Race Condition handling | 04/08/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/transactions> |
-| Wed | - Study system security measures: <br>&emsp; + **OWASP Top 10**: SQL Injection, XSS, CSRF, Broken Authentication, Sensitive Data Exposure <br>&emsp; + Rate limiting to prevent brute-force attacks <br>&emsp; + HTTPS/TLS, CORS configuration <br>&emsp; + Helmet.js for setting security HTTP headers <br>&emsp; + Input sanitization to prevent XSS <br>&emsp; + Environment variable management (no hardcoded secrets) | 05/08/2026 | <https://owasp.org/www-project-top-ten/> |
-| Thu | - Harden Authentication, Authorization and Validation: <br>&emsp; + Implement **Refresh Token Rotation**: invalidate old token after each refresh <br>&emsp; + Implement account lockout after multiple failed login attempts <br>&emsp; + Add complete validation to all DTOs (class-validator decorators) <br>&emsp; + Implement global Exception Filter for consistent error handling <br>&emsp; + Sanitize all user input before persisting to the database | 06/08/2026 | <https://docs.nestjs.com/exception-filters> |
-| Fri | - Security testing and bug fixes: <br>&emsp; + Test basic attack scenarios: SQL Injection, XSS attempts, CSRF <br>&emsp; + Verify rate limiting is functioning correctly <br>&emsp; + Test Race Condition with concurrent requests (Postman Runner or k6) <br>&emsp; + Fix identified security vulnerabilities <br>&emsp; + Review all Authorization logic | 07/08/2026 | |
+| Mon | - Optimize database queries and eliminate **N+1 Query**: <br>&emsp; + Analyze Prisma query logs, measuring query counts on property listing and application endpoints <br>&emsp; + Replace lazy loading with Prisma `include` / `select` eager loading <br>&emsp; + Create database indexes on frequently queried columns (`location`, `price`, `status`, `createdAt`) | 03/08/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization> |
+| Tue | - Resolve **Race Condition** challenges: <br>&emsp; + Analyze concurrency conflict scenarios: simultaneous application approval or lease generation operations <br>&emsp; + Apply `prisma.$transaction` and Pessimistic Locking (`SELECT FOR UPDATE`) <br>&emsp; + Run concurrent request tests to verify data consistency under high concurrency | 04/08/2026 | <https://www.postgresql.org/docs/current/explicit-locking.html> |
+| Wed | - Strengthen overall application security: <br>&emsp; + Verify 100% protection of mutative endpoints with `AuthGuard` and `RolesGuard` <br>&emsp; + Implement **Refresh Token Rotation**: invalidating old refresh tokens upon rotation <br>&emsp; + Integrate Helmet.js for HTTP security headers and `@nestjs/throttler` for Rate Limiting against brute-force attacks <br>&emsp; + Validate and sanitize all user input using DTO class-validator decorators | 05/08/2026 | <https://owasp.org/www-project-top-ten/> |
+| Thu | - Complete **Amazon Location Service** integration: <br>&emsp; + Provision Place Index and Map resources on AWS Console <br>&emsp; + Build `LocationService` in NestJS backend to geocode property text addresses into coordinates (latitude, longitude) <br>&emsp; + Integrate MapLibre GL JS / Amazon Location Service SDK to display interactive search maps in Next.js UI | 06/08/2026 | <https://docs.aws.amazon.com/location/> |
+| Fri | - Optimize PostGIS spatial queries and weekly summary: <br>&emsp; + Optimize spatial distance queries (`ST_DWithin` / `ST_Distance`) combining coordinates from Amazon Location Service <br>&emsp; + Re-benchmark API response times after optimization (showing significant latency reductions) <br>&emsp; + Evaluate system security and performance improvements with mentor | 07/08/2026 | |
 
 ---
 
 ### Week 7 Achievements:
 
-* Successfully identified and resolved **Race Condition** in the property booking feature:
-  * Applied `SELECT FOR UPDATE` within Prisma Transaction, ensuring only 1 booking is created when multiple concurrent requests target the same slot.
-  * Concurrent test with 10 simultaneous requests → only 1 booking succeeded, remaining 9 received appropriate error responses.
+* Completely resolved **N+1 Query** issues: reduced database queries from dozens down to a single JOIN query using Prisma `include`.
 
-* Applied **Optimistic Locking** for Payment updates with a version field — detects conflicts and requires retry instead of overwriting data.
+* Resolved **Race Conditions** successfully: applied `prisma.$transaction` and `SELECT FOR UPDATE` to prevent duplicate lease creation during concurrent requests.
 
-* Deployed security measures:
-  * Helmet.js with comprehensive security headers (CSP, HSTS, X-Frame-Options)
-  * Rate limiting: 10 requests/minute for the login endpoint
-  * CORS restricted to the Frontend domain only
-  * All DTOs validated and sanitized
+* Comprehensively elevated **system security**: implemented Refresh Token Rotation, Rate Limiting, Helmet.js HTTP security headers, and secured 100% of API endpoints with `AuthGuard` and `RolesGuard`.
 
-* Completed **Refresh Token Rotation** — each token is single-use only, significantly strengthening security.
+* Successfully integrated **Amazon Location Service**: supported automated address-to-coordinate geocoding and rendering interactive maps for property search.
 
-* Implemented **account lockout** after 5 consecutive failed login attempts (15-minute lockout).
-
-* Security testing confirmed the system is resistant to basic attack vectors from the OWASP Top 10.
+* Optimized PostGIS spatial queries, reducing location-based property filtering response times to under 50ms.
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* Clearly understood the difference between Optimistic and Pessimistic Locking: Optimistic is better when conflicts are rare (better performance), Pessimistic is better when conflicts are frequent (stronger consistency guarantees).
-* Internalized the Refresh Token Rotation principle: a token must be immediately invalidated after use to prevent replay attacks.
-* Learned how to read the OWASP Top 10 and apply each specific defensive measure to a real-world system.
-* Key insight: security is not a feature to add at the end — it must be designed from the start and continuously verified.
+* Understood the root cause of N+1 Query patterns in ORM frameworks and learned eager loading techniques to boost response times.
+* Mastered handling concurrent data modification conflicts in PostgreSQL using `prisma.$transaction` and Pessimistic Locking (`SELECT FOR UPDATE`).
+* Applied key OWASP Top 10 security principles: Refresh Token Rotation against session hijacking and Rate Limiting against DDoS/brute-force attacks.
+* Mastered integrating Amazon Location Service into backend and frontend applications for location services and map visualizations.

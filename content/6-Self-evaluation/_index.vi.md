@@ -1,40 +1,36 @@
 ---
 title: "Tự đánh giá"
-date: 2024-01-01
+date: 2026-08-06
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** với vị trí **Workforce Bootcamp - First Cloud AI Journey** từ ngày **22/06/2026** đến ngày **15/08/2026**, em đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế tiêu chuẩn quốc tế.  
 
-Trong suốt thời gian thực tập tại **[Tên công ty/tổ chức]** từ **[ngày bắt đầu]** đến **[ngày kết thúc]**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia **[mô tả ngắn gọn dự án hoặc công việc chính]**, qua đó cải thiện kỹ năng **[liệt kê kỹ năng: lập trình, phân tích, viết báo cáo, giao tiếp…]**.  
+Em đã tham gia chương trình đào tạo chuyên sâu và thực hiện dự án **Hệ thống quản lý bất động sản cho thuê (Real Estate Rental Management System)** tích hợp các dịch vụ điện toán đám mây AWS tiêu chuẩn doanh nghiệp (Amazon Cognito, Amazon S3, Amazon Location Service), qua đó nâng cao rõ rệt kỹ năng thiết kế kiến trúc hệ thống, phát triển ứng dụng Fullstack (NestJS & Next.js), tư duy giải quyết vấn đề và tác phong làm việc chuyên nghiệp.
 
-Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
+Về tác phong, em luôn tuân thủ nội quy công ty, hoàn thành công việc đúng hạn và tích cực chủ động trao đổi với các mentor và đồng nghiệp để nâng cao hiệu quả dự án.
 
-Để phản ánh một cách khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
-
+Để phản ánh một cách khách quan quá trình thực tập 2 tháng vừa qua, em xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
 
 | STT | Tiêu chí                            | Mô tả                                                                                            | Tốt | Khá | Trung bình |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | --- | --- | ---------- |
-| 1   | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về ngành, áp dụng kiến thức vào thực tế, kỹ năng sử dụng công cụ, chất lượng công việc | ✅   | ☐   | ☐          |
-| 2   | **Khả năng học hỏi**                | Tiếp thu kiến thức mới, học hỏi nhanh                                                            | ☐   | ✅   | ☐          |
-| 3   | **Chủ động**                        | Tự tìm hiểu, nhận nhiệm vụ mà không chờ chỉ dẫn                                                  | ✅   | ☐   | ☐          |
-| 4   | **Tinh thần trách nhiệm**           | Hoàn thành công việc đúng hạn, đảm bảo chất lượng                                                | ✅   | ☐   | ☐          |
-| 5   | **Kỷ luật**                         | Tuân thủ giờ giấc, nội quy, quy trình làm việc                                                   | ☐   | ☐   | ✅          |
-| 6   | **Tính cầu tiến**                   | Sẵn sàng nhận feedback và cải thiện bản thân                                                     | ☐   | ✅   | ☐          |
-| 7   | **Giao tiếp**                       | Trình bày ý tưởng, báo cáo công việc rõ ràng                                                     | ☐   | ✅   | ☐          |
-| 8   | **Hợp tác nhóm**                    | Làm việc hiệu quả với đồng nghiệp, tham gia nhóm                                                 | ✅   | ☐   | ☐          |
-| 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng đồng nghiệp, đối tác, môi trường làm việc                                              | ✅   | ☐   | ☐          |
-| 10  | **Tư duy giải quyết vấn đề**        | Nhận diện vấn đề, đề xuất giải pháp, sáng tạo                                                    | ☐   | ✅   | ☐          |
-| 11  | **Đóng góp vào dự án/tổ chức**      | Hiệu quả công việc, sáng kiến cải tiến, ghi nhận từ team                                         | ✅   | ☐   | ☐          |
-| 12  | **Tổng thể**                        | Đánh giá chung về toàn bộ quá trình thực tập                                                     | ✅   | ☐   | ☐          |
+| 1   | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về điện toán đám mây AWS, áp dụng NestJS/Next.js vào thực tế, chất lượng sản phẩm      | ✅   | ☐   | ☐          |
+| 2   | **Khả năng học hỏi**                | Tiếp thu nhanh các dịch vụ AWS mới (Cognito, S3, Location Service) và công nghệ mới               | ✅   | ☐   | ☐          |
+| 3   | **Chủ động**                        | Tự nghiên cứu tài liệu AWS, xây dựng tài liệu workshop và đề xuất giải pháp kỹ thuật            | ✅   | ☐   | ☐          |
+| 4   | **Tinh thần trách nhiệm**           | Hoàn thành các cột mốc công việc (Worklog, Proposal, Workshop) đúng thời hạn                       | ✅   | ☐   | ☐          |
+| 5   | **Kỷ luật**                         | Tuân thủ nghiêm túc giờ giấc, quy trình làm việc và chuẩn mực giao tiếp                           | ✅   | ☐   | ☐          |
+| 6   | **Tính cầu tiến**                   | Sẵn sàng lắng nghe góp ý từ Mentor/Admin và cải thiện chất lượng công việc                      | ✅   | ☐   | ☐          |
+| 7   | **Giao tiếp**                       | Trình bày kiến trúc hệ thống, báo cáo tiến độ và viết tài liệu kỹ thuật rõ ràng                   | ☐   | ✅   | ☐          |
+| 8   | **Hợp tác nhóm**                    | Hỗ trợ đồng nghiệp trong chương trình Bootcamp, làm việc nhóm hiệu quả                           | ✅   | ☐   | ☐          |
+| 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng chuẩn mực văn hóa doanh nghiệp của AWS và các đối tác                                  | ✅   | ☐   | ☐          |
+| 10  | **Tư duy giải quyết vấn đề**        | Phân tích bài toán thực tế, tối ưu hóa chi phí & hiệu năng các dịch vụ AWS                       | ☐   | ✅   | ☐          |
+| 11  | **Đóng góp vào dự án/tổ chức**      | Đóng góp bộ tài liệu thực hành Workshop hoàn chỉnh phục vụ chương trình FCAJ                     | ✅   | ☐   | ☐          |
+| 12  | **Tổng thể**                        | Đánh giá chung về toàn bộ quá trình thực tập 2 tháng                                             | ✅   | ☐   | ☐          |
 
-### Cần cải thiện
+### Điểm cần tiếp tục cải thiện
 
-* Nâng cao tính kỹ luật, chấp hành nghiêm chỉnh nội quy của công ty hoặc bất kỳ trong một tổ chức nào
-* Cải thiện trong cách tư duy giải quyết vấn đề
-* Học cách giao tiếp tốt hơn trong giao tiếp hằng ngày và trong công việc, xử lý tình huống
+* **Đẩy mạnh tư duy kiến trúc chuyên sâu**: Tiếp tục mở rộng kiến thức về các giải pháp Serverless tiên tiến (AWS Lambda, DynamoDB) và hạ tầng dưới dạng mã (IaC - Terraform/AWS CDK).
+* **Nâng cao kỹ năng thuyết trình & giao tiếp kỹ thuật**: Rèn luyện khả năng trình bày giải pháp kỹ thuật bằng tiếng Anh trong các buổi Tech Talk hoặc báo cáo chuyên môn.
+* **Tối ưu hóa quản lý thời gian**: Phân bổ hợp lý hơn nữa giữa việc nghiên cứu lý thuyết AWS và thực hành xây dựng sản phẩm.

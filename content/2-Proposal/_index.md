@@ -7,224 +7,242 @@ pre: " <b> 2. </b> "
 ---
 
 # Real Estate Rental Management System
-## An Integrated Software Solution with AWS for the Residential Rental Market
+## AWS-Integrated Software Solution for the Residential Rental Market
 
 ---
 
 ### 1. Executive Summary
 
-The Real Estate Rental Management System is a web-based platform that manages the full lifecycle of a residential rental transaction — from property listing and search, to viewing appointment scheduling, contract creation, payment tracking, and automated notifications — within a unified system.
+The Real Estate Rental Management System is a unified software platform supporting the end-to-end lifecycle of residential rental transactions — from property listing, map-based search, application submission, application review, automated lease creation, payment tracking, to real-time messaging and automated email notifications.
 
-The platform serves three primary user groups: **Landlords** who manage their property portfolios and process rental applications; **Tenants** who search for properties, book viewings, and sign contracts online; and **Administrators** who moderate content and monitor overall system activity.
+The system serves two primary user roles: **property managers/landlords (manager)** who publish listings, manage property portfolios, review rental applications, and track active leases; and **tenants (tenant)** who search for properties using multi-criteria filters combined with map locations, submit online applications, track application status, and communicate directly with landlords via real-time messaging.
 
-Technically, the system is built on a monorepo architecture with a **NestJS** (TypeScript) backend, a **Next.js** (App Router) frontend, a **PostgreSQL** database accessed via **Prisma ORM**, and integrated AWS services including **Amazon S3**, **Amazon SES**, **Amazon Cognito**, **Amazon RDS**, and **Amazon CloudFront**. The objective is to deliver a fully functional, scalable system that meets foundational security standards in a cloud environment.
+Technically, the system is built on a monorepo architecture (`pnpm workspaces`) featuring a **NestJS** (TypeScript) backend, a **Next.js** (App Router) frontend utilizing **Redux Toolkit / RTK Query**, a **PostgreSQL** database with **PostGIS** spatial extensions accessed via **Prisma ORM**, and integrated AWS cloud services including **Amazon Cognito** (user authentication), **Amazon S3** (image storage), **Amazon RDS** (managed cloud database), **Amazon SES** (automated email notifications), and **Amazon Location Service** (address geocoding and map rendering). The project aims to deliver a fully functional, high-performance, and secure application tailored for cloud environments.
 
 ---
 
 ### 2. Problem Statement
 
-#### Background
+#### Context
 
-The residential rental market still relies heavily on informal channels: Facebook groups, messaging apps, physical flyers, and real estate brokers. The process from listing a property to signing a lease is typically lengthy and opaque, creating friction for both landlords and tenants.
+The current residential rental market relies heavily on informal channels such as social media groups, individual text messaging, or third-party brokers. The workflow from property discovery to lease execution is often fragmented, lacks dedicated management tools, and presents information transparency risks for both landlords and tenants.
 
-Specific pain points include:
+Specifically, key challenges include:
 
-- **For landlords**: No centralized tool to manage multiple properties; vacancy status, viewing schedules, and contracts must be tracked manually through spreadsheets or personal notes.
-- **For tenants**: No multi-criteria search filters (price, area, location, amenities); no mechanism to confirm viewing appointments or track the status of rental applications.
-- **Regarding data security**: Contracts and personal information are often exchanged through unsecured channels, creating potential data exposure risks.
+- **For Landlords**: Lack of a centralized dashboard to manage multi-property portfolios; tracking vacant rooms, incoming rental applications, and lease agreements is performed manually using spreadsheets or physical notebooks.
+- **For Tenants**: Absence of intuitive map-integrated search tools with multi-criteria filters (price, area, bedroom count, amenities); lack of centralized application status tracking and communication channels.
+- **For Communication & Notifications**: Exchanges via personal messaging apps lead to scattered information; lack of automated email alerts when rental application or lease contract statuses change.
 
 #### Proposed Solution
 
-The system addresses each of these issues through a centralized web platform where:
+The system resolves these limitations through a centralized web application:
 
-- Landlords have a dashboard to manage all properties, viewing schedules, and contracts.
-- Tenants have a search interface with multi-criteria filters, online booking, and real-time application status tracking.
-- Authentication and authorization ensure each role can only access data within its permitted scope.
-- Critical notifications (appointment confirmations, contract updates) are sent automatically via email.
+- Landlords gain access to a dedicated Manager Dashboard to oversee property portfolios, review incoming applications, and track active lease agreements.
+- Tenants benefit from an intuitive search interface combining filtering and map visualizations, online application submission, and real-time status tracking.
+- Upon application approval, the system automatically generates a lease contract (Lease) within an atomic database transaction, ensuring strict lease schedule control and preventing scheduling overlaps.
+- Tenants and landlords communicate directly via property-anchored real-time chat widgets.
+- Automated transactional email notifications are dispatched via Amazon SES when applications are submitted or status updates occur.
 
 ---
 
 ### 3. Solution Architecture
 
-The system is organized as a **monorepo**, with clear separation between the backend, frontend, and a shared library (`@shared/types`).
+The system is structured as a **monorepo** (`pnpm workspaces`), containing backend services (`apps/server`), frontend client (`apps/client`), and shared data types (`packages/types`, `@shared/types`) to ensure strict type consistency between client and server layers.
 
-#### High-Level Architecture Diagram
+#### System Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                        Client Layer                         │
 │              Next.js App (App Router, SSR/CSR)              │
-│         React Components · Zustand · Axios Interceptor       │
+│        React Components · Redux Toolkit / RTK Query         │
 └────────────────────────┬────────────────────────────────────┘
-                         │ HTTPS / REST API
+                         │ HTTPS REST API + WebSocket
 ┌────────────────────────▼────────────────────────────────────┐
 │                       Backend Layer                         │
 │              NestJS (TypeScript · Modular DI)               │
-│  Auth · Property · Booking · Contract · Notification · Admin │
-│         JWT Guards · Role Guards · Class-Validator           │
-└────┬──────────────┬──────────────┬──────────────────────────┘
-     │              │              │
-┌────▼────┐   ┌─────▼─────┐  ┌────▼────────────────────────┐
-│ AWS RDS │   │ Amazon S3 │  │  AWS Services                │
-│PostgreSQL│  │+CloudFront│  │  SES · Cognito               │
-└─────────┘   └───────────┘  └─────────────────────────────┘
+│   Property · Application · Lease · Tenant · Manager ·       │
+│   Message (Chat Real-time) · Notification · Location        │
+│         AuthGuard · RolesGuard · Class-Validator            │
+└────┬──────────────┬──────────────┬──────────────┬───────────┘
+     │              │              │              │
+┌────▼────┐   ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼───────────┐
+│ AWS RDS │   │ Amazon S3 │  │ Amazon SES│  │ Amazon Location │
+│PostgreSQL│  │ (property │  │ (email    │  │ Service         │
+│+ PostGIS│   │ images)   │  │ notify)   │  │ (Geocode & Map) │
+└─────────┘   └───────────┘  └───────────┘  └─────────────────┘
+                     Amazon Cognito (User Pool & App Client)
+                     — Client authentication & JWT token issuance —
 ```
 
-#### AWS Services Used
+#### AWS Services Utilized
 
 | Service | Role in the System |
 |---------|--------------------|
-| **Amazon RDS (PostgreSQL)** | Primary database storing all business data |
-| **Amazon S3** | Property image storage; accessed via presigned URLs |
-| **Amazon CloudFront** | CDN distributing images from S3, reducing client latency |
-| **Amazon SES** | Sending account verification and business notification emails |
-| **Amazon Cognito** | User authentication management, integrated with the JWT flow |
+| **Amazon RDS (PostgreSQL + PostGIS)** | Primary relational database storing all domain data; PostGIS extension handles spatial data queries and distance calculations |
+| **Amazon S3** | Centralized storage for property images uploaded from the application |
+| **Amazon Cognito** | Manages user registration, login authentication, and issues JWT tokens for all backend API requests |
+| **Amazon SES** | Dispatches automated transactional emails to users upon rental application status changes or lease creations |
+| **Amazon Location Service** | Geocodes text addresses into coordinates (latitude, longitude), powers place autocomplete, and renders interactive map tiles |
 
 #### Backend Module Design
 
-The NestJS backend is organized into independent modules, each responsible for a distinct business domain:
+The NestJS backend is organized into modular domain components:
 
-- **Auth Module**: Registration, login, token refresh, Google OAuth2, Refresh Token Rotation.
-- **Property Module**: Property CRUD, S3 image upload, multi-criteria filter and search.
-- **Booking Module**: Viewing appointment management with a state machine (PENDING → CONFIRMED/CANCELLED).
-- **Contract Module**: Rental contract creation and storage.
-- **Notification Module**: Email notifications via SES when booking status changes.
-- **Admin Module**: Statistics dashboard, property listing approval/rejection.
+- **Auth module**: Receives JWT tokens from Amazon Cognito, applying `AuthGuard` and `RolesGuard` for user authentication and authorization.
+- **Property module**: Handles property CRUD operations, Amazon S3 image uploads, and multi-criteria filtering integrated with PostGIS spatial queries.
+- **Application module**: Manages tenant rental applications and landlord approval workflows.
+- **Lease module**: Automatically generates lease contracts inside a `prisma.$transaction` upon application approval and maintains payment history (Payment).
+- **Message module**: Manages WebSocket Gateway connections, enabling real-time chat between tenants and landlords.
+- **Notification module**: Stores in-app notifications and triggers Amazon SES email dispatches.
+- **Location module**: Interfaces with Amazon Location Service for address geocoding and map spatial queries.
+- **Tenant / Manager module**: Manages user profile information by role, synchronized with Cognito profiles via `cognitoId`.
 
 ---
 
 ### 4. Technical Implementation
 
-#### Technology Stack and Rationale
+#### Technology Stack & Rationale
 
 **Backend — NestJS (TypeScript)**
 
-NestJS was selected for its clearly modular architecture, which suits a system with multiple business domains. Its Dependency Injection mechanism facilitates unit testing and enforces separation of concerns between layers (Controller → Service → Repository). TypeScript provides end-to-end type safety, reducing runtime errors, particularly when integrating with Prisma ORM.
+**NestJS** was selected for its modular architecture, allowing clear separation of domain concerns such as properties, applications, leases, and real-time chat. Its **Dependency Injection** mechanism reduces coupling between application layers, facilitating unit testing and maintainability. **TypeScript** delivers strong static typing, combining with **Prisma ORM** for end-to-end data type safety from database schema to controllers.
 
 **Frontend — Next.js (App Router)**
 
-Next.js with the App Router allows flexible use of Server Components (faster initial load, better SEO) alongside Client Components (interactive UI). An Axios interceptor handles automatic JWT refresh, providing a seamless user experience even when access tokens expire.
+**Next.js** App Router enables optimized page rendering. The application leverages **Server Components** for property listing pages to maximize initial load performance, while employing **Client Components** for interactive UI elements such as maps, filters, and chat boxes. **Redux Toolkit** and **RTK Query** manage global authentication state, API response caching, and automatic JWT bearer token header injection.
 
-**Database — PostgreSQL + Prisma ORM**
+**Database — PostgreSQL + PostGIS + Prisma ORM**
 
-PostgreSQL is a natural fit for the system's relational data model (User ↔ Property ↔ Booking ↔ Contract). Prisma provides a type-safe database client, schema migrations, and a query builder — eliminating manual SQL errors and accelerating development.
+**PostgreSQL** perfectly fits the relational domain model of rental property management. The **PostGIS** extension enables storing coordinates as spatial `geography` types and performing distance calculations directly in SQL queries. **Prisma ORM** manages database migrations cleanly while allowing raw SQL execution (`$queryRaw`) when combining standard filter predicates with PostGIS spatial functions.
 
-#### Key Technical Problems Addressed
+#### Key Engineering Achievements
 
-**Authentication and Authorization**
+**Role-Based Authentication & Authorization**
 
-The system uses JWT with two token types: short-lived Access Tokens (15 minutes) and long-lived Refresh Tokens (7 days). Refresh Token Rotation ensures each token is single-use, preventing replay attacks. AuthGuard and RolesGuard are applied at the controller level to enforce role-based access control (TENANT/LANDLORD/ADMIN).
+The system relies on JWT tokens issued by **Amazon Cognito**. At the NestJS backend, `AuthGuard` extracts and verifies JWT token validity, while `RolesGuard` enforces role permissions (TENANT or MANAGER). The system implements **Refresh Token Rotation** to invalidate old refresh tokens upon rotation, preventing session hijacking.
 
-**N+1 Query Problem**
+**Eliminating N+1 Queries**
 
-During development, querying a list of properties with their associated images and landlord information initially triggered N+1 queries — with 20 properties, the system was executing approximately 50 separate database queries. This was resolved by applying Prisma `include` to eager-load relations in a single JOIN query, combined with database indexing on frequently filtered columns (price, location, status). The result was a reduction in P95 response time from approximately 800ms to 120ms.
+During development, fetching property listings alongside images and landlord details initially caused N+1 query performance hits. This was resolved by utilizing Prisma's **include** feature to eager-load related models in a single JOIN query. Combined with database **indexes** on frequently queried columns (`location`, `price`, `status`), P95 response times dropped from ~800ms to ~120ms.
 
-**Race Condition**
+**Concurrency Control (Race Condition Prevention)**
 
-The scenario where two users simultaneously book the same viewing slot was handled using Pessimistic Locking (`SELECT FOR UPDATE` within a Prisma `$transaction`). This ensures only one booking is created successfully; concurrent requests receive a meaningful error response rather than producing inconsistent data.
+Concurrent application approvals for the same property could lead to duplicate lease creation or data inconsistency. This was resolved by wrapping approval workflows in a **`prisma.$transaction`** combined with **Pessimistic Locking (`SELECT ... FOR UPDATE`)**. When a transaction begins, the target property record is locked until completion, guaranteeing absolute data consistency.
 
-**Property Image Storage**
+**Geocoding & Interactive Maps**
 
-Images are uploaded directly to Amazon S3 and served through CloudFront CDN. The frontend accesses images via time-limited presigned URLs rather than public URLs — reducing the risk of unauthorized access and providing control over bandwidth usage.
+Text addresses entered during property creation are sent to **Amazon Location Service** to convert into geographic coordinates (latitude, longitude). These coordinates are stored in PostGIS-enabled location tables. During user property searches, the backend executes `ST_DWithin` spatial distance queries to return properties within the selected radius on the Next.js interactive map.
 
-#### Development Phases
+#### 8-Week Development Timeline
 
-| Week | Phase | Key Deliverables |
-|------|-------|-----------------|
-| 1–2 | Preparation & Research | Onboarding, AWS fundamentals, Free Tier setup, Credits |
-| 3 | Analysis & Design | Business domain, Use Cases, architecture, tech stack |
-| 4 | Foundation | Database schema, Auth, S3/SES/Cognito integration |
-| 5 | Feature Development | Property, Booking, Contract, Notification, Frontend |
-| 6 | Performance Optimization | N+1 Query fix, indexing, cursor-based pagination |
-| 7 | Security & Hardening | Race Condition, Transactions, OWASP, Token Rotation |
-| 8 | Completion & Handover | E2E testing, CloudFront, documentation, product demo |
+| Week | Phase | Key Tasks |
+|------|-------|-----------|
+| 1 | Onboarding & Setup | FCAJ policy review, AWS fundamentals, AWS Free Tier registration, $200 AWS Credits receipt, AWS Budget creation |
+| 2 | Architecture & Cognito | Requirements analysis, architecture design, monorepo refactoring, Amazon Cognito integration, `AuthGuard` & `RolesGuard` implementation |
+| 3 | DB & Core Modules | Prisma schema definition (PostgreSQL + PostGIS), development of **tenant**, **manager**, **application**, and **lease** modules |
+| 4 | Property & Search | Development of **property** module, **Amazon S3** image upload integration, multi-criteria search filtering, user profile pages |
+| 5 | Manager Dashboard & RDS | Manager Dashboard completion, property editing & S3 image management, DB migration to **Amazon RDS PostgreSQL** |
+| 6 | Real-time Chat & SES Email | Development of **message** module (WebSocket real-time chat), **notification** module (in-app notifications), **Amazon SES** email integration |
+| 7 | Performance & Security | N+1 query optimization (Prisma `include`), Race Condition handling (Pessimistic Locking `SELECT ... FOR UPDATE`), **Amazon Location Service** integration |
+| 8 | E2E Testing & Handover | End-to-End system testing, bug fixes, README and Swagger API documentation completion, Worklog & Proposal finalization, demo presentation |
 
 ---
 
-### 5. Timeline & Milestones
+### 5. Roadmap & Milestones
 
 ```
-Week 1–2  │ ████ Preparation & AWS Fundamentals
-Week 3    │ ██   Business Analysis & System Design
-Week 4    │ ███  Database · Auth · AWS Integration
-Week 5    │ ████ Core Feature Development · Frontend
-Week 6    │ ██   N+1 Query Optimization & DB Performance
-Week 7    │ ███  Race Condition · Security · Hardening
-Week 8    │ ███  Completion · Testing · Docs · Handover
+Week 1    │ ████ Onboarding · AWS Fundamentals · AWS Budget
+Week 2    │ ████ Architecture Design · Monorepo · Amazon Cognito · Guards
+Week 3    │ ████ Prisma Schema · PostgreSQL · Tenant/Manager/Application/Lease Modules
+Week 4    │ ████ Property Module · Amazon S3 Image Upload · Filters · Profile Pages
+Week 5    │ ████ Manager Dashboard · Property Editing · DB Migration to Amazon RDS
+Week 6    │ ████ WebSocket Real-time Chat · Notification · Amazon SES Email
+Week 7    │ ████ N+1 Query Optimization · Race Condition Locking · Amazon Location Service
+Week 8    │ ████ E2E Testing · README & Swagger Docs · Proposal & Demo Handover
 ```
 
 **Key Milestones:**
 
-- **Week 2**: $200 AWS Credits received; AWS Budget configured.
-- **Week 4**: Full authentication flow operational (register → verify → login); S3 upload functional.
-- **Week 5**: Internal demo of core business features with mentor.
-- **Week 6**: P95 response time improvement confirmed after N+1 optimization.
-- **Week 8**: Final product demo; source code and documentation handover complete.
+- **Week 2**: Completed onboarding, received $200 AWS Credits, configured AWS Budget, and finalized Cognito authentication flows.
+- **Week 4**: Finalized property listing workflow with Amazon S3 image uploads and multi-criteria search filtering.
+- **Week 5**: Successfully migrated database to Amazon RDS and conducted internal Manager Dashboard demo with mentor.
+- **Week 6**: Deployed WebSocket real-time chat and automated transactional email dispatches via Amazon SES.
+- **Week 7**: Resolved N+1 query bottlenecks, prevented Race Conditions using Pessimistic Locking, and integrated location map features.
+- **Week 8**: Passed End-to-End testing, finalized technical documentation, successfully presented live demo, and handed over system.
 
 ---
 
 ### 6. Budget Estimation
 
-Operating costs during the development and demo environment are managed through the **AWS Free Tier** and the **$200 USD AWS Credits** received through the student support program.
+System operational costs throughout the 8-week internship were managed strictly within the **AWS Free Tier** allocation and the **$200 USD AWS Credits** provided by the student program.
 
-#### AWS Infrastructure Costs (Development Environment Estimate)
+#### AWS Infrastructure Costs (Estimated Development Environment)
 
-| Service | Configuration | Estimated Cost |
-|---------|--------------|----------------|
-| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~$15/month |
-| Amazon S3 | ~5 GB storage, ~10,000 requests/month | ~$0.15/month |
-| Amazon CloudFront | ~10 GB transfer/month | ~$0.85/month |
-| Amazon SES | ~500 emails/month (sandbox) | $0 (Free Tier) |
-| Amazon Cognito | <50,000 MAU | $0 (Free Tier) |
-| **Total Estimate** | | **~$16/month** |
+| Service | Utilization Configuration | Estimated Monthly Cost |
+|---------|---------------------------|------------------------|
+| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~$15.00 / month |
+| Amazon S3 | ~5 GB image storage, ~10,000 requests/month | ~$0.15 / month |
+| Amazon SES | ~500 notification emails/month (Sandbox environment) | $0.00 (Free Tier) |
+| Amazon Cognito | <50,000 Monthly Active Users (MAU) | $0.00 (Free Tier) |
+| Amazon Location Service | Address geocoding and map tile requests within tier limits | ~$0.50 / month |
+| **Total Estimated Cost** | | **~$15.65 / month** |
 
-> All costs during the 8-week internship period fall within the $200 AWS Credits allocation, resulting in zero actual out-of-pocket expenses.
+> Total actual expenditure across 8 weeks of development and testing was approximately $32.00, fully covered by the $200 AWS Credits allocation.
 
-#### Cost Control Strategy
+#### Cost Management Strategy
 
-- Create **AWS Budget** with email alerts at $50 and $100 thresholds.
-- Use **RDS Single-AZ** instead of Multi-AZ in the development environment to reduce costs.
-- Configure **S3 Lifecycle Policy** to automatically delete test upload files after 30 days.
-- Stop the RDS instance outside working hours when access is not required.
+- Configured **AWS Budget** automated email alerts triggered at $50 and $100 spending thresholds.
+- Provisioned **Single-AZ RDS** instances for development to minimize costs compared to Multi-AZ setups.
+- Implemented client-side input debouncing to limit API request frequency to Amazon Location Service during address searches.
+- Scheduled Amazon RDS instance stops outside office hours when active development was paused.
 
 ---
 
-### 7. Risk Assessment
+### 7. Risk Assessment & Mitigation
 
 #### Risk Matrix
 
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-| Exceeding AWS Credits | Medium | Low | AWS Budget alerts; stop unused resources |
-| Authentication security vulnerability | High | Low | Refresh Token Rotation, rate limiting, account lockout |
-| Race Condition in Booking | High | Medium | Pessimistic Locking with `SELECT FOR UPDATE` |
-| Database performance degradation | Medium | Medium | N+1 fix, indexing, cursor-based pagination |
-| S3 presigned URL abuse | Low | Low | Short URL expiration; ownership verification before generation |
+| Identified Risk | Severity | Likelihood | Mitigation Strategy |
+|-----------------|----------|------------|---------------------|
+| AWS Credit overspending | Medium | Low | Configured AWS Budget alerts; stopped RDS instances during off-hours |
+| Race Conditions during concurrent application approvals | High | Medium | Applied `prisma.$transaction` combined with Pessimistic Locking (`SELECT ... FOR UPDATE`) |
+| Performance degradation due to N+1 Queries | Medium | Medium | Eager-loaded relations with Prisma `include` and indexed frequently searched columns |
+| Real-time WebSocket chat disconnection | Medium | Low | Implemented client auto-reconnection logic and stored message history in PostgreSQL |
+| Excessive file upload sizes to Amazon S3 | Low | Low | Enforced payload size and MIME-type validation at Controller layer prior to SDK calls |
 
 #### Contingency Plans
 
-- **RDS failure**: Restore from automated snapshots (enabled by default on RDS).
-- **S3 upload failure**: Retry logic with exponential backoff at the backend layer.
-- **SES throttling**: Queue emails and retry — this does not block the core business workflow.
-- **Cognito outage**: Fall back to the JWT-only internal Auth module flow; system remains functional.
+- **Amazon RDS Database**: Configured automated daily snapshots on Amazon RDS to enable rapid point-in-time recovery if data corruption occurs.
+- **Amazon S3 Uploads**: Implemented backend retry logic with exponential backoff for transient S3 connection issues.
+- **Amazon SES Email Delivery**: Persisted all notification events in the `Notification` table; if email delivery fails, users can still view notifications in the app UI.
 
 ---
 
 ### 8. Expected Outcomes
 
-#### Technical Outcomes
+#### Technical Deliverables
 
-By the end of the development phase, the system is expected to achieve:
+At the conclusion of the 8-week project, the system achieved the following outcomes:
 
-- All core business workflows operating stably: registration, login, property listing, search, viewing bookings, and contract creation.
-- An authentication system meeting foundational security standards: JWT Rotation, rate limiting, input validation, OWASP Top 10 compliance.
-- Optimized database query performance: P95 response time under 200ms for paginated list APIs.
-- Comprehensive technical documentation: README, Swagger API docs (40+ endpoints), architecture diagrams.
+- **Fully Functional Business Workflows**: Tenants search properties on interactive maps, submit applications, and engage in real-time chat; Landlords manage listings, edit images, review applications, and automatically generate leases.
+- **Standardized Authentication & Security**: 100% of API endpoints protected via `AuthGuard` and `RolesGuard`, implementing Refresh Token Rotation and strict payload validation.
+- **Optimized System Performance**: N+1 queries eliminated, reducing listing API response times to ~120ms; concurrency issues eliminated using Pessimistic Locking.
+- **Comprehensive Documentation**: Complete deployment `README.md`, **Swagger API documentation** covering 40+ endpoints, and standardized system architecture diagrams.
 
-#### Learning Value and Skill Development
+#### Learning Outcomes & Skill Development
 
-The project is structured to reflect a real-world software development environment — from business analysis and architecture design through implementation, performance optimization, security hardening, and formal handover. Core skills developed include: designing REST APIs to industry standards, integrating AWS services into production-grade applications, handling concurrency issues, and optimizing database performance — all of which have direct applicability to a software engineering career.
+The internship project provided extensive hands-on experience in full-stack cloud engineering:
 
-#### Extension Roadmap
+- Software architecture design and monorepo management for enterprise application development.
+- Integration and operation of cloud services (Cognito, S3, RDS, SES, Location Service) in production-ready workflows.
+- Relational database query optimization, PostGIS spatial data handling, and database transaction concurrency control.
+- Professional technical writing, worklogging, and product demonstration capabilities.
 
-The modular architecture of NestJS allows the system to scale without major refactoring. Potential future directions include: integrating an online payment gateway, adding real-time chat between landlords and tenants, or containerizing the entire system with Docker/ECS to support more flexible deployment on a production environment.
+#### Future Enhancements
+
+The modular NestJS and Next.js architecture enables seamless future expansion:
+
+- Online payment gateway integration (VNPay, ZaloPay, Stripe) for automated monthly rent processing.
+- Cross-platform Mobile Application development utilizing React Native.
+- Application containerization using Docker and deployment onto Amazon ECS / EKS for automated cloud scaling.

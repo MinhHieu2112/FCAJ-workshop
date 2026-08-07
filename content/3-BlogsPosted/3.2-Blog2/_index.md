@@ -1,31 +1,31 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
-weight: 1
+date: 2026-08-03
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+# IMAGE MANAGEMENT WITH AWS S3
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+In a real estate rental management system, each property may contain multiple high-resolution images (`photoUrls`) to provide detailed information for potential tenants. Storing these files directly on the application server (NestJS) can quickly consume storage resources and increase I/O overhead when handling concurrent requests. To address these challenges, the project uses **Amazon S3** as the primary image storage service.
 
-Key points to know:
+To improve both performance and security, the image upload workflow was designed as follows:
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+- Use **Amazon S3 Presigned URLs** to allow the Frontend (Next.js) to upload images directly to Amazon S3. The Backend generates a short-lived signed URL, eliminating the need for image data to pass through the NestJS server and significantly reducing CPU and memory usage.
+- Manage S3 access permissions through **AWS IAM**, granting the Backend only the minimum permissions required to generate signed upload URLs (`PutObject`).
+- Store the image URL in the PostgreSQL database (via Prisma) only after the upload has been successfully completed.
+- Integrate the **Next.js Image (`<Image />`)** component with the `remotePatterns` configuration in `next.config.js` to enable automatic image optimization, lazy loading, and modern image formats such as WebP and AVIF.
+- Provide placeholder images to ensure a consistent user experience when an image is unavailable or cannot be loaded.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+During implementation, the team encountered **403 Forbidden** errors caused by incorrect S3 Bucket Policy and CORS configuration. After updating the bucket's `AllowedOrigins` and `AllowedHeaders` settings and reviewing the IAM policies, the system was able to upload and display images reliably with improved performance.
 
-...Image...
+## Architecture Overview
 
-...Link...
+![Overview](/images/3-BlogsPosted/S3_Image_Architecture.png)
 
-...Guide...
+## References
+
+- https://docs.aws.amazon.com/s3/
+- https://docs.aws.amazon.com/IAM/
+- https://nextjs.org/docs/app/api-reference/components/image

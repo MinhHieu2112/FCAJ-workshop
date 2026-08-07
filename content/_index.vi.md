@@ -25,14 +25,11 @@ chapter: false
 
 &emsp; **Thời gian thực tập:** Từ ngày 22/06/2026 đến ngày 15/08/2026
 
-![Ảnh đại diện của bạn](/images/avatar.png)
-
-
 
 ### Nội dung báo cáo
 
-1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
+1.  [Nhật ký thực tập](1-Worklog/)
+2.  [Đề xuất](2-Proposal/)
 3.  [Các bài blogs đã đăng](3-BlogsPosted/)
 4.  [Các events đã tham gia](4-EventParticipated/)
 5.  [Workshop](5-Workshop/)

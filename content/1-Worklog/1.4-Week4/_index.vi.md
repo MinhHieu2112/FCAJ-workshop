@@ -8,11 +8,11 @@ pre: " <b> 1.4. </b> "
 
 ### Mục tiêu tuần 4:
 
-* Thiết kế cơ sở dữ liệu và định nghĩa schema Prisma cho hệ thống.
-* Xây dựng chức năng xác thực người dùng (Authentication & Authorization).
-* Tích hợp cơ sở dữ liệu và thiết lập lưu trữ file với AWS S3.
-* Tích hợp các dịch vụ AWS: S3, SES, Cognito vào backend.
-* Kiểm thử và chỉnh sửa các chức năng đã xây dựng.
+* Phát triển module **property**: xây dựng API CRUD bất động sản và tích hợp Amazon S3 để upload/lưu trữ hình ảnh.
+* Xây dựng chức năng tìm kiếm và bộ lọc bất động sản đa tiêu chí (giá, diện tích, số phòng, tiện nghi, loại hình).
+* Hoàn thiện trang cài đặt tài khoản và hồ sơ cá nhân cho người thuê (tenant) và chủ nhà (manager) ở giao diện Next.js.
+* Tích hợp giao diện tìm kiếm và danh sách bất động sản ở frontend với backend NestJS API.
+* Kiểm thử và tối ưu toàn bộ các chức năng đã triển khai trong tuần.
 
 ---
 
@@ -20,38 +20,31 @@ pre: " <b> 1.4. </b> "
 
 | Thứ | Công việc | Ngày | Nguồn tài liệu |
 |-----|-----------|------|----------------|
-| 2 | - Thiết kế cơ sở dữ liệu và API: <br>&emsp; + Vẽ ERD (Entity Relationship Diagram) cho toàn bộ hệ thống <br>&emsp; + Định nghĩa các entities: User, Property, Booking, Contract, Payment, Notification <br>&emsp; + Viết Prisma schema: model, relation, enum <br>&emsp; + Thiết kế API endpoints chi tiết (method, path, request/response body) <br>&emsp; + Tạo migration và seed data | 13/07/2026 | <https://www.prisma.io/docs/> |
-| 3 | - Xây dựng chức năng xác thực người dùng: <br>&emsp; + Implement JWT-based authentication (Access Token + Refresh Token) <br>&emsp; + Xây dựng Auth module: register, login, logout, refresh token <br>&emsp; + Implement bcrypt để hash password <br>&emsp; + Viết AuthGuard và RolesGuard để phân quyền <br>&emsp; + Implement Google OAuth2 login (Passport.js) | 14/07/2026 | <https://docs.nestjs.com/security/authentication> |
-| 4 | - Tích hợp cơ sở dữ liệu và lưu trữ: <br>&emsp; + Kết nối Prisma với PostgreSQL (local + AWS RDS) <br>&emsp; + Viết repository pattern cho từng module <br>&emsp; + Tích hợp AWS S3: upload ảnh bất động sản, generate presigned URL <br>&emsp; + Cấu hình Multer để xử lý file upload từ client | 15/07/2026 | <https://docs.aws.amazon.com/s3/> |
-| 5 | - Tích hợp các dịch vụ AWS vào hệ thống: <br>&emsp; + **AWS SES**: gửi email xác thực tài khoản, thông báo đặt lịch <br>&emsp; + **AWS Cognito**: tích hợp User Pool, cấu hình App Client <br>&emsp; + **AWS S3**: hoàn thiện logic upload/delete ảnh, quản lý folder theo property ID <br>&emsp; + Viết unit test cho Auth module | 16/07/2026 | <https://docs.aws.amazon.com/ses/> |
-| 6 | - Kiểm thử và chỉnh sửa chức năng: <br>&emsp; + Test các API endpoint với Postman/Thunder Client <br>&emsp; + Fix bug liên quan đến token refresh và role guard <br>&emsp; + Kiểm tra S3 upload với file lớn (multipart upload) <br>&emsp; + Review code và refactor theo best practices của NestJS | 17/07/2026 | |
+| 2 | - Phát triển backend module **property**: <br>&emsp; + Định nghĩa Prisma model Property, Location, PropertyImage và tạo DTO cho CRUD <br>&emsp; + Tích hợp AWS SDK v3 cho **Amazon S3**: xây dựng service upload nhiều ảnh bất động sản, lưu URL ảnh <br>&emsp; + Xây dựng API tạo tin đăng, cập nhật thông tin và xóa bất động sản | 13/07/2026 | <https://docs.aws.amazon.com/s3/> |
+| 3 | - Xây dựng chức năng tìm kiếm và bộ lọc bất động sản: <br>&emsp; + Viết logic truy vấn Prisma linh hoạt hỗ trợ lọc theo khoảng giá, diện tích, số phòng ngủ, phòng tắm, loại hình <br>&emsp; + Xây dựng bộ lọc tiện nghi (amenities: wifi, điều hòa, chỗ để xe, nội thất) <br>&emsp; + Xây dựng phân trang (pagination) và sắp xếp (sorting) cho API danh sách | 14/07/2026 | <https://www.prisma.io/docs/> |
+| 4 | - Hoàn thiện trang cài đặt ở frontend Next.js: <br>&emsp; + Xây dựng trang cài đặt tài khoản (Settings) và thông tin hồ sơ (Profile) cho tenant và manager <br>&emsp; + Xây dựng form chỉnh sửa thông tin cá nhân, cập nhật ảnh đại diện <br>&emsp; + Quản lý auth state ở client bằng Redux Toolkit | 15/07/2026 | <https://nextjs.org/docs> |
+| 5 | - Tích hợp giao diện tìm kiếm và xem tin đăng: <br>&emsp; + Xây dựng trang danh sách bất động sản (Property List) với thanh tìm kiếm và sidebar bộ lọc <br>&emsp; + Xây dựng trang chi tiết bất động sản (Property Detail) hiển thị gallery ảnh S3, tiện nghi, mô tả <br>&emsp; + Kết nối API bằng RTK Query, đính kèm JWT token trong mọi request | 16/07/2026 | <https://redux-toolkit.js.org/> |
+| 6 | - Kiểm thử và tối ưu các chức năng đã triển khai: <br>&emsp; + Kiểm thử luồng đăng tin bất động sản kèm upload ảnh lên Amazon S3 thành công <br>&emsp; + Test độ chính xác của bộ lọc khi tìm kiếm kết hợp nhiều điều kiện <br>&emsp; + Kiểm tra hiển thị responsive trên màn hình mobile và desktop, fix bug giao diện | 17/07/2026 | |
 
 ---
 
 ### Kết quả đạt được tuần 4:
 
-* Hoàn thành **ERD** và **Prisma schema** đầy đủ cho 6 entity chính: User, Property, Booking, Contract, Payment, Notification; chạy migration thành công trên PostgreSQL.
+* Phát triển hoàn thiện **Property module**: cung cấp đầy đủ API CRUD bất động sản, tự động quản lý danh mục hình ảnh.
 
-* Xây dựng hệ thống **Authentication** hoàn chỉnh:
-  * JWT với Access Token (15 phút) và Refresh Token (7 ngày)
-  * Bcrypt password hashing
-  * AuthGuard và RolesGuard hoạt động đúng cho cả 3 roles: TENANT, LANDLORD, ADMIN
-  * Google OAuth2 login tích hợp thành công
+* Tích hợp thành công **Amazon S3**: hỗ trợ upload nhiều hình ảnh bất động sản cùng lúc và hiển thị ảnh mượt mà qua S3 bucket URL.
 
-* Tích hợp thành công **AWS S3**: upload và xóa ảnh bất động sản, generate presigned URL để client truy cập ảnh an toàn.
+* Xây dựng thành công chức năng tìm kiếm và bộ lọc đa tiêu chí: cho phép lọc chính xác theo giá thuê, diện tích, số phòng, tiện nghi và loại hình bất động sản.
 
-* Tích hợp **AWS SES**: gửi email xác thực tài khoản và email thông báo đặt lịch xem nhà.
+* Hoàn thiện trang cài đặt **(Settings/Profile)** ở giao diện Next.js cho cả hai nhóm người dùng tenant và manager.
 
-* Tích hợp **AWS Cognito**: cấu hình User Pool và App Client, đồng bộ với Auth module của NestJS.
-
-* Kiểm thử toàn bộ API Authentication với Postman, xác nhận flow đăng ký → xác thực email → đăng nhập hoạt động đúng.
+* Tích hợp hoàn tất giữa Next.js frontend và NestJS backend thông qua RTK Query, kiểm thử toàn bộ luồng đăng tin và tìm kiếm hoạt động ổn định.
 
 ---
 
 ### Kiến thức / Kinh nghiệm học được:
 
-* Hiểu sâu về cơ chế JWT: Access Token ngắn hạn (stateless) kết hợp Refresh Token dài hạn giúp cân bằng giữa security và UX.
-* Nắm được cách thiết kế Prisma schema với quan hệ 1-N và N-N, sử dụng enum để quản lý trạng thái (BookingStatus, PropertyStatus).
-* Học cách tích hợp AWS SDK v3 vào NestJS: cấu hình credential, region, và sử dụng các command (PutObjectCommand, GetObjectCommand).
-* Hiểu được sự khác biệt giữa public S3 URL và presigned URL — presigned URL an toàn hơn và có thời hạn sử dụng.
-* Kinh nghiệm debug: lỗi CORS khi tích hợp Cognito cần cấu hình đúng App Client callback URL.
+* Hiểu cách tích hợp AWS SDK v3 trong NestJS để quản lý file trên Amazon S3 (PutObjectCommand, DeleteObjectCommand).
+* Nắm vững kỹ thuật xây dựng động câu truy vấn Prisma (dynamic query building) khi xử lý bộ lọc tìm kiếm có nhiều điều kiện không bắt buộc.
+* Kinh nghiệm tổ chức giao diện Next.js App Router: tách biệt Server Components cho trang danh sách (SEO) và Client Components cho form bộ lọc tương tác.
+* Nắm vững cách quản lý trạng thái đăng nhập và cache dữ liệu API ở frontend bằng Redux Toolkit và RTK Query.

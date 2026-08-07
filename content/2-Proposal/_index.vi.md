@@ -11,42 +11,43 @@ pre: " <b> 2. </b> "
 
 ---
 
-### 1. Tóm tắt điều hành
+### 1. Tóm tắt
 
-Hệ thống quản lý cho thuê bất động sản là một nền tảng phần mềm hỗ trợ toàn bộ vòng đời của giao dịch cho thuê nhà ở — từ đăng tin, tìm kiếm, đặt lịch xem nhà, ký hợp đồng đến quản lý thanh toán và thông báo — trên một nền tảng thống nhất.
+Hệ thống quản lý cho thuê bất động sản là một nền tảng phần mềm hỗ trợ toàn bộ vòng đời của giao dịch cho thuê nhà ở — từ đăng tin bất động sản, tìm kiếm kết hợp bản đồ địa lý, nộp đơn xin thuê, xét duyệt đơn, tự động tạo hợp đồng thuê, quản lý lịch sử thanh toán đến nhắn tin thời gian thực và tự động gửi thông báo qua email — trên một nền tảng thống nhất.
 
-Hệ thống phục vụ ba nhóm người dùng chính: **chủ nhà (landlord)** quản lý danh sách bất động sản và xử lý yêu cầu thuê; **người thuê (tenant)** tìm kiếm, đặt lịch và ký hợp đồng trực tuyến; **quản trị viên (admin)** kiểm duyệt nội dung và giám sát hoạt động toàn hệ thống.
+Hệ thống phục vụ hai nhóm người dùng chính: **chủ nhà/quản lý (manager)** đăng tin, quản lý danh sách bất động sản đang cho thuê, xét duyệt đơn xin thuê và theo dõi hợp đồng; **người thuê (tenant)** tìm kiếm bất động sản theo nhiều tiêu chí kết hợp vị trí bản đồ, nộp đơn xin thuê trực tuyến, theo dõi trạng thái đơn và trao đổi trực tiếp với chủ nhà qua hệ thống trò chuyện thời gian thực.
 
-Về mặt kỹ thuật, hệ thống được xây dựng trên kiến trúc monorepo với backend **NestJS** (TypeScript), frontend **Next.js** (App Router), cơ sở dữ liệu **PostgreSQL** truy cập qua **Prisma ORM**, và tích hợp các dịch vụ AWS bao gồm **Amazon S3**, **Amazon SES**, **Amazon Cognito**, **Amazon RDS** và **Amazon CloudFront**. Mục tiêu của dự án là đưa vào vận hành một hệ thống đủ tính năng, có khả năng mở rộng, và đáp ứng các tiêu chuẩn bảo mật cơ bản trong môi trường cloud.
+Về mặt kỹ thuật, hệ thống được xây dựng trên kiến trúc monorepo (`pnpm workspaces`) với backend **NestJS** (TypeScript), frontend **Next.js** (App Router) dùng **Redux Toolkit / RTK Query**, cơ sở dữ liệu **PostgreSQL** mở rộng phần không gian **PostGIS** truy cập qua **Prisma ORM**, cùng sự tích hợp của các dịch vụ AWS bao gồm **Amazon Cognito** (xác thực người dùng), **Amazon S3** (lưu trữ hình ảnh), **Amazon RDS** (cơ sở dữ liệu đám mây), **Amazon SES** (gửi email thông báo) và **Amazon Location Service** (geocoding địa chỉ và hiển thị bản đồ). Dự án hướng đến việc triển khai một giải pháp phần mềm hoàn chỉnh về chức năng, tối ưu về hiệu năng và tuân thủ các tiêu chuẩn bảo mật trong môi trường đám mây.
 
 ---
 
-### 2. Tuyên bố vấn đề
+### 2. Đặt vấn đề
 
 #### Bối cảnh
 
-Thị trường cho thuê nhà ở hiện nay vẫn phụ thuộc nhiều vào các kênh không chính thức: nhóm Facebook, Zalo, tờ rơi hoặc môi giới trung gian. Quy trình từ đăng tin đến ký hợp đồng thường kéo dài và thiếu minh bạch, gây khó khăn cho cả chủ nhà lẫn người thuê.
+Thị trường cho thuê nhà ở hiện nay vẫn phụ thuộc nhiều vào các kênh không chính thức như nhóm mạng xã hội, tin nhắn cá nhân hoặc môi giới trung gian. Quy trình từ đăng tin, tìm kiếm, thỏa thuận đến ký hợp đồng thường kéo dài, thiếu công cụ quản lý chuyên biệt và tiềm ẩn nhiều rủi ro về thông tin.
 
-Cụ thể, các vấn đề nổi bật bao gồm:
+Cụ thể, các hạn chế nổi bật bao gồm:
 
-- **Phía chủ nhà**: Không có công cụ quản lý tập trung cho nhiều bất động sản; thông tin phòng trống, lịch xem nhà và hợp đồng phải theo dõi thủ công qua bảng tính hoặc ghi chép cá nhân.
-- **Phía người thuê**: Thiếu bộ lọc tìm kiếm theo nhiều tiêu chí (giá, diện tích, vị trí, tiện nghi); không có cơ chế xác nhận lịch hẹn xem nhà hoặc theo dõi trạng thái yêu cầu thuê.
-- **Về bảo mật thông tin**: Hợp đồng và thông tin cá nhân thường được trao đổi qua kênh không bảo mật, tiềm ẩn rủi ro dữ liệu.
+- **Phía chủ nhà**: Không có bảng điều khiển tập trung để quản lý danh sách nhiều bất động sản; việc theo dõi trạng thái phòng trống, danh sách đơn xin thuê và thông tin hợp đồng phải thực hiện thủ công qua bảng tính hoặc sổ sách cá nhân.
+- **Phía người thuê**: Thiếu công cụ tìm kiếm kết hợp bản đồ vị trí trực quan và bộ lọc đa tiêu chí (giá thuê, diện tích, số phòng, tiện nghi); không có kênh theo dõi tiến độ xét duyệt đơn xin thuê và giao tiếp tập trung.
+- **Về giao tiếp và thông báo**: Việc trao đổi qua các ứng dụng nhắn tin cá nhân bên ngoài dễ làm thất lạc thông tin; thiếu cơ chế gửi email thông báo tự động khi phát sinh sự thay đổi trạng thái đơn thuê hoặc hợp đồng.
 
 #### Giải pháp đề xuất
 
-Hệ thống được xây dựng để giải quyết từng điểm trên thông qua một nền tảng web tập trung, trong đó:
+Hệ thống được phát triển nhằm giải quyết triệt để các hạn chế trên thông qua một ứng dụng web tập trung:
 
-- Chủ nhà có dashboard quản lý toàn bộ bất động sản, lịch xem nhà và hợp đồng.
-- Người thuê có giao diện tìm kiếm với bộ lọc đa tiêu chí, đặt lịch trực tuyến và theo dõi trạng thái yêu cầu theo thời gian thực.
-- Hệ thống xác thực và phân quyền đảm bảo mỗi vai trò chỉ truy cập được dữ liệu thuộc phạm vi cho phép.
-- Các thông báo quan trọng (xác nhận lịch hẹn, cập nhật hợp đồng) được gửi tự động qua email.
+- Chủ nhà được trang bị bảng điều khiển (Manager Dashboard) để quản lý danh mục bất động sản, theo dõi các đơn xin thuê cần xử lý và xem chi tiết hợp đồng đã khởi tạo.
+- Người thuê có giao diện tìm kiếm bất động sản trực quan theo bộ lọc và vị trí bản đồ, nộp đơn xin thuê trực tuyến và theo dõi trạng thái xử lý theo thời gian thực.
+- Khi đơn thuê được duyệt, hệ thống tự động lập hợp đồng thuê (Lease) trong một transaction CSDL an toàn, đảm bảo kiểm soát chặt chẽ lịch thuê và ngăn ngừa trùng lặp.
+- Người thuê và chủ nhà có thể nhắn tin trực tiếp qua kênh trò chuyện thời gian thực (real-time chat) được gắn theo từng bất động sản.
+- Hệ thống tự động gửi email thông báo qua Amazon SES khi người thuê nộp đơn hoặc khi chủ nhà cập nhật trạng thái xét duyệt đơn.
 
 ---
 
 ### 3. Kiến trúc giải pháp
 
-Hệ thống được tổ chức theo mô hình **monorepo**, tách biệt rõ ràng giữa backend, frontend và thư viện dùng chung (`@shared/types`).
+Hệ thống được tổ chức theo mô hình **monorepo** (`pnpm workspaces`), bao gồm backend (`apps/server`), frontend (`apps/client`) và thư viện kiểu dữ liệu dùng chung (`packages/types`, gói `@shared/types`) nhằm đảm bảo tính đồng bộ dữ liệu giữa hai phía.
 
 #### Sơ đồ kiến trúc tổng thể
 
@@ -54,42 +55,48 @@ Hệ thống được tổ chức theo mô hình **monorepo**, tách biệt rõ 
 ┌─────────────────────────────────────────────────────────────┐
 │                        Client Layer                         │
 │              Next.js App (App Router, SSR/CSR)              │
-│         React Components · Zustand · Axios Interceptor       │
+│        React Components · Redux Toolkit / RTK Query         │
 └────────────────────────┬────────────────────────────────────┘
-                         │ HTTPS / REST API
+                         │ HTTPS REST API + WebSocket
 ┌────────────────────────▼────────────────────────────────────┐
 │                       Backend Layer                         │
 │              NestJS (TypeScript · Modular DI)               │
-│  Auth · Property · Booking · Contract · Notification · Admin │
-│         JWT Guards · Role Guards · Class-Validator           │
-└────┬──────────────┬──────────────┬──────────────────────────┘
-     │              │              │
-┌────▼────┐   ┌─────▼─────┐  ┌────▼────────────────────────┐
-│ AWS RDS │   │ Amazon S3 │  │  AWS Services                │
-│PostgreSQL│  │(+CloudFront│  │  SES · Cognito               │
-└─────────┘   └───────────┘  └─────────────────────────────┘
+│   Property · Application · Lease · Tenant · Manager ·       │
+│   Message (Chat Real-time) · Notification · Location        │
+│         AuthGuard · RolesGuard · Class-Validator            │
+└────┬──────────────┬──────────────┬──────────────┬───────────┘
+     │              │              │              │
+┌────▼────┐   ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼───────────┐
+│ AWS RDS │   │ Amazon S3 │  │ Amazon SES│  │ Amazon Location │
+│PostgreSQL│  │ (ảnh      │  │ (email    │  │ Service         │
+│+ PostGIS│   │ property) │  │ thông báo)│  │ (Geocode & Map) │
+└─────────┘   └───────────┘  └───────────┘  └─────────────────┘
+                     Amazon Cognito (User Pool & App Client)
+                     — xác thực client, phát hành token JWT —
 ```
 
 #### Các dịch vụ AWS sử dụng
 
 | Dịch vụ | Vai trò trong hệ thống |
 |---------|------------------------|
-| **Amazon RDS (PostgreSQL)** | Cơ sở dữ liệu chính, lưu trữ toàn bộ dữ liệu nghiệp vụ |
-| **Amazon S3** | Lưu trữ ảnh bất động sản; truy cập qua presigned URL |
-| **Amazon CloudFront** | CDN phân phối ảnh từ S3, giảm latency cho client |
-| **Amazon SES** | Gửi email xác thực tài khoản và thông báo nghiệp vụ |
-| **Amazon Cognito** | Quản lý xác thực người dùng, tích hợp với JWT flow |
+| **Amazon RDS (PostgreSQL + PostGIS)** | Cơ sở dữ liệu quan hệ chính, lưu trữ toàn bộ dữ liệu nghiệp vụ; phần mở rộng PostGIS hỗ trợ các câu truy vấn dữ liệu không gian và tính khoảng cách vị trí |
+| **Amazon S3** | Lưu trữ tập trung các tệp hình ảnh bất động sản được tải lên từ ứng dụng |
+| **Amazon Cognito** | Quản lý đăng ký, đăng nhập và phát hành chuỗi mã xác thực JWT cho mọi yêu cầu tới backend |
+| **Amazon SES** | Gửi email giao dịch và thông báo tự động tới người dùng khi có sự thay đổi trạng thái đơn thuê hoặc hợp đồng |
+| **Amazon Location Service** | Chuyển đổi địa chỉ văn bản thành tọa độ địa lý (geocoding), hỗ trợ gợi ý địa điểm autocomplete và hiển thị bản đồ tương tác |
 
 #### Thiết kế module backend
 
-Backend NestJS được tổ chức theo module độc lập, mỗi module đảm nhiệm một miền nghiệp vụ riêng:
+Backend NestJS được phân chia thành các module độc lập theo miền nghiệp vụ:
 
-- **Auth module**: đăng ký, đăng nhập, refresh token, Google OAuth2, refresh token rotation.
-- **Property module**: CRUD bất động sản, upload ảnh qua S3, filter/search đa tiêu chí.
-- **Booking module**: quản lý lịch xem nhà với state machine (PENDING → CONFIRMED/CANCELLED).
-- **Contract module**: tạo và lưu trữ hợp đồng thuê nhà.
-- **Notification module**: gửi thông báo email qua SES khi trạng thái booking thay đổi.
-- **Admin module**: dashboard thống kê, duyệt/từ chối property listing.
+- **Auth module**: Tiếp nhận JWT token từ Amazon Cognito, triển khai `AuthGuard` và `RolesGuard` để xác thực và phân quyền người dùng.
+- **Property module**: Xử lý các thao tác CRUD bất động sản, tải ảnh lên Amazon S3, tìm kiếm và lọc dữ liệu đa tiêu chí kết hợp hàm không gian PostGIS.
+- **Application module**: Quản lý đơn xin thuê của người thuê và chức năng xét duyệt đơn của chủ nhà.
+- **Lease module**: Khởi tạo hợp đồng thuê tự động trong một `prisma.$transaction` khi đơn thuê được chấp thuận, lưu trữ lịch sử thanh toán (Payment).
+- **Message module**: Quản lý kết nối WebSocket Gateway, hỗ trợ truyền nhận tin nhắn trò chuyện thời gian thực giữa tenant và manager.
+- **Notification module**: Lưu trữ thông báo trong ứng dụng (in-app notification) và gọi dịch vụ Amazon SES gửi email thông báo.
+- **Location module**: Giao tiếp với Amazon Location Service để thực hiện geocoding địa chỉ và phục vụ truy vấn vị trí trên bản đồ.
+- **Tenant / Manager module**: Quản lý thông tin hồ sơ cá nhân của từng nhóm người dùng, đồng bộ với thông tin Cognito qua `cognitoId`.
 
 ---
 
@@ -99,93 +106,96 @@ Backend NestJS được tổ chức theo module độc lập, mỗi module đả
 
 **Backend — NestJS (TypeScript)**
 
-NestJS được chọn vì kiến trúc module hóa rõ ràng phù hợp với hệ thống nhiều miền nghiệp vụ. Cơ chế Dependency Injection giúp viết unit test dễ dàng và tách biệt concern giữa các layer (Controller → Service → Repository). TypeScript đảm bảo type safety xuyên suốt, giảm lỗi runtime khi tích hợp với Prisma ORM.
+**NestJS** được lựa chọn làm nền tảng phát triển backend nhờ kiến trúc module hóa chặt chẽ, giúp phân tách rõ ràng các miền nghiệp vụ như quản lý bất động sản, đơn xin thuê, hợp đồng và tin nhắn. Cơ chế **Dependency Injection** giúp giảm sự phụ thuộc trực tiếp giữa các tầng ứng dụng, thuận tiện cho việc kiểm thử và bảo trì mã nguồn. **TypeScript** cung cấp cơ chế kiểm soát kiểu dữ liệu mạnh mẽ, kết hợp với **Prisma ORM** đảm bảo tính đồng bộ kiểu dữ liệu từ schema CSDL đến tầng ứng dụng.
 
 **Frontend — Next.js (App Router)**
 
-Next.js với App Router cho phép kết hợp Server Components (tăng tốc initial load, SEO) và Client Components (interactive UI) một cách linh hoạt. Axios interceptor xử lý JWT refresh tự động, giúp trải nghiệm người dùng liền mạch ngay cả khi access token hết hạn.
+**Next.js** với kiến trúc **App Router** được sử dụng để xây dựng giao diện người dùng tối ưu. Hệ thống phân chia linh hoạt giữa **Server Components** cho các trang danh sách bất động sản nhằm tối ưu tốc độ tải và **Client Components** cho các thành phần tương tác cao như bản đồ, bộ lọc và khung chat. **Redux Toolkit** kết hợp **RTK Query** được triển khai để quản lý trạng thái đăng nhập tập trung, tự động lưu cache dữ liệu API và đính kèm JWT token vào các request HTTP gửi tới backend.
 
-**Database — PostgreSQL + Prisma ORM**
+**Database — PostgreSQL + PostGIS + Prisma ORM**
 
-PostgreSQL phù hợp với mô hình dữ liệu quan hệ của hệ thống (User ↔ Property ↔ Booking ↔ Contract). Prisma cung cấp type-safe database client, schema migration và query builder — giảm lỗi SQL thủ công và tăng tốc phát triển.
+**PostgreSQL** đáp ứng hoàn hảo mô hình dữ liệu quan hệ của ứng dụng cho thuê nhà ở. Phần mở rộng **PostGIS** cho phép lưu trữ tọa độ dưới dạng dữ liệu không gian (`geography`) và thực hiện các phép tính khoảng cách trực tiếp trong CSDL. **Prisma ORM** giúp quản lý migration an toàn và cung cấp Prisma Client type-safe, đồng thời cho phép thực thi các câu truy vấn SQL thô (`$queryRaw`) khi cần kết hợp các điều kiện lọc thông thường với hàm địa lý của PostGIS.
 
-#### Các vấn đề kỹ thuật được giải quyết
+#### Các vấn đề kỹ thuật đã giải quyết
 
-**Xác thực và phân quyền**
+**Xác thực và phân quyền dựa trên vai trò**
 
-Hệ thống sử dụng JWT với hai loại token: access token ngắn hạn (15 phút) và refresh token dài hạn (7 ngày). Refresh token rotation đảm bảo mỗi token chỉ được dùng một lần, ngăn chặn replay attack. `AuthGuard` và `RolesGuard` được áp dụng ở cấp controller để đảm bảo phân quyền theo role (TENANT/LANDLORD/ADMIN).
+Hệ thống sử dụng JWT token do **Amazon Cognito** phát hành. Tại backend NestJS, `AuthGuard` trích xuất và giải mã JWT token để xác minh tính hợp lệ, trong khi `RolesGuard` kiểm tra vai trò người dùng (TENANT hoặc MANAGER). Hệ thống áp dụng cơ chế **Refresh Token Rotation** nhằm vô hiệu hóa token cũ ngay khi phát hành token mới, hạn chế rủi ro cướp phiên làm việc.
 
-**N+1 Query**
+**Giải quyết hiện tượng N+1 Query**
 
-Trong quá trình phát triển, việc truy vấn danh sách bất động sản kèm ảnh và thông tin chủ nhà ban đầu gây ra N+1 queries — với 20 bất động sản, hệ thống thực hiện ~50 queries riêng lẻ. Vấn đề được giải quyết bằng cách áp dụng Prisma `include` để eager load các relation trong một query duy nhất, kết hợp với database indexing trên các column thường dùng để filter (price, location, status). Kết quả: P95 response time giảm từ ~800ms xuống ~120ms.
+Trong quá trình phát triển, truy vấn lấy danh sách bất động sản kèm theo ảnh và thông tin chủ nhà ban đầu phát sinh bài toán N+1 Query, khiến CSDL phải thực hiện hàng chục câu truy vấn riêng biệt cho một danh sách. Hệ thống đã khắc phục triệt để bằng cách áp dụng tính năng **include** của Prisma để nạp trước (eager loading) toàn bộ dữ liệu liên quan trong một câu truy vấn JOIN duy nhất. Đồng thời, các chỉ mục **(index)** đã được thêm vào các cột thường xuyên lọc như `location`, `price`, `status`, giúp thời gian phản hồi P95 giảm từ ~800ms xuống còn ~120ms.
 
-**Race Condition**
+**Xử lý xung đột đồng thời (Race Condition)**
 
-Kịch bản hai người dùng đặt lịch cùng một slot thời gian được xử lý bằng Pessimistic Locking (`SELECT FOR UPDATE` trong Prisma `$transaction`). Giải pháp đảm bảo chỉ một booking được tạo thành công, request còn lại nhận phản hồi lỗi có nghĩa thay vì gây ra dữ liệu không nhất quán.
+Khi nhiều yêu cầu xét duyệt đơn thuê hoặc tạo hợp đồng xảy ra đồng thời cho cùng một bất động sản, hệ thống có thể đối mặt với rủi ro ghi đè dữ liệu hoặc tạo trùng hợp đồng. Vấn đề này được giải quyết bằng cách bọc toàn bộ thao tác trong một **`prisma.$transaction`** kết hợp với cơ chế **Pessimistic Locking (`SELECT ... FOR UPDATE`)**. Khi một giao dịch bắt đầu, bản ghi bất động sản liên quan sẽ được khóa cho đến khi giao dịch hoàn tất, đảm bảo tính nhất quán tuyệt đối của dữ liệu.
 
-**Lưu trữ ảnh bất động sản**
+**Tích hợp geocoding và bản đồ vị trí**
 
-Ảnh được upload trực tiếp lên Amazon S3 và phân phối qua CloudFront CDN. Frontend truy cập ảnh qua presigned URL có thời hạn thay vì public URL — giảm rủi ro truy cập trái phép và kiểm soát được băng thông.
+Địa chỉ văn bản nhập vào khi tạo tin đăng bất động sản được gửi tới **Amazon Location Service** để chuyển đổi thành tọa độ địa lý (latitude, longitude). Tọa độ này được lưu vào bảng `Location` có tích hợp cột PostGIS. Khi người dùng tìm kiếm bất động sản theo vị trí trên bản đồ giao diện Next.js, backend thực hiện câu truy vấn không gian `ST_DWithin` để trả về các bất động sản nằm trong bán kính được chọn.
 
-#### Các giai đoạn phát triển
+#### Tiến độ 8 tuần phát triển
 
 | Tuần | Giai đoạn | Nội dung chính |
 |------|-----------|----------------|
-| 1–2 | Chuẩn bị & nghiên cứu | Onboarding, tìm hiểu AWS, đăng ký Free Tier & Credits |
-| 3 | Phân tích & thiết kế | Nghiệp vụ, use case, kiến trúc, tech stack |
-| 4 | Xây dựng nền tảng | Database schema, auth, tích hợp S3/SES/Cognito |
-| 5 | Phát triển chức năng | Property, booking, contract, notification, frontend |
-| 6 | Tối ưu hiệu năng | N+1 query, indexing, cursor pagination |
-| 7 | Bảo mật & hardening | Race condition, transaction, OWASP, token rotation |
-| 8 | Hoàn thiện & bàn giao | E2E testing, CloudFront, documentation, demo |
+| 1 | Onboarding & Chuẩn bị | Tìm hiểu quy định FCAJ, làm quen với AWS, đăng ký AWS Free Tier, nhận 200 USD AWS Credits, tạo AWS Budget |
+| 2 | Phân tích & Tích hợp Cognito | Phân tích yêu cầu hệ thống, thiết kế kiến trúc, refactor monorepo, tích hợp Amazon Cognito, xây dựng `AuthGuard` và `RolesGuard` |
+| 3 | Xây dựng CSDL & Module cốt lõi | Định nghĩa Prisma schema (PostgreSQL + PostGIS), phát triển module **tenant**, **manager**, **application** và **lease** |
+| 4 | Phát triển Property & Tìm kiếm | Phát triển module **property**, tích hợp upload ảnh **Amazon S3**, xây dựng bộ lọc tìm kiếm đa tiêu chí, hoàn thiện trang cài đặt Profile |
+| 5 | Dashboard & Chuyển CSDL RDS | Hoàn thiện Manager Dashboard, xây dựng chức năng chỉnh sửa tin đăng & quản lý ảnh S3, chuyển CSDL sang **Amazon RDS PostgreSQL** |
+| 6 | Real-time Chat & Email SES | Phát triển module **message** (trò chuyện thời gian thực qua WebSocket), module **notification** (in-app notification), tích hợp **Amazon SES** gửi email |
+| 7 | Tối ưu & Bảo mật hệ thống | Tối ưu N+1 query (Prisma `include`), xử lý Race Condition (Pessimistic Locking `SELECT ... FOR UPDATE`), tích hợp **Amazon Location Service** |
+| 8 | Kiểm thử & Demo | Kiểm thử tổng thể (E2E testing), sửa lỗi tồn đọng, hoàn thiện README, Swagger API docs, báo cáo Worklog & Proposal, demo và bàn giao |
 
 ---
 
 ### 5. Lộ trình & Mốc triển khai
 
 ```
-Tuần 1–2  │ ████ Chuẩn bị & AWS fundamentals
-Tuần 3    │ ██   Phân tích nghiệp vụ & thiết kế hệ thống
-Tuần 4    │ ███  Database · Auth · Tích hợp AWS
-Tuần 5    │ ████ Phát triển tính năng chính · Frontend
-Tuần 6    │ ██   Tối ưu N+1 query & hiệu năng database
-Tuần 7    │ ███  Race condition · Bảo mật · Hardening
-Tuần 8    │ ███  Hoàn thiện · Kiểm thử · Tài liệu · Bàn giao
+Tuần 1    │ ████ Onboarding · AWS Fundamentals · AWS Budget
+Tuần 2    │ ████ Thiết kế kiến trúc · Monorepo · Amazon Cognito · Guards
+Tuần 3    │ ████ Prisma Schema · PostgreSQL · Module Tenant/Manager/Application/Lease
+Tuần 4    │ ████ Module Property · Upload ảnh Amazon S3 · Filter · Profile Pages
+Tuần 5    │ ████ Manager Dashboard · Chỉnh sửa tin đăng · Migrate CSDL sang Amazon RDS
+Tuần 6    │ ████ WebSocket Real-time Chat · Notification · Amazon SES Email
+Tuần 7    │ ████ Tối ưu N+1 Query · Race Condition Locking · Amazon Location Service
+Tuần 8    │ ████ E2E Testing · Tài liệu README & Swagger · Proposal & Demo bàn giao
 ```
 
-**Mốc quan trọng:**
+**Các mốc quan trọng:**
 
-- **Tuần 2**: Nhận 200 USD AWS Credits, thiết lập AWS Budget.
-- **Tuần 4**: Auth flow hoàn chỉnh (register → verify → login), S3 upload hoạt động.
-- **Tuần 5**: Demo nội bộ các chức năng nghiệp vụ chính với mentor.
-- **Tuần 6**: Xác nhận cải thiện P95 response time sau tối ưu N+1.
-- **Tuần 8**: Demo sản phẩm hoàn chỉnh, bàn giao source code và tài liệu.
+- **Tuần 2**: Hoàn thành onboarding, nhận 200 USD AWS Credits, thiết lập AWS Budget và hoàn thiện luồng xác thực Cognito.
+- **Tuần 4**: Hoàn thành luồng đăng tin bất động sản với tải ảnh Amazon S3 và bộ lọc tìm kiếm đa tiêu chí.
+- **Tuần 5**: Chuyển đổi thành công cơ sở dữ liệu lên Amazon RDS và demo nội bộ Manager Dashboard với mentor.
+- **Tuần 6**: Triển khai thành công tính năng nhắn tin thời gian thực qua WebSocket và gửi email tự động qua Amazon SES.
+- **Tuần 7**: Khắc phục dứt điểm N+1 Query, ngăn ngừa Race Condition bằng Pessimistic Locking và hoàn thiện bản đồ vị trí.
+- **Tuần 8**: Nghiệm thu kiểm thử tổng thể, hoàn thiện tài liệu kỹ thuật, demo sản phẩm thành công và bàn giao hệ thống.
 
 ---
 
 ### 6. Ước tính ngân sách
 
-Chi phí vận hành hệ thống trong môi trường phát triển và demo được kiểm soát thông qua **AWS Free Tier** và **200 USD AWS Credits** nhận được từ chương trình hỗ trợ sinh viên.
+Toàn bộ chi phí vận hành hệ thống trong suốt 8 tuần thực tập được tối ưu nhằm nằm trọn trong hạn mức **AWS Free Tier** và số tiền **200 USD AWS Credits** nhận được từ chương trình hỗ trợ.
 
 #### Chi phí hạ tầng AWS (ước tính môi trường development)
 
-| Dịch vụ | Cấu hình | Chi phí ước tính |
-|---------|----------|-----------------|
-| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, single-AZ | ~15 USD/tháng |
-| Amazon S3 | ~5 GB storage, ~10,000 requests/tháng | ~0.15 USD/tháng |
-| Amazon CloudFront | ~10 GB transfer/tháng | ~0.85 USD/tháng |
-| Amazon SES | ~500 email/tháng (trong sandbox) | 0 USD (Free Tier) |
-| Amazon Cognito | <50,000 MAU | 0 USD (Free Tier) |
-| **Tổng ước tính** | | **~16 USD/tháng** |
+| Dịch vụ | Cấu hình sử dụng | Chi phí ước tính |
+|---------|------------------|------------------|
+| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~15 USD/tháng |
+| Amazon S3 | ~5 GB lưu trữ hình ảnh, ~10,000 lượt yêu cầu/tháng | ~0.15 USD/tháng |
+| Amazon SES | ~500 email thông báo/tháng (môi trường Sandbox) | 0 USD (Free Tier) |
+| Amazon Cognito | <50,000 người dùng hoạt động hàng tháng (MAU) | 0 USD (Free Tier) |
+| Amazon Location Service | Yêu cầu geocoding địa chỉ và nạp bản đồ trong hạn mức trải nghiệm | ~0.50 USD/tháng |
+| **Tổng chi phí ước tính** | | **~15.65 USD/tháng** |
 
-> Toàn bộ chi phí trong thời gian thực tập (8 tuần) nằm trong phạm vi 200 USD AWS Credits, không phát sinh chi phí thực tế.
+> Tổng chi phí thực tế cho 8 tuần phát triển và kiểm thử ước tính khoảng 32 USD, được chi trả hoàn toàn bằng gói 200 USD AWS Credits.
 
-#### Chiến lược kiểm soát chi phí
+#### Biện pháp kiểm soát chi phí
 
-- Tạo **AWS Budget** với ngưỡng cảnh báo email ở mức 50 USD và 100 USD.
-- Sử dụng **RDS single-AZ** thay vì Multi-AZ trong môi trường dev để giảm chi phí.
-- Cấu hình **S3 lifecycle policy** để tự động xóa các file upload thử nghiệm sau 30 ngày.
-- Tắt RDS instance ngoài giờ làm việc khi không có nhu cầu truy cập.
+- Cấu hình **AWS Budget** gửi cảnh báo email tự động khi chi phí vượt các mốc 50 USD và 100 USD.
+- Sử dụng mô hình **RDS Single-AZ** cho môi trường phát triển để tiết kiệm chi phí so với Multi-AZ.
+- Giới hạn số lượng request gọi tới Amazon Location Service phía client bằng kỹ thuật debounce khi người dùng gõ tìm kiếm địa chỉ.
+- Tắt instance Amazon RDS ngoài giờ làm việc khi không có nhu cầu thao tác dữ liệu.
 
 ---
 
@@ -193,38 +203,46 @@ Chi phí vận hành hệ thống trong môi trường phát triển và demo đ
 
 #### Ma trận rủi ro
 
-| Rủi ro | Mức độ ảnh hưởng | Xác suất | Chiến lược giảm thiểu |
-|--------|-----------------|----------|----------------------|
-| Vượt ngưỡng AWS Credits | Trung bình | Thấp | AWS Budget alert; tắt tài nguyên khi không dùng |
-| Lỗ hổng bảo mật auth | Cao | Thấp | Refresh token rotation, rate limiting, account lockout |
-| Race condition trong booking | Cao | Trung bình | Pessimistic locking với `SELECT FOR UPDATE` |
-| Hiệu năng database suy giảm | Trung bình | Trung bình | N+1 fix, indexing, cursor pagination |
-| S3 presigned URL bị lạm dụng | Thấp | Thấp | Thời hạn URL ngắn, kiểm tra ownership trước khi generate |
+| Rủi ro phát sinh | Mức độ | Xác suất | Giải pháp xử lý & giảm thiểu |
+|------------------|--------|----------|------------------------------|
+| Vượt chi phí AWS Credits | Trung bình | Thấp | Thiết lập AWS Budget alert; tắt các tài nguyên RDS ngoài giờ làm việc |
+| Race Condition khi duyệt đơn thuê đồng thời | Cao | Trung bình | Áp dụng `prisma.$transaction` kết hợp Pessimistic Locking (`SELECT ... FOR UPDATE`) |
+| Suy giảm hiệu năng do N+1 Query | Trung bình | Trung bình | Nạp trước dữ liệu bằng Prisma `include` và bổ sung database index cho các cột tìm kiếm |
+| Thất lạc kết nối WebSocket chat thời gian thực | Trung bình | Thấp | Xây dựng cơ chế tự động kết nối lại (auto-reconnect) ở client và lưu lịch sử tin nhắn trong CSDL |
+| Tải file ảnh dung lượng quá lớn lên Amazon S3 | Thấp | Thấp | Validate dung lượng và định dạng file ảnh ở tầng Controller trước khi gọi AWS SDK upload |
 
 #### Kế hoạch dự phòng
 
-- Nếu RDS gặp sự cố: rollback từ automated snapshot (bật theo mặc định trên RDS).
-- Nếu S3 upload thất bại: retry logic với exponential backoff ở tầng backend.
-- Nếu SES bị throttle: queue email và gửi lại sau, không ảnh hưởng đến luồng nghiệp vụ chính.
-- Nếu Cognito gặp sự cố: fallback về JWT-only flow (hệ thống vẫn hoạt động với auth module nội bộ).
+- **Cơ sở dữ liệu Amazon RDS**: Khôi phục dữ liệu từ bản sao lưu tự động (Automated Snapshot) được cấu hình hàng ngày trên Amazon RDS nếu xảy ra sự cố hỏng dữ liệu.
+- **Tải ảnh Amazon S3**: Bổ sung cơ chế thử lại (retry logic) ở backend khi kết nối tới S3 bucket bị ngắt đoạn tạm thời.
+- **Gửi email Amazon SES**: Lưu lịch sử thông báo vào bảng `Notification` trong CSDL; nếu Amazon SES bị gián đoạn, người dùng vẫn có thể xem thông báo trực tiếp trên giao diện ứng dụng.
 
 ---
 
 ### 8. Kết quả kỳ vọng
 
-#### Kết quả kỹ thuật
+#### Kết quả kỹ thuật đạt được
 
-Kết thúc giai đoạn phát triển, hệ thống dự kiến đạt được:
+Sau 8 tuần triển khai, dự án đạt được các kết quả kỹ thuật cụ thể:
 
-- Toàn bộ luồng nghiệp vụ chính vận hành ổn định: đăng ký, đăng nhập, đăng tin bất động sản, tìm kiếm, đặt lịch xem nhà, tạo hợp đồng.
-- Hệ thống xác thực đạt tiêu chuẩn bảo mật cơ bản: JWT rotation, rate limiting, input validation, OWASP Top 10 compliance.
-- Hiệu năng truy vấn database được tối ưu: P95 response time dưới 200ms cho các API danh sách với phân trang.
-- Tài liệu kỹ thuật đầy đủ: README, Swagger API docs (40+ endpoints), sơ đồ kiến trúc.
+- **Vận hành hoàn chỉnh luồng nghiệp vụ**: Người thuê tìm kiếm bất động sản theo vị trí bản đồ, nộp đơn thuê, nhắn tin thời gian thực; Chủ nhà quản lý tin đăng, chỉnh sửa hình ảnh, xét duyệt đơn và tự động khởi tạo hợp đồng thuê.
+- **Bảo mật & Phân quyền chuẩn hóa**: 100% các API endpoint được bảo vệ bằng `AuthGuard` và `RolesGuard`, triển khai Refresh Token Rotation và validate dữ liệu chặt chẽ.
+- **Hiệu năng tối ưu**: Xử lý triệt để bài toán N+1 Query giúp thời gian phản hồi API danh sách đạt ~120ms; kiểm soát hoàn toàn xung đột đồng thời bằng Pessimistic Locking.
+- **Tài liệu kỹ thuật đầy đủ**: Xuất bản tệp `README.md` hướng dẫn triển khai, tài liệu **Swagger API documentation** cho hơn 40 endpoints và sơ đồ kiến trúc hệ thống chuẩn hóa.
 
 #### Giá trị học tập và phát triển kỹ năng
 
-Dự án được thiết kế để phản ánh môi trường phát triển phần mềm thực tế trong doanh nghiệp — từ giai đoạn phân tích nghiệp vụ, thiết kế kiến trúc, triển khai, tối ưu hiệu năng, đến bảo mật và bàn giao. Các kỹ năng cốt lõi tích lũy được bao gồm: thiết kế REST API theo chuẩn, tích hợp dịch vụ AWS trong ứng dụng thực tế, xử lý concurrency và tối ưu database — những kỹ năng có giá trị trực tiếp trong công việc kỹ sư phần mềm sau khi tốt nghiệp.
+Quá trình thực hiện dự án giúp củng cố toàn diện các kỹ năng kỹ thuật thực tế:
 
-#### Định hướng mở rộng
+- Tư duy phân tích nghiệp vụ và thiết kế kiến trúc phần mềm theo mô hình monorepo chuyên nghiệp.
+- Kỹ năng tích hợp và vận hành các dịch vụ đám mây AWS (Cognito, S3, RDS, SES, Location Service) trong ứng dụng sản phẩm thực tế.
+- Thành thạo kỹ thuật tối ưu hóa cơ sở dữ liệu quan hệ, xử lý truy vấn dữ liệu không gian PostGIS và kiểm soát giao dịch đồng thời (concurrency management).
+- Kỹ năng viết tài liệu kỹ thuật, báo cáo công việc và trình bày sản phẩm phần mềm theo chuẩn doanh nghiệp.
 
-Kiến trúc module hóa của NestJS cho phép mở rộng hệ thống mà không cần tái cấu trúc lớn. Các hướng phát triển tiếp theo có thể bao gồm: tích hợp thanh toán trực tuyến, bổ sung real-time chat giữa chủ nhà và người thuê, hoặc containerize toàn bộ hệ thống với Docker/ECS để hỗ trợ deployment linh hoạt hơn trên môi trường production.
+#### Định hướng phát triển tiếp theo
+
+Hệ thống được thiết kế theo kiến trúc module hóa linh hoạt, tạo tiền đề thuận lợi cho các hướng mở rộng trong tương lai:
+
+- Tích hợp cổng thanh toán trực tuyến (VNPay, ZaloPay, Stripe) để xử lý giao dịch thanh toán tiền thuê nhà hàng tháng.
+- Xây dựng ứng dụng di động (Mobile App) dựa trên React Native để tăng trải nghiệm tiện lợi cho người dùng.
+- Đóng gói ứng dụng bằng Docker và triển khai lên hạ tầng Amazon ECS / EKS để hỗ trợ khả năng tự động mở rộng (auto-scaling) khi lượng truy cập tăng cao.

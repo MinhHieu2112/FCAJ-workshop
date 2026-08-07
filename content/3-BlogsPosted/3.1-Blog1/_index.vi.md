@@ -1,31 +1,33 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-08-03
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+# HỆ THỐNG XÁC THỰC VỚI AWS COGNITO
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Trong quá trình phát triển hệ thống quản lý cho thuê bất động sản, nhóm lựa chọn **Amazon Cognito** để quản lý xác thực người dùng thay vì tự xây dựng cơ chế đăng nhập bằng JWT. Quá trình tích hợp không chỉ dừng lại ở việc đăng nhập thành công mà còn phải giải quyết bài toán phân quyền giữa **Manager** và **Tenant** trong toàn bộ hệ thống.
 
-Các điểm chính cần nắm:
+Một trong những khó khăn gặp phải là xác định loại token phù hợp để gửi đến Backend. Ban đầu, hệ thống chỉ sử dụng **Access Token** để xác thực, tuy nhiên token này không chứa thuộc tính `custom:role` được cấu hình trong Cognito. Điều này khiến `RolesGuard` không thể xác định vai trò của người dùng và nhiều yêu cầu bị từ chối với mã lỗi **401 Unauthorized** hoặc **403 Forbidden**.
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+Sau quá trình tìm hiểu, thử nghiệm và tối ưu, cơ chế xác thực và phân quyền của hệ thống được hoàn thiện theo các nội dung sau:
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+- Sử dụng **Access Token** làm Bearer Token để xác thực (Authentication) mọi yêu cầu gửi từ Frontend đến Backend thông qua `JwtAuthGuard`.
+- Trích xuất thông tin vai trò người dùng (`custom:role`) từ **ID Token** ở phía Frontend và truyền đến Backend thông qua `X-User-Role` hoặc Token Payload để phục vụ quá trình phân quyền (Authorization).
+- Xây dựng `JwtAuthGuard` với cơ chế kiểm tra nhiều lớp: ưu tiên lấy vai trò từ Token Payload, sau đó truy vấn cơ sở dữ liệu bằng Prisma và cuối cùng sử dụng giá trị từ Header `X-User-Role` khi cần thiết.
+- Xây dựng `RolesGuard` để kiểm tra quyền truy cập của người dùng theo từng vai trò (**Manager** hoặc **Tenant**) trước khi cho phép truy cập các API được bảo vệ.
+- Cấu hình CORS trên NestJS để cho phép Header `X-User-Role`, đảm bảo các yêu cầu từ Frontend được xử lý đúng và tránh lỗi Preflight (`OPTIONS`).
+- Sử dụng `fetchAuthSession()` của Amplify v6 để tự động quản lý phiên đăng nhập và làm mới Access Token khi hết hạn, giúp người dùng không cần đăng nhập lại trong thời gian Refresh Token còn hiệu lực.
 
-...Hình ảnh...
+## Hình ảnh minh họa
 
-...Link...
+![Overview](/images/3-BlogsPosted/Cognito_Auth_Architecture.png)
 
-...Hướng dẫn...
+## Tham khảo
+
+- [AWS Cognito Documentation](https://docs.aws.amazon.com/cognito/)
+- [AWS Amplify Documentation](https://docs.aws.amazon.com/amplify/)
+- [NestJS Authentication](https://docs.nestjs.com/security/authentication)
+- [NestJS Authorization](https://docs.nestjs.com/security/authorization)

@@ -8,11 +8,11 @@ pre: " <b> 1.3. </b> "
 
 ### Mục tiêu tuần 3:
 
-* Tìm hiểu nghiệp vụ hệ thống bất động sản — xác định các actors, use cases và luồng nghiệp vụ chính.
-* Phân tích yêu cầu và xây dựng danh sách tính năng (feature list) cho hệ thống.
-* Thiết kế kiến trúc tổng thể của hệ thống (high-level architecture).
-* Lựa chọn công nghệ phù hợp cho Backend, Frontend và Database.
-* Xác định các dịch vụ AWS sẽ tích hợp vào hệ thống.
+* Thiết kế cơ sở dữ liệu quan hệ và định nghĩa Prisma schema cho hệ thống quản lý cho thuê bất động sản (PostgreSQL + PostGIS).
+* Phát triển module **tenant** và **manager**: xây dựng API quản lý hồ sơ người dùng theo từng vai trò.
+* Phát triển module **application**: xây dựng API cho người thuê tạo đơn xin thuê và theo dõi trạng thái đơn.
+* Phát triển module **lease**: xây dựng API cho quản lý xét duyệt đơn thuê, tự động tạo hợp đồng và lưu lịch sử thanh toán.
+* Kiểm thử các API endpoint quản lý người dùng, đơn thuê, hợp đồng và hoàn thiện tài liệu Swagger.
 
 ---
 
@@ -20,38 +20,31 @@ pre: " <b> 1.3. </b> "
 
 | Thứ | Công việc | Ngày | Nguồn tài liệu |
 |-----|-----------|------|----------------|
-| 2 | - Nghiên cứu nghiệp vụ hệ thống bất động sản: <br>&emsp; + Xác định các actors: Tenant (người thuê), Landlord (chủ nhà), Admin <br>&emsp; + Phân tích các luồng nghiệp vụ chính: đăng tin, tìm kiếm, đặt lịch xem nhà, ký hợp đồng, thanh toán <br>&emsp; + Tìm hiểu các hệ thống bất động sản thực tế (Mogi, Batdongsan.com.vn) để lấy tham khảo | 06/07/2026 | Tham khảo thực tế |
-| 3 | - Phân tích yêu cầu hệ thống: <br>&emsp; + Viết Use Case Diagram cho từng actor <br>&emsp; + Liệt kê functional requirements và non-functional requirements <br>&emsp; + Xác định các ràng buộc nghiệp vụ (business rules) <br> - Thảo luận với mentor về phạm vi hệ thống | 07/07/2026 | Tài liệu phân tích nghiệp vụ |
-| 4 | - Thiết kế kiến trúc tổng thể hệ thống: <br>&emsp; + Vẽ high-level architecture diagram <br>&emsp; + Xác định các module chính: Auth, Property, Booking, Payment, Notification <br>&emsp; + Xác định giao tiếp giữa các module (REST API, message queue) <br>&emsp; + Thiết kế sơ bộ API endpoints (RESTful conventions) | 08/07/2026 | |
-| 5 | - Lựa chọn công nghệ: <br>&emsp; + **Backend**: NestJS (TypeScript) — modular architecture, dependency injection <br>&emsp; + **Frontend**: Next.js (React) — SSR/SSG, routing, TailwindCSS <br>&emsp; + **Database**: PostgreSQL (relational) + Prisma ORM <br>&emsp; + Lý do lựa chọn từng công nghệ (trade-off analysis) | 09/07/2026 | |
-| 6 | - Xác định các dịch vụ AWS tích hợp vào hệ thống: <br>&emsp; + **S3**: lưu trữ ảnh bất động sản <br>&emsp; + **SES**: gửi email thông báo, xác thực <br>&emsp; + **Cognito**: quản lý xác thực người dùng <br>&emsp; + **RDS**: cơ sở dữ liệu production <br>&emsp; + **EC2 / ECS**: deploy backend <br> - Tổng hợp tài liệu thiết kế, cập nhật vào repository | 10/07/2026 | |
+| 2 | - Thiết kế ERD và định nghĩa schema Prisma: <br>&emsp; + Tạo schema cho các bảng: User, Tenant, Manager, Application, Lease, Payment <br>&emsp; + Thiết lập các mối quan hệ (1-1, 1-N, N-N) và enum trạng thái (ApplicationStatus, LeaseStatus) <br>&emsp; + Thực thi Prisma migration khởi tạo cấu trúc cơ sở dữ liệu trên PostgreSQL | 06/07/2026 | <https://www.prisma.io/docs/> |
+| 3 | - Phát triển module **tenant** và module **manager**: <br>&emsp; + Xây dựng API lấy thông tin profile và cập nhật thông tin cá nhân cho tenant và manager <br>&emsp; + Xây dựng service đồng bộ dữ liệu người dùng từ Amazon Cognito vào PostgreSQL qua `cognitoId` <br>&emsp; + Validate dữ liệu đầu vào với class-validator DTO | 07/07/2026 | <https://docs.nestjs.com/techniques/validation> |
+| 4 | - Phát triển module **application** (quản lý đơn thuê): <br>&emsp; + Xây dựng API cho tenant tạo đơn xin thuê (submit application) kèm thông tin cá nhân và thời gian thuê mong muốn <br>&emsp; + Xây dựng API cho tenant xem danh sách đơn thuê đã nộp và hủy đơn đang ở trạng thái PENDING <br>&emsp; + Xây dựng API cho manager xem danh sách đơn thuê cần xử lý theo từng bất động sản | 08/07/2026 | |
+| 5 | - Phát triển module **lease** (quản lý hợp đồng & thanh toán): <br>&emsp; + Xây dựng API cho manager xét duyệt đơn thuê (APPROVED / DENIED) <br>&emsp; + Triển khai logic tự động khởi tạo hợp đồng (Lease) khi đơn thuê được duyệt trong một `prisma.$transaction` <br>&emsp; + Xây dựng API tra cứu danh sách hợp đồng và liên kết lịch sử thanh toán (Payment) theo từng hợp đồng | 09/07/2026 | <https://www.prisma.io/docs/concepts/components/prisma-client/transactions> |
+| 6 | - Kiểm thử và viết tài liệu API: <br>&emsp; + Kiểm thử các luồng tạo đơn thuê, duyệt đơn, phát sinh hợp đồng bằng Postman <br>&emsp; + Kiểm tra các ràng buộc dữ liệu (ví dụ: không cho phép tạo hợp đồng trùng lặp) <br>&emsp; + Tích hợp Swagger (OpenAPI) mô tả chi tiết các endpoint của 4 module | 10/07/2026 | <https://docs.nestjs.com/openapi/introduction> |
 
 ---
 
-### Kết quả đạt được tuần 3:
+### Kết quả đạt me tuần 3:
 
-* Hiểu rõ nghiệp vụ hệ thống bất động sản cho thuê với 3 actor chính: **Tenant**, **Landlord** và **Admin**.
+* Hoàn thành thiết kế **ERD** và **Prisma schema** đầy đủ cho các entity cốt lõi: User, Tenant, Manager, Application, Lease, Payment; chạy migration thành công trên cơ sở dữ liệu PostgreSQL.
 
-* Hoàn thành bản phân tích yêu cầu bao gồm:
-  * Use Case Diagram cho từng actor
-  * Danh sách Functional Requirements (đăng tin, tìm kiếm, đặt lịch, thanh toán, thông báo)
-  * Non-functional Requirements (performance, security, scalability)
+* Phát triển xong **Tenant module** và **Manager module**: cung cấp đầy đủ API quản lý thông tin tài khoản, hồ sơ cá nhân và đồng bộ với Amazon Cognito.
 
-* Hoàn thành bản thiết kế kiến trúc tổng thể với các module: **Auth**, **Property**, **Booking**, **Payment**, **Notification**, **Admin**.
+* Phát triển xong **Application module**: cho phép tenant nộp đơn xin thuê, theo dõi trạng thái và cho phép manager xem danh sách đơn thuê của bất động sản.
 
-* Quyết định tech stack:
-  * Backend: **NestJS** (TypeScript, modular, DI)
-  * Frontend: **Next.js** (App Router, SSR)
-  * ORM: **Prisma** với **PostgreSQL**
-  * Styling: **TailwindCSS**
+* Phát triển xong **Lease module**: hỗ trợ manager xét duyệt đơn thuê và tự động sinh hợp đồng thuê (Lease) tương ứng trong một transaction an toàn dữ liệu.
 
-* Lập danh sách đầy đủ các dịch vụ AWS sẽ tích hợp: S3, SES, Cognito, RDS, EC2/ECS.
+* Kiểm thử toàn bộ API của 4 module với Postman và xuất tài liệu **Swagger API documentation** cho các endpoint đã xây dựng.
 
 ---
 
 ### Kiến thức / Kinh nghiệm học được:
 
-* Học được phương pháp phân tích nghiệp vụ hệ thống thực tế: bắt đầu từ actor → use case → business rule → functional requirement.
-* Hiểu được tầm quan trọng của việc thiết kế kiến trúc trước khi code — giúp tránh các thay đổi lớn sau này.
-* Nắm được trade-off khi chọn công nghệ: NestJS cho Backend phù hợp với kiến trúc module hóa; Prisma giúp type-safe database access.
-* Học cách kết hợp dịch vụ AWS vào thiết kế hệ thống ngay từ giai đoạn planning thay vì tích hợp sau.
+* Hiểu sâu về thiết kế cơ sở dữ liệu quan hệ cho bài toán cho thuê nhà ở: quản lý vòng đời từ Application → Lease → Payment.
+* Thành thạo cách định nghĩa quan hệ 1-N, 1-1 và enum trong Prisma schema, cũng như quản lý lịch sử migration bằng Prisma CLI.
+* Nắm vững cách sử dụng `prisma.$transaction` để đảm bảo tính nguyên tố (atomicity) khi thực hiện nhiều thao tác CSDL liên quan (duyệt đơn + tạo hợp đồng).
+* Học cách sử dụng DTO và class-validator để chặn dữ liệu không hợp lệ ngay tại tầng Controller.

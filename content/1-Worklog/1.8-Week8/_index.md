@@ -8,11 +8,11 @@ pre: " <b> 1.8. </b> "
 
 ### Week 8 Objectives:
 
-* Complete remaining features and fix outstanding bugs.
-* Perform comprehensive end-to-end system testing.
-* Final performance and security optimization before handover.
-* Prepare complete technical documentation and internship report.
-* Summarize results, conduct final evaluation, and deliver the product.
+* Perform comprehensive end-to-end (E2E) application testing covering all tenant and manager business flows.
+* Review and eliminate all remaining frontend UI layout issues and backend exception handling bugs.
+* Finalize technical documentation (README.md, Swagger API documentation, high-level system architecture diagram).
+* Standardize and update the **Solution Proposal** and the entire 8-week internship Worklog documentation.
+* Prepare live product demo scenarios, summarize internship achievements, and hand over the system.
 
 ---
 
@@ -20,48 +20,37 @@ pre: " <b> 1.8. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Complete remaining features: <br>&emsp; + Finalize Admin dashboard: user/property/booking statistics, approve/reject property listings <br>&emsp; + Finalize advanced search: simultaneous multi-criteria filtering (price, area, location, amenities) <br>&emsp; + Finalize profile pages: booking history, account settings, landlord property management <br>&emsp; + Fix outstanding bugs carried over from previous weeks | 10/08/2026 | |
-| Tue | - Comprehensive system testing: <br>&emsp; + Write and run end-to-end tests for all main business workflows <br>&emsp; + Test all API endpoints with edge case data <br>&emsp; + Cross-browser testing: Chrome, Firefox, Safari <br>&emsp; + Mobile testing (responsive design) <br>&emsp; + Perform regression testing after bug fixes | 11/08/2026 | |
-| Wed | - Final performance and security optimization: <br>&emsp; + Audit all APIs: check response times, remove unnecessary endpoints <br>&emsp; + Configure CDN for S3 (CloudFront): reduce image loading latency <br>&emsp; + Final security audit: re-verify all Authorization rules and input validation <br>&emsp; + Optimize Frontend bundle size: code splitting, lazy loading <br>&emsp; + Configure production environment variables | 12/08/2026 | |
-| Thu | - Prepare technical documentation and internship report: <br>&emsp; + Write comprehensive **README.md**: setup guide, environment configuration, local run and deployment instructions <br>&emsp; + Write **API documentation** (Swagger/OpenAPI): detailed descriptions of each endpoint <br>&emsp; + Write **system architecture documentation**: architecture diagrams, component descriptions <br>&emsp; + Prepare **internship report slides**: timeline, technologies, achievements, lessons learned | 13/08/2026 | |
-| Fri | - Final summary, evaluation, and handover: <br>&emsp; + Demo the completed product to mentor and team <br>&emsp; + Present the internship report: objectives, progress, results, challenges and lessons <br>&emsp; + Receive final feedback from mentor <br>&emsp; + Hand over source code, documentation, and deployment environment <br>&emsp; + Personal retrospective: assess strengths and areas for improvement | 14/08/2026 | |
+| Mon | - Comprehensive End-to-End (E2E) System Testing: <br>&emsp; + Test Tenant flow: Cognito registration/login → property search on Amazon Location Service map → application submission → real-time WebSocket chat <br>&emsp; + Test Manager flow: property creation → S3 image upload → SES email notification → application review → automatic lease creation on Amazon RDS | 10/08/2026 | |
+| Tue | - Review and Bug Fixing: <br>&emsp; + Fix responsive UI layout issues on mobile and tablet screen sizes <br>&emsp; + Add global exception filters to handle database errors and return standardized response payloads <br>&emsp; + Audit data integrity when canceling applications or terminating leases | 11/08/2026 | |
+| Wed | - Complete Technical Documentation: <br>&emsp; + Write comprehensive **README.md**: environment setup (.env), monorepo installation (`pnpm install`), local development, and production build instructions <br>&emsp; + Publish and standardize **Swagger API documentation** covering 40+ API endpoints <br>&emsp; + Update high-level system architecture diagram | 12/08/2026 | |
+| Thu | - Update Solution Proposal and Internship Worklog: <br>&emsp; + Review and refine **Solution Proposal** (`content/2-Proposal/`): ensuring adherence to the 8 required sections and providing deep analysis of AWS services <br>&emsp; + Synchronize the **8-week Worklog** (`content/1-Worklog/`): verifying cross-week consistency, removing arbitrary capitalization and AI-generated tone <br>&emsp; + Standardize Vietnamese corporate report style orthography | 13/08/2026 | |
+| Fri-Sat | - Demo Preparation and System Handover: <br>&emsp; + Prepare presentation slides and live demo scenario summarizing the 8-week internship <br>&emsp; + Deliver live product demonstration to mentor and internship evaluation committee <br>&emsp; + Collect feedback and formal evaluation from the hosting company <br>&emsp; + Hand over monorepo source code, technical documentation, and administrative accounts | 14/08/2026 - 15/08/2026 | |
 
 ---
 
 ### Week 8 Achievements:
 
-* Completed the **Admin Dashboard** with full functionality: statistics, content moderation, and user management.
+* Completed **End-to-End (E2E) testing**: all primary user flows between tenants and managers operated reliably with zero critical bugs.
 
-* Completed **comprehensive testing**: all main business workflows pass, no remaining critical bugs.
+* Resolved 100% of remaining **UI layout glitches and API exception bugs**, ensuring smooth application rendering across all device types.
 
-* Final optimizations:
-  * Integrated **CloudFront** in front of S3: reduced image loading latency from ~300ms to ~50ms (for clients in the same region).
-  * Reduced **Frontend bundle size** by ~35% through code splitting and lazy loading.
-  * Final security audit found no new critical vulnerabilities.
+* Produced a complete set of **technical documentation**: deployment README.md, Swagger API docs, and standardized system architecture diagrams.
 
-* Completed all **technical documentation**:
-  * README.md with comprehensive setup instructions
-  * Swagger API documentation (40+ endpoints)
-  * System architecture diagram
+* Finalized the **Solution Proposal** and **8-week Worklog** documentation using a professional corporate reporting style with precise technical terminology.
 
-* Successfully **demoed** the final product to the mentor and team, receiving positive feedback on code quality and feature completeness.
+* **Successfully demoed and presented** the Real Estate Rental Management System to the mentor, receiving positive feedback on architecture quality and completeness.
 
-* **Full handover completed**: source code, documentation, and AWS EC2/ECS deployment guide.
+* **Successfully handed over** source code and project documentation to First Cloud AI Journey.
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* **Technical summary**: Over 8 weeks of internship, successfully built a complete property rental system using NestJS + Next.js + PostgreSQL, with multiple integrated AWS services (S3, SES, Cognito, RDS, CloudFront).
-
-* **Lesson on development process**: Thorough planning before coding → feature development → optimization → security audit is an effective cycle to maintain in every real-world project.
-
-* **Key skills accumulated**:
-  * System design and analysis from real-world business requirements
-  * Security mindset: authentication, authorization, input validation, rate limiting
-  * Database performance optimization: N+1 query, indexing, pagination
-  * Concurrency handling: Race Condition, Transactions, Locking
-  * AWS service integration in real applications
-  * Writing professional technical documentation
-
-* **Next steps**: Continue deepening knowledge in Cloud-native architecture (microservices, containerization with Docker/ECS) and Infrastructure as Code (Terraform/CDK).
+* **Technical Summary**: Over 8 internship weeks, mastered the process of building a production-ready full-stack web application from business analysis, architectural design, technology selection (NestJS, Next.js, PostgreSQL/PostGIS, Prisma) to integrating core AWS services (Cognito, S3, SES, RDS, Location Service).
+* **Key Skills Acquired**:
+  * Cloud architecture design and infrastructure cost optimization.
+  * Database query optimization (resolving N+1 queries, indexing, PostGIS spatial queries).
+  * Concurrency handling (Race Condition prevention, Transactions, Pessimistic Locking).
+  * Web application security (RBAC Guards, Refresh Token Rotation, Rate Limiting).
+  * Professional technical documentation and business report writing.
+* **Future Outlook**: Plan to further explore Cloud-Native Architecture, Serverless paradigms, Containerization (Docker, Amazon ECS/EKS), and Infrastructure as Code (Terraform / AWS CDK).

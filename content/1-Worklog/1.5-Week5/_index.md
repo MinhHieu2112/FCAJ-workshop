@@ -8,11 +8,11 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Objectives:
 
-* Develop the core business features of the system (Property, Booking, Payment, Notification).
-* Complete the API and handle complex business logic (booking state management, payment processing).
-* Integrate the Frontend (Next.js) with the Backend API.
-* Test features and fix bugs.
-* Evaluate progress with mentor at the end of the week.
+* Complete the manager dashboard user interface in the Next.js application.
+* Build property editing functionality: update property details, upload new images, or remove old images on Amazon S3.
+* Migrate the database from the local development environment to **Amazon RDS (PostgreSQL + PostGIS managed)**.
+* Fix system bugs and optimize database connections and query performance.
+* Report progress and demo completed features to the mentor.
 
 ---
 
@@ -20,38 +20,31 @@ pre: " <b> 1.5. </b> "
 
 | Day | Task | Date | Reference |
 |-----|------|------|-----------|
-| Mon | - Develop core system features: <br>&emsp; + **Property module**: full CRUD, filter/search by price, area, location, property type <br>&emsp; + **Booking module**: schedule property viewings, update statuses (PENDING → CONFIRMED → CANCELLED) <br>&emsp; + **Contract module**: create rental contracts, store contract details <br>&emsp; + Validate input data with class-validator | 20/07/2026 | <https://docs.nestjs.com/> |
-| Tue | - Finalize API and business logic: <br>&emsp; + Implement Notification module: create notifications when booking status changes <br>&emsp; + Implement Payment flow: integrate payment gateway (mock), update contract status <br>&emsp; + Implement pagination and sorting for property listing API <br>&emsp; + Write Swagger documentation for all API endpoints | 21/07/2026 | <https://docs.nestjs.com/openapi/introduction> |
-| Wed | - Integrate Frontend with Backend: <br>&emsp; + Configure Next.js App Router, create main pages: Home, Property List, Property Detail, Booking <br>&emsp; + Call APIs from Frontend: axios/fetch with JWT interceptor <br>&emsp; + Implement global state management (Zustand or React Context) for auth state <br>&emsp; + Build components: PropertyCard, BookingForm, NavigationBar | 22/07/2026 | <https://nextjs.org/docs> |
-| Thu | - Full system feature testing: <br>&emsp; + Test workflow: register → login → create listing → search → book a viewing <br>&emsp; + Verify role-based access: TENANT cannot create listings, LANDLORD cannot self-confirm bookings <br>&emsp; + Fix bugs found during testing <br>&emsp; + Test responsive design on mobile | 23/07/2026 | |
-| Fri | - Overall progress review with mentor: <br>&emsp; + Demo completed features <br>&emsp; + Receive feedback on code quality and UX <br>&emsp; + Plan for Week 6: performance optimization | 24/07/2026 | |
+| Mon | - Complete Manager Dashboard UI: <br>&emsp; + Build property portfolio management page with status tabs (Available, Rented, Pending) <br>&emsp; + Build rental application review table for incoming applications <br>&emsp; + Display quick summary cards: active listings, new applications, active leases | 20/07/2026 | <https://nextjs.org/docs> |
+| Tue | - Build property editing functionality: <br>&emsp; + Build property edit form in frontend with full property fields: price, area, amenities, location <br>&emsp; + Build image management logic: support uploading new images to Amazon S3 or deleting obsolete photos <br>&emsp; + Integrate NestJS backend `PATCH /properties/:id` API | 21/07/2026 | <https://docs.aws.amazon.com/s3/> |
+| Wed | - Migrate database to Amazon RDS: <br>&emsp; + Provision Amazon RDS PostgreSQL instance (db.t3.micro, single-AZ) via AWS Console <br>&emsp; + Configure Security Group rules allowing secure access from backend IP <br>&emsp; + Install PostGIS extension on Amazon RDS PostgreSQL <br>&emsp; + Run `prisma db push` / `prisma migrate deploy` to push schema and seed data onto RDS | 22/07/2026 | <https://docs.aws.amazon.com/rds/> |
+| Thu | - Bug fixes and system performance optimization: <br>&emsp; + Configure connection pooling for Prisma connecting to Amazon RDS <br>&emsp; + Resolve edge-case exceptions when updating property listing and application statuses <br>&emsp; + Benchmark cloud database latency and optimize slow database queries | 23/07/2026 | <https://www.prisma.io/docs/guides/performance-and-optimization> |
+| Fri | - Test Manager Dashboard and Amazon RDS deployment: <br>&emsp; + Test end-to-end flow: manager creates listing → edits listing → manages S3 images → approves application on Amazon RDS database <br>&emsp; + Evaluate Week 5 progress with mentor and record feedback for Week 6 optimizations | 24/07/2026 | |
 
 ---
 
 ### Week 5 Achievements:
 
-* Completed all core business modules:
-  * **Property**: full CRUD with filter/search, S3 image upload
-  * **Booking**: lifecycle management with state machine (PENDING → CONFIRMED/CANCELLED)
-  * **Contract**: rental contract creation and storage
-  * **Notification**: automatic notifications when booking status changes
+* Completed **Manager Dashboard UI**: provided an intuitive interface for property portfolio management, application tracking, and lease monitoring.
 
-* Completed **Swagger documentation** for all API endpoints, enabling direct API testing via the UI.
+* Completed **Property Editing Functionality**: supported flexible updates to property details while synchronizing image additions and deletions on Amazon S3.
 
-* Successfully integrated **Next.js Frontend** with Backend API:
-  * Main pages functional: Home, Property Listing (with filters), Property Detail, Booking Form
-  * JWT interceptor automatically refreshes tokens when expired
-  * Auth state managed globally via context
+* Successfully migrated database to **Amazon RDS (PostgreSQL + PostGIS)**: established a managed, cloud-hosted relational database environment on AWS.
 
-* Confirmed role-based authorization works correctly across the full business workflow.
+* Resolved concurrent data update issues and successfully configured Prisma connection pooling for Amazon RDS.
 
-* Received positive feedback from mentor, with a suggestion to optimize the number of database queries.
+* Successfully demoed Week 5 progress to the mentor, confirming that property management workflows operate seamlessly on Cloud RDS.
 
 ---
 
 ### Knowledge / Experience Gained:
 
-* Gained a deep understanding of state machine patterns in booking management — clearly defining valid transitions is essential to prevent data inconsistencies.
-* Learned how to implement standard pagination (cursor-based vs. offset-based): offset suits paginated UI, cursor suits infinite scroll.
-* Understood Next.js App Router organization: Server Components vs. Client Components, and when to use `use client`.
-* Practical experience: JWT interceptors need to handle race conditions when multiple requests simultaneously call the refresh token endpoint.
+* Learned how to provision and configure cloud-managed Amazon RDS PostgreSQL instances, configuring Security Groups according to the principle of least privilege.
+* Mastered enabling and managing the PostGIS extension on Amazon RDS PostgreSQL for spatial data queries.
+* Gained experience handling complex edit forms while managing synchronized image uploads and deletions on Amazon S3.
+* Learned database connection pool optimization techniques when transitioning from local DB to cloud-managed databases.

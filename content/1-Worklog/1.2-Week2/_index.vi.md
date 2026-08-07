@@ -8,11 +8,11 @@ pre: " <b> 1.2. </b> "
 
 ### Mục tiêu tuần 2:
 
-* Tìm hiểu chuyên sâu các dịch vụ AWS về Compute và Storage.
-* Tìm hiểu Database, Networking và IAM trên AWS.
-* Thực hành sử dụng các dịch vụ AWS cơ bản trên Console và CLI.
-* Hoàn thành các nhiệm vụ AWS Academy / AWS Skill Builder.
-* Tổng hợp kiến thức và trao đổi với mentor cuối tuần.
+* Phân tích chi tiết yêu cầu nghiệp vụ của hệ thống quản lý cho thuê bất động sản và các nhóm người dùng (tenant, manager).
+* Thiết kế kiến trúc tổng thể hệ thống và tái cấu trúc dự án thành mô hình monorepo (pnpm workspaces).
+* Tích hợp dịch vụ Amazon Cognito để quản lý người dùng và phát hành JWT authentication.
+* Xây dựng cơ chế xác thực và phân quyền ở backend NestJS bằng `AuthGuard` và `RolesGuard`.
+* Kiểm thử luồng đăng ký, đăng nhập và phân quyền người dùng trước khi phát triển các module nghiệp vụ.
 
 ---
 
@@ -20,42 +20,31 @@ pre: " <b> 1.2. </b> "
 
 | Thứ | Công việc | Ngày | Nguồn tài liệu |
 |-----|-----------|------|----------------|
-| 2 | - Tìm hiểu AWS Compute: <br>&emsp; + **EC2**: Instance types (General Purpose, Compute Optimized, Memory Optimized), AMI, User Data, Placement Groups <br>&emsp; + **Auto Scaling Group (ASG)**: scaling policy, health check <br>&emsp; + **Elastic Load Balancer (ELB)**: ALB vs NLB <br>&emsp; + **AWS Lambda**: serverless function, event triggers, execution environment | 29/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 3 | - Tìm hiểu AWS Storage và Database: <br>&emsp; + **S3**: bucket policy, versioning, lifecycle rule, presigned URL <br>&emsp; + **EBS**: volume types (gp3, io2), snapshot <br>&emsp; + **RDS**: Multi-AZ, Read Replica, backup <br>&emsp; + **DynamoDB**: partition key, sort key, GSI <br> - Tìm hiểu AWS Networking: <br>&emsp; + **VPC**: subnet (public/private), Internet Gateway, NAT Gateway <br>&emsp; + **Security Group vs NACL** <br>&emsp; + **Route Table** | 30/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Tìm hiểu AWS IAM chuyên sâu: <br>&emsp; + Users, Groups, Roles, Policies <br>&emsp; + Policy evaluation logic (Allow/Deny) <br>&emsp; + IAM Best Practices: least privilege, MFA, access key rotation <br> - Thực hành tạo IAM User, gán policy, tạo IAM Role cho EC2 <br> - Thực hành tạo VPC với public/private subnet, cấu hình Security Group | 01/07/2026 | <https://docs.aws.amazon.com/IAM/> |
-| 5 | - Thực hành các dịch vụ AWS cơ bản: <br>&emsp; + Launch EC2 instance, kết nối SSH, cài đặt Nginx <br>&emsp; + Tạo S3 bucket, upload file, cấu hình public access <br>&emsp; + Tạo RDS instance (MySQL), kết nối từ EC2 <br> - Hoàn thành các bài lab trong AWS Academy / Skill Builder | 02/07/2026 | AWS Academy / Skill Builder |
-| 6 | - Tổng hợp kiến thức tuần 2 vào notes cá nhân <br> - Trao đổi với mentor về tiến độ học và định hướng tuần tiếp theo <br> - Đọc thêm tài liệu về kiến trúc Well-Architected Framework của AWS | 03/07/2026 | <https://aws.amazon.com/architecture/well-architected/> |
+| 2 | - Phân tích yêu cầu hệ thống quản lý cho thuê bất động sản: <br>&emsp; + Xác định các nhóm người dùng: người thuê (tenant), chủ nhà/quản lý (manager) <br>&emsp; + Phân tích luồng nghiệp vụ cốt lõi: đăng tin, nộp đơn thuê, xét duyệt, hợp đồng <br> - Tái cấu trúc (refactor) dự án thành mô hình monorepo sử dụng pnpm workspaces (`apps/server`, `apps/client`, `packages/types`) | 29/06/2026 | <https://cloudjourney.awsstudygroup.com/1-explore/> |
+| 3 | - Thiết kế kiến trúc tổng thể hệ thống (high-level architecture): <br>&emsp; + Backend: NestJS (TypeScript, modular architecture, DI) <br>&emsp; + Frontend: Next.js (App Router, Redux Toolkit / RTK Query) <br>&emsp; + Database: PostgreSQL với Prisma ORM <br>&emsp; + Xác định sơ đồ tích hợp các dịch vụ AWS (Cognito, S3, RDS, Location Service) | 30/06/2026 | <https://docs.nestjs.com/> |
+| 4 | - Tích hợp Amazon Cognito và JWT Authentication: <br>&emsp; + Tạo và cấu hình Amazon Cognito User Pool & App Client <br>&emsp; + Thiết lập luồng xác thực đăng ký, xác nhận email và đăng nhập qua Cognito <br>&emsp; + Đồng bộ thông tin người dùng từ Cognito với backend qua `cognitoId` | 01/07/2026 | <https://docs.aws.amazon.com/cognito/> |
+| 5 | - Xây dựng cơ chế xác thực và phân quyền ở backend NestJS: <br>&emsp; + Xây dựng `AuthGuard` xác thực chữ ký và thời hạn của JWT token <br>&emsp; + Xây dựng `RolesGuard` kiểm tra quyền truy cập theo vai trò (TENANT, MANAGER) <br>&emsp; + Áp dụng decorator phân quyền cho các endpoint thử nghiệm | 02/07/2026 | <https://docs.nestjs.com/guards> |
+| 6 | - Kiểm thử và tổng hợp tiến độ tuần 2: <br>&emsp; + Kiểm thử các API xác thực và phân quyền với Postman (đăng ký, đăng nhập, lấy token) <br>&emsp; + Kiểm tra việc ngăn chặn các request không hợp lệ hoặc sai vai trò <br>&emsp; + Báo cáo tiến độ và trao đổi định hướng tuần 3 với mentor | 03/07/2026 | |
 
 ---
 
 ### Kết quả đạt được tuần 2:
 
-* Nắm vững các dịch vụ **Compute** của AWS:
-  * EC2 với các loại instance, AMI, User Data và cách kết nối SSH
-  * Auto Scaling Group với chính sách scale-out/scale-in
-  * Elastic Load Balancer (ALB) và cơ chế phân tải traffic
-  * AWS Lambda và mô hình serverless event-driven
+* Hoàn thành phân tích yêu cầu hệ thống và xác định rõ 2 vai trò người dùng chính: **tenant** (người thuê) và **manager** (chủ nhà/quản lý).
 
-* Hiểu và thực hành được các dịch vụ **Storage & Database**:
-  * S3 với bucket policy, versioning, lifecycle rules
-  * EBS snapshot và volume type selection
-  * RDS với cơ chế Multi-AZ failover và Read Replica
-  * DynamoDB với mô hình key-value và Global Secondary Index
+* Tái cấu trúc thành công dự án sang mô hình **monorepo** với pnpm workspaces (`apps/server`, `apps/client`, `packages/types`), giúp chia sẻ DTO và interface dễ dàng giữa frontend và backend.
 
-* Hiểu kiến trúc **Networking AWS**:
-  * Thiết kế VPC với public/private subnet
-  * Cấu hình Security Group (stateful) và NACL (stateless)
-  * Phân biệt Internet Gateway và NAT Gateway
+* Hoàn thành bản thiết kế kiến trúc tổng thể của ứng dụng kết hợp giữa NestJS, Next.js, PostgreSQL và các dịch vụ AWS.
 
-* Nắm vững **IAM**: tạo user, group, role, policy theo nguyên tắc least privilege.
+* Tích hợp thành công **Amazon Cognito**: khởi tạo User Pool, App Client, thực hiện luồng xác thực và phát hành JWT token.
 
-* Hoàn thành các bài lab AWS Academy và tích lũy thêm credits học tập.
+* Xây dựng và áp dụng thành công **`AuthGuard`** và **`RolesGuard`** tại backend NestJS, bảo vệ các endpoint và phân quyền chính xác theo vai trò (TENANT, MANAGER).
 
 ---
 
 ### Kiến thức / Kinh nghiệm học được:
 
-* Hiểu sự khác biệt quan trọng giữa Security Group (stateful, áp dụng cho instance) và NACL (stateless, áp dụng cho subnet).
-* Nắm được nguyên tắc least privilege trong IAM — chỉ cấp quyền tối thiểu cần thiết cho từng entity.
-* Học được cách đọc và áp dụng AWS Well-Architected Framework như một bộ guideline thiết kế hệ thống.
-* Thực hành thực tế giúp củng cố kiến thức lý thuyết nhanh hơn nhiều so với chỉ đọc tài liệu.
+* Hiểu cách tổ chức dự án dạng monorepo với pnpm workspaces, giúp quản lý nguồn mã nguồn tập trung và nhất quán type giữa client và server.
+* Nắm vững cơ chế ủy quyền xác thực cho Amazon Cognito — giúp giảm thiểu rủi ro tự lưu trữ và quản lý mật khẩu người dùng tại cơ sở dữ liệu nội bộ.
+* Nắm chắc phương pháp xây dựng Guard trong NestJS (ExecutionContext, Reflector) để triển khai Authentication & Role-based Access Control (RBAC).
+* Bước đầu áp dụng tư duy thiết kế hệ thống theo hướng chia nhỏ module (modular design) trước khi triển khai các tính năng chi tiết.

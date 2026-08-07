@@ -1,31 +1,30 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
-weight: 1
+date: 2026-08-03
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# QUẢN LÝ HÌNH ẢNH VỚI AMAZON S3 
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+Trong hệ thống quản lý cho thuê bất động sản, mỗi tài sản có thể bao gồm hàng loạt hình ảnh chất lượng cao (`photoUrls`) để mô tả chi tiết. Nếu lưu trữ tệp trực tiếp trên máy chủ ứng dụng (NestJS), dung lượng bộ nhớ sẽ tăng nhanh và dễ gây nghẽn I/O khi có nhiều request đồng thời. Vì vậy, nhóm lựa chọn **Amazon S3** làm dịch vụ lưu trữ hình ảnh chuyên dụng.
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Để tối ưu hiệu năng và bảo mật, quy trình xử lý hình ảnh được thiết kế theo hướng:
 
-Các điểm chính cần nắm:
+* Sử dụng cơ chế **S3 Presigned URL**: Frontend (Next.js) xin cấp URL có chữ ký thời hạn ngắn từ Backend, sau đó **tải ảnh trực tiếp lên Amazon S3** mà không cần truyền qua server trung gian, giúp giải phóng hoàn toàn tải CPU/RAM cho Backend NestJS.
+* Quản lý quyền truy cập S3 nghiêm ngặt thông qua **AWS IAM**, chỉ cấp quyền tạo chữ ký (`PutObject`) cho Backend.
+* Sau khi tải lên S3 thành công, URL của hình ảnh mới được lưu vào cơ sở dữ liệu (PostgreSQL/Prisma) để phục vụ việc truy vấn.
+* Tích hợp **Next.js Image (`<Image />`)** kết hợp cấu hình `remotePatterns` trong `next.config.js` để tự động nén, lazy-loading và tối ưu định dạng ảnh (WebP/AVIF) phía Client.
+* Xây dựng bộ ảnh mặc định (Placeholder Image) để xử lý mượt mà các trường hợp liên kết ảnh hỏng hoặc không tồn tại.
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+Trong quá trình triển khai, nhóm đã giải quyết vấn đề lỗi **403 Forbidden** do Bucket Policy và CORS trên S3 chưa cho phép domain của Next.js gọi request. Sau khi cấu hình chính xác `AllowedHeaders`, `AllowedOrigins` trên S3 Bucket và rà soát IAM Policy, hệ thống đã vận hành upload và hiển thị hình ảnh ổn định, tốc độ cao.
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+## Hình ảnh minh họa
 
-...Hình ảnh...
+![Overview](/images/3-BlogsPosted/S3_Image_Architecture.png)
 
-...Link...
+## Tham khảo
 
-...Hướng dẫn...
+- https://docs.aws.amazon.com/s3/
+- https://docs.aws.amazon.com/IAM/
+- https://nextjs.org/docs/app/api-reference/components/image

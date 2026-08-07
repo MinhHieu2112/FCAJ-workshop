@@ -1,39 +1,36 @@
 ---
 title: "Self-Assessment"
-date: 2024-01-01
+date: 2026-08-06
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+During my internship at **Amazon Web Services Vietnam Company Limited** as a **Workforce Bootcamp - First Cloud AI Journey** intern from **June 22, 2026** to **August 15, 2026**, I had the invaluable opportunity to learn, practice, and apply university knowledge to an enterprise-grade cloud working environment.
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+I participated in intensive training modules and built the **Real Estate Rental Management System** project integrated with core AWS cloud services (Amazon Cognito, Amazon S3, and Amazon Location Service). Through this hands-on journey, I significantly enhanced my technical skills in cloud architecture design, Fullstack engineering (NestJS & Next.js), problem-solving mindsets, and professional work ethic.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+Regarding workplace behavior, I consistently adhered to company regulations, completed assigned milestones on schedule, and actively collaborated with mentors and peers to elevate overall project deliverables.
 
-To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
+To objectively reflect on my 2-month internship, I evaluate my performance based on the following criteria:
 
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
-| 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
-| 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
-| 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
-| 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
-| 9   | **Professional conduct**            | Respecting colleagues, partners, and the work environment                                        | ✅    | ☐    | ☐       |
-| 10  | **Problem-solving skills**          | Identifying problems, proposing solutions, and showing creativity                                | ☐    | ✅    | ☐       |
-| 11  | **Contribution to project/team**    | Work effectiveness, innovative ideas, recognition from the team                                  | ✅    | ☐    | ☐       |
-| 12  | **Overall**                         | General evaluation of the entire internship period                                               | ✅    | ☐    | ☐       |
+| 1   | **Professional knowledge & skills** | Understanding AWS cloud services, applying NestJS/Next.js in practice, high-quality deliverables| ✅    | ☐    | ☐       |
+| 2   | **Ability to learn**                | Rapidly acquiring new AWS services (Cognito, S3, Location Service) and modern tech stacks       | ✅    | ☐    | ☐       |
+| 3   | **Proactiveness**                   | Independently researching AWS documentation, creating workshop content, proposing tech solutions  | ✅    | ☐    | ☐       |
+| 4   | **Sense of responsibility**         | Completing all worklog, proposal, and workshop milestones strictly on schedule                  | ✅    | ☐    | ☐       |
+| 5   | **Discipline**                      | Strict adherence to work hours, corporate guidelines, and professional communication standards   | ✅    | ☐    | ☐       |
+| 6   | **Progressive mindset**             | Actively receiving feedback from Mentors/Admins to continuously refine work quality               | ✅    | ☐    | ☐       |
+| 7   | **Communication**                   | Presenting system architecture, reporting progress, and writing clear technical documentation    | ☐    | ✅    | ☐       |
+| 8   | **Teamwork**                        | Supporting peers in the Bootcamp program and collaborating effectively in team settings         | ✅    | ☐    | ☐       |
+| 9   | **Professional conduct**            | Upholding AWS corporate culture standards and professional etiquette                             | ✅    | ☐    | ☐       |
+| 10  | **Problem-solving skills**          | Analyzing real-world challenges, optimizing cost and performance of cloud architecture            | ☐    | ✅    | ☐       |
+| 11  | **Contribution to project/team**    | Delivering a comprehensive, reusable AWS Workshop guide for the FCAJ initiative                  | ✅    | ☐    | ☐       |
+| 12  | **Overall**                         | General self-assessment of the entire 2-month internship journey                                | ✅    | ☐    | ☐       |
 
-### Needs Improvement
+### Areas for Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+* **Deepen Cloud Architecture Mastery**: Continue exploring advanced Serverless patterns (AWS Lambda, DynamoDB) and Infrastructure as Code (IaC via Terraform/AWS CDK).
+* **Enhance Technical Communication & Pitching**: Practice delivering technical solution presentations in English for future Tech Talks and architectural reviews.
+* **Optimize Time & Task Management**: Better balance theoretical AWS certification study with practical hands-on application development.
