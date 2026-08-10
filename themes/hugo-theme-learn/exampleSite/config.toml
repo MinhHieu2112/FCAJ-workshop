@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://minhhieu2112.github.io/FCAJ-workshop/"
 languageCode = "en-US"
 defaultContentLanguage = "en"
 
@@ -11,7 +11,7 @@ defaultContentLanguageInSubdir= true
 [params]
   editURL = "https://github.com/matcornic/hugo-theme-learn/edit/master/exampleSite/content/"
   description = "Documentation for Hugo Learn Theme"
-  author = "Mathieu Cornic"
+  author = "minhhieusgu@gmail.com"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
