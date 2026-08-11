@@ -1,32 +1,35 @@
 ---
-title: "Workshop"
+title: "Deploying a real estate management system on AWS"
 date: 2026-08-06
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Building a Cloud-Native Real Estate Rental Management System on AWS
-
 #### Overview
 
-In this hands-on workshop, you will build and configure key AWS cloud services for a **Real Estate Rental Management System** built with **NestJS** and **Next.js**.
+In this hands-on workshop, you will build and deploy a production-grade **Real Estate Rental Management System** built with **NestJS** and **Next.js** on AWS cloud infrastructure.
 
-You will learn how to integrate core enterprise AWS services into a modern web application:
-+ **Amazon Cognito** - User identity management, authentication, role-based access control (RBAC), and JWT token handling.
-+ **Amazon S3** - Secure media storage for property images using short-lived Presigned URLs for direct client uploads.
-+ **Amazon Location Service** - Address geocoding (converting address strings to coordinates) and interactive map rendering.
-+ **Amazon RDS (PostgreSQL + PostGIS)** - Managed relational database for rental application workflows, lease contracts, and spatial queries.
+You will set up networking, compute, database, authentication, storage, observability, and CI/CD automation using core enterprise AWS services:
+
+- **Amazon VPC, EC2, RDS** – Networking, compute, and managed relational database.
+- **Application Load Balancer (ALB) & AWS WAF** – HTTPS routing and layer-7 web application firewall.
+- **Amazon Cognito** – User identity management, authentication, and role-based access control (RBAC).
+- **Amazon S3** – Secure media storage for property images using short-lived presigned URLs.
+- **Amazon Location Service** – Address geocoding and interactive map rendering.
+- **Amazon SES** – Automated transactional email notifications.
+- **GitHub Actions & Amazon CloudWatch** – CI/CD pipeline automation and system observability.
 
 {{% notice tip %}}
-This workshop is designed to mirror real-world production setups, utilizing AWS SDK v3 with TypeScript and NestJS modular backend architecture.
+This workshop mirrors a real-world production deployment. Each section builds on the previous one, so it is recommended to follow the steps in order.
 {{% /notice %}}
 
 #### Content
 
-1. [System Architecture & Overview](5.1-Overview/)
-2. [Prerequisites & Environment Setup](5.2-Prerequisites/)
-3. [Authentication with Amazon Cognito](5.3-Cognito-Auth/)
-4. [Media Storage with Amazon S3](5.4-S3-Storage/)
-5. [Address Geocoding with Amazon Location Service](5.5-Location-Service/)
-6. [Resource Cleanup](5.6-Cleanup/)
+1. [System architecture & environment preparation](5.1-Overview/)
+2. [Database & backend server deployment](5.2-DB-Backend/)
+3. [Routing, security & HTTPS](5.3-Routing-Security/)
+4. [Authentication & authorization with Amazon Cognito](5.4-Cognito-Auth/)
+5. [Storage management & extended services](5.5-Storage-Services/)
+6. [CI/CD automation & monitoring](5.6-CICD-Monitoring/)
+7. [Resource cleanup](5.7-Cleanup/)

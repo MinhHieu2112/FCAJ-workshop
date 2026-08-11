@@ -43,9 +43,9 @@ Trong chương trình, các đội thi trình bày nhiều ý tưởng ứng d�
 
 #### 1. Ứng dụng Agentic AI trong đặt hàng trực tuyến
 
-Nhóm AI-Power tập trung giải quyết những bất tiện trong quy trình đặt hàng trực tuyến. Theo nhóm, người dùng thường phải trải qua nhiều bước như đăng ký tài khoản, nhập thông tin thanh toán và tìm kiếm món ăn qua nhiều giao diện khác nhau, làm giảm trải nghiệm sử dụng.
+Nhóm tập trung giải quyết những bất tiện trong quy trình đặt hàng trực tuyến. Theo nhóm, người dùng thường phải trải qua nhiều bước như đăng ký tài khoản, nhập thông tin thanh toán và tìm kiếm món ăn qua nhiều giao diện khác nhau, làm giảm trải nghiệm sử dụng.
 
-![Overview](/images/4-EventParticipated/AI-power.png)
+![Overview](/images/4-EventParticipated/Event_3/oneTeam.png)
 ***Hình 1. Kiến trúc AWS mà đội thi xây dựng.***
 
 Để giải quyết vấn đề này, nhóm xây dựng một AI Agent có khả năng hỗ trợ người dùng đặt hàng thông qua hội thoại tự nhiên. Một số điểm nổi bật của giải pháp gồm:
@@ -60,7 +60,7 @@ Giải pháp cho thấy Agentic AI có thể đóng vai trò như một trợ l�
 
 Một nhóm khác lựa chọn bài toán hỗ trợ phân tích dữ liệu và lập báo cáo tự động cho Data Analyst. Mục tiêu của nhóm là giảm thời gian thực hiện các công việc lặp lại và hỗ trợ quá trình ra quyết định.
 
-![Overview](/images/4-EventParticipated/Data-analysis.png)
+![Overview](/images/4-EventParticipated/Event_3/Data-analysis.png)
 ***Hình 2. Kiến trúc AWS mà đội thi xây dựng.***
 
 Giải pháp được xây dựng theo mô hình Proof of Concept (POC), trong đó AI Agent có khả năng:
@@ -71,6 +71,20 @@ Giải pháp được xây dựng theo mô hình Proof of Concept (POC), trong �
 
 Qua phần trình bày, nhóm cho thấy Agentic AI không chỉ hỗ trợ tự động hóa quy trình phân tích dữ liệu mà còn có thể phối hợp với con người để từng bước nâng cao chất lượng kết quả.
 
+#### 3. Ứng dụng Agentic AI theo dõi lưu lượng khách hàng
+Nhóm tập trung xây dựng giải pháp giải quyết vấn đề theo dõi lưu lượng hành khách ra vào ở các khu vực công ty, hãng sân bay.
+
+![Overview](/images/4-EventParticipated/Event_3/Guest.png)
+***Hình 3. Kiến trúc AWS mà đội thi xây dựng.***
+
+- Kiến trúc sử dụng Amazon Kinesis Video Streams để tiếp nhận dữ liệu hình ảnh từ camera và đưa vào môi trường xử lý trên AWS. 
+- Dữ liệu được xử lý thông qua ECS, Amazon ECR và SageMaker Endpoint nhằm phân tích hình ảnh và nhận diện thông tin liên quan đến lưu lượng khách hàng. 
+- Các kết quả và dữ liệu sự kiện được lưu trữ bằng Amazon S3 và DynamoDB. 
+CloudFront, API Gateway và AWS Lambda đảm nhiệm việc cung cấp và xử lý các yêu cầu từ phía người dùng 
+- AgentCore Runtime kết hợp Amazon Bedrock hỗ trợ xây dựng Agent có khả năng phân tích và tương tác với dữ liệu. 
+- Tích hợp Cognito, IAM, Secrets Manager, CloudTrail và CloudWatch để quản lý xác thực, phân quyền, bảo mật và giám sát hệ thống. 
+
+Qua kiến trúc này, em có thể hình dung rõ hơn cách các dịch vụ AWS được kết hợp thành một hệ thống hoàn chỉnh thay vì sử dụng từng dịch vụ một cách độc lập.
 
 ## Những kiến thức tiếp thu
 
@@ -111,11 +125,10 @@ Sau khi tham gia sự kiện, em rút ra một số bài học cho bản thân:
 
 ![FCAJ x Agentic AI Build Week Event](https://img.youtube.com/vi/hz32VBrvW7M/maxresdefault.jpg)
 
-***Hình 3. Toàn cảnh sự kiện FCAJ x Agentic AI Build Week.***
+***Hình 4. Toàn cảnh sự kiện FCAJ x Agentic AI Build Week.***
 
-![Overview](/images/4-EventParticipated/event_3.jpeg)
-
-***Hình 4. Hình chụp tập thể cùng các đội thi Hackathon***
+![Overview](/images/4-EventParticipated/Event_3/Meeting.jpeg)
+***Hình 5. Hình chụp tập thể cùng các đội thi Hackathon***
 
 ## Kết luận
 

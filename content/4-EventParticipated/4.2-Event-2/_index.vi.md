@@ -10,77 +10,113 @@ pre: " <b> 4.2. </b> "
 
 ### Mục Đích Sự Kiện
 
-- Giúp sinh viên hiểu cách các doanh nghiệp thiết kế và vận hành hệ thống trên nền tảng AWS, đồng thời cập nhật yêu cầu tuyển dụng và định hướng nghề nghiệp trong lĩnh vực Cloud.
-- Cung cấp góc nhìn toàn cảnh về nhu cầu tuyển dụng, tiêu chuẩn kỹ thuật thực tế đối với kỹ sư Cloud trẻ và các kênh tiếp cận cơ hội nghề nghiệp trong ngành.
-- Tiếp nối tinh thần *"Pay it Forward"* của cộng đồng AWS First Cloud AI Journey – nơi các thế hệ đi trước quay lại chia sẻ, định hướng và hỗ trợ kỹ năng cho thế hệ tiếp nối.
+- Giúp em hiểu rõ hơn cách doanh nghiệp xây dựng và vận hành hệ thống trên nền tảng AWS, cũng như những yêu cầu thực tế đối với sinh viên muốn theo đuổi lĩnh vực Cloud.
+- Tìm hiểu thêm về xu hướng tuyển dụng, các kỹ năng mà doanh nghiệp đang kỳ vọng ở kỹ sư Cloud trẻ và cách chủ động tiếp cận các cơ hội nghề nghiệp.
+- Có cơ hội trực tiếp trao đổi với các chuyên gia đang làm việc trong lĩnh vực Cloud và hiểu thêm về tinh thần chia sẻ kiến thức của cộng đồng AWS First Cloud AI Journey.
 
 ### Danh Sách Diễn Giả
 
-- **Mr.Nguyen Gia Hung** - Head of Solution Architect, AWS Việt Nam (Founder của AWS First Cloud AI Journey)
-- **Mr.Khang Nguyen** - Solution Architect, Cloud Kinetics
-- **Ms.Nhu Tran** - Account Manager, Amazon Web Services Việt Nam
-- **Mr.Vinh Banh** - Senior Data Engineer, Renova Cloud
+![AWS Study Tour Event](https://img.youtube.com/vi/FKtMkUqyny4/maxresdefault.jpg)
+
+***Hình 1: Toàn cảnh sự kiện Study Tour "AWS: Enterprise Cloud Architectures and Industry Application" tại văn phòng AWS Việt Nam.***
+
+- **Nguyễn Trần Minh Duy** – Industry Liaison Officer, Swinburne Việt Nam.
+- **Nguyễn Gia Hưng** – Head of Solution Architecture, AWS Việt Nam.
+- **Khang Nguyen** – Solution Architect, Cloud Kinetics.
+- **Vinh Banh** – Senior Data Engineer, Renova Cloud.
 
 ### Nội Dung Nổi Bật
 
-#### Thực trạng và tiêu chuẩn tuyển dụng ngành Cloud
+#### 1. Kết nối giáo dục - Doanh nghiệp và tinh thần cộng đồng
 
-- **Tiêu chuẩn đầu vào gia tăng:** Yêu cầu dành cho các vị trí Thực tập sinh (Intern) hay Fresher ngày càng khắt khe. Ngay từ vị trí Intern, nhà tuyển dụng đã kỳ vọng ứng viên nắm rõ kiến thức về Containerization, Orchestration (như Kubernetes/K8s) và nền tảng Mạng (Networking).
-- **Dịch chuyển hệ thống lõi lên Cloud:** Xu hướng đưa cả hệ thống Core Banking, hệ thống tài chính, bảo hiểm và thương mại điện tử lên Cloud đòi hỏi kỹ sư trẻ phải có tư duy vững chắc về bảo mật, tính sẵn sàng cao và khả năng mở rộng.
+Phần chia sẻ của **anh Nguyễn Trần Minh Duy** giúp em hiểu rõ hơn về mối liên hệ giữa chương trình đào tạo tại trường và nhu cầu thực tế của doanh nghiệp.
 
-#### Giải mã thị trường tuyển dụng "Ẩn"
+Thông qua chương trình Study Tour, sinh viên Swinburne có cơ hội được trực tiếp đến văn phòng AWS để tìm hiểu môi trường làm việc và lắng nghe kinh nghiệm từ những người đang làm việc trong ngành. Bên cạnh đó, việc tích hợp nội dung **AWS Academy** vào môn học *COS2019 Cloud Computing Architecture* giúp sinh viên có kiến thức nền tảng trước khi tiếp cận các tình huống thực tế.
 
-- **Thực tế kênh tuyển dụng:** Có đến **90% - 100%** nhu cầu tuyển dụng thực tế trong lĩnh vực Cloud chuyên sâu không xuất hiện trên các trang tin tuyển dụng đại trà.
-- **Tuyển dụng qua mạng lưới nội bộ:** Phần lớn các cơ hội việc làm đến từ tuyển dụng nội bộ, chương trình tiến cử và mối quan hệ cá nhân.
-- **Tăng cường sự hiện diện:** Việc chủ động tham gia và đóng góp cho các cộng đồng chuyên môn là chìa khóa để tiếp cận các công việc chất lượng mà không cần thông qua các trang đăng tin truyền thống.
+Một điểm em ấn tượng là tinh thần **"Pay it Forward"** của cộng đồng AWS First Cloud AI Journey. Những người đã có kinh nghiệm quay lại chia sẻ kiến thức, kinh nghiệm và định hướng cho các thế hệ sinh viên tiếp theo. Điều này cho em thấy việc học trong ngành công nghệ không chỉ diễn ra trong lớp học mà còn thông qua cộng đồng và sự kết nối giữa những người đi trước với người mới bắt đầu.
 
-#### Xu hướng kiến trúc đám mây doanh nghiệp
+#### 2. Thực trạng thị trường tuyển dụng Cloud/AI
 
-- Các doanh nghiệp lớn đang dịch chuyển mạnh mẽ từ việc ứng dụng Cloud ở quy mô nhỏ sang triển khai toàn bộ hạ tầng cốt lõi trên AWS.
-- Việc thiết kế kiến trúc hệ thống bắt buộc phải tuân thủ nghiêm ngặt các tiêu chuẩn về an toàn dữ liệu, tối ưu chi phí vận hành và phân bổ tài tài nguyên linh hoạt.
+![Part-1](/images/4-EventParticipated/Event_2/Part-1.png)
+***Hình 2: Phần chia sẻ của anh Nguyễn Gia Hưng.***
+Phần chia sẻ của **anh Nguyễn Gia Hưng** tập trung nhiều vào yêu cầu của thị trường tuyển dụng và cách sinh viên chuẩn bị cho sự nghiệp Cloud.
+
+Một điều khiến em khá bất ngờ là yêu cầu dành cho vị trí Intern hiện nay không chỉ dừng lại ở việc biết sử dụng một số dịch vụ AWS. Các kiến thức nền như **Linux, Networking, Docker và Kubernetes** ngày càng trở nên quan trọng. Qua đó, em nhận ra rằng việc chỉ học từng dịch vụ AWS riêng lẻ là chưa đủ nếu muốn hiểu và làm việc với một hệ thống Cloud thực tế.
+
+Anh cũng chia sẻ về **Hidden Job Market**, trong đó nhiều cơ hội việc làm không nhất thiết được đăng công khai mà đến từ referral, giới thiệu nội bộ và các mối quan hệ trong cộng đồng. Điều này khiến em nhận ra rằng ngoài việc cải thiện năng lực kỹ thuật, việc tham gia các sự kiện, cộng đồng và xây dựng network cũng là một phần quan trọng trong quá trình tìm kiếm cơ hội nghề nghiệp.
+
+#### 3. Enterprise Cloud Architecture và bài toán triển khai thực tế
+
+![Part-2](/images/4-EventParticipated/Event_2/Part-2.png)
+***Hình 3: Phần chia sẻ của đại diện Cloud Kinetics.***
+
+Phần trình bày từ **đại diện Cloud Kinetics** giúp em có cái nhìn rõ hơn về cách Cloud được áp dụng trong các doanh nghiệp lớn.
+
+Các doanh nghiệp trong lĩnh vực tài chính, ngân hàng, bảo hiểm và thương mại điện tử đang có xu hướng đưa những hệ thống quan trọng lên Cloud, trong đó có cả các hệ thống lõi. Đây không còn đơn giản là việc chuyển một ứng dụng từ server truyền thống lên AWS mà phải giải quyết nhiều vấn đề về **bảo mật, High Availability, khả năng mở rộng và Legacy Migration**.
+
+Điều em rút ra là khi thiết kế một kiến trúc Cloud cho doanh nghiệp, việc lựa chọn dịch vụ chỉ là một phần của bài toán. Kiến trúc cần được thiết kế dựa trên yêu cầu thực tế của hệ thống, đồng thời cân bằng giữa khả năng mở rộng, độ tin cậy, bảo mật và chi phí vận hành.
+
+#### 4. Tư duy giải quyết vấn đề và phát triển sự nghiệp
+
+![Part-3](/images/4-EventParticipated/Event_2/Part-3.png)
+***Hình 4: Phần chia sẻ của chị Như về tư duy giải quyết vấn đề.***
+
+Một bài học em thấy khá hữu ích là khi gặp một vấn đề kỹ thuật hoặc cần hỏi người có kinh nghiệm, không nên chỉ đưa ra một câu hỏi quá chung chung. Thay vào đó, cần xác định vấn đề, đưa ra **assumption**, thử phân tích nguyên nhân và sau đó đặt câu hỏi cụ thể. Cách tiếp cận này giúp người hỗ trợ hiểu nhanh vấn đề và đưa ra hướng giải quyết phù hợp hơn.
+
+Bên cạnh đó, các diễn giả cũng nhấn mạnh rằng kỹ sư Cloud không làm việc hoàn toàn độc lập. Một sản phẩm thực tế cần sự phối hợp giữa kỹ thuật và các bộ phận như **Business, Marketing** để đảm bảo giải pháp được xây dựng không chỉ đúng về mặt kỹ thuật mà còn tạo ra giá trị cho doanh nghiệp.
+
+Cuối cùng là bài học về **Consistency**. Việc phát triển trong ngành công nghệ cần một quá trình học tập và thực hành liên tục. Thay vì chỉ học khi có yêu cầu hoặc trước một kỳ thi, em cần duy trì việc học, thử nghiệm và rút kinh nghiệm sau mỗi dự án hoặc sự kiện.
 
 ### Những Gì Học Được
 
-#### Tư duy thiết kế & năng lực kỹ thuật
+#### Về kiến thức kỹ thuật
 
-- Qua phần chia sẻ của các diễn giả, em nhận thấy kiến thức nền tảng như Linux, Networking, Docker, Kubernetes và Infrastructure as Code vẫn là yêu cầu quan trọng đối với kỹ sư Cloud. Đây cũng là những kỹ năng cần được đầu tư trước khi tìm hiểu các dịch vụ AWS chuyên sâu.
-- Khi đối mặt với bài toán kỹ thuật phức tạp, cần biết đưa ra các giả định, tinh chỉnh góc nhìn và thu hẹp phạm vi để người hỗ trợ dễ dàng tư vấn lời giải chính xác.
+Qua sự kiện, em nhận ra rằng nền tảng kỹ thuật vẫn đóng vai trò rất quan trọng đối với một kỹ sư Cloud. Các kiến thức như **Linux, Networking, Docker, Kubernetes và Infrastructure as Code** cần được củng cố trước khi đi sâu vào các dịch vụ AWS.
 
-#### Định hướng phát triển sự nghiệp
+Đặc biệt, phần chia sẻ về Enterprise Cloud giúp em hiểu rằng một hệ thống thực tế cần được quan tâm đồng thời đến nhiều yếu tố như bảo mật, khả năng mở rộng, tính sẵn sàng và chi phí, thay vì chỉ tập trung vào việc hệ thống có chạy được hay không.
 
-- **Chủ động tạo dựng sự hiện diện:** Năng lực kỹ thuật cần đi đôi với sự chủ động kết nối. Xây dựng uy tín cá nhân trong cộng đồng giúp mở ra nhiều cơ hội nghề nghiệp dài hạn.
-- **Sự kiên trì:** Thành công và sự may mắn trong sự nghiệp là kết quả của một quá trình học tập kiên trì, tích lũy liên tục chứ không tự nhiên xuất hiện.
-- **Làm việc nhóm liên ngành:** Dự án thực tế đòi hỏi sự phối hợp giữa đội ngũ kỹ thuật và các bộ phận nghiệp vụ (Business, Marketing) để đảm bảo sản phẩm tạo ra đúng giá trị kinh doanh.
+#### Về cách tiếp cận vấn đề
 
-### Ứng Dụng Vào Project
+Trước đây, khi gặp vấn đề kỹ thuật, em thường có xu hướng tìm kiếm trực tiếp câu trả lời. Sau buổi chia sẻ, em nhận ra rằng việc xác định vấn đề và đưa ra giả định trước khi đặt câu hỏi sẽ giúp quá trình tìm hiểu hiệu quả hơn.
 
-- **Tối ưu quản lý và phân phối tệp phương tiện:** Sau buổi chia sẻ, em quyết định tách việc lưu trữ hình ảnh ra khỏi máy chủ ứng dụng và sử dụng Amazon S3. Điều này giúp Backend chỉ xử lý nghiệp vụ thay vì phải lưu trữ các tệp dung lượng lớn.
-- **Tích hợp dịch vụ vị trí địa lý:** Đối với chức năng quản lý bất động sản, em lựa chọn Amazon Location Service để hỗ trợ tìm kiếm địa chỉ và hiển thị vị trí trên bản đồ thay vì sử dụng các dịch vụ bản đồ bên thứ ba.
-- **Xác thực và phân quyền tập trung:** Em cũng triển khai **AWS Cognito User Pool** để quản lý định danh người dùng, cấp phát JWT Tokens và kết hợp với NestJS Guards để phân quyền dựa trên vai trò (RBAC) cho người dùng trên nền tảng Next.js.
-- **Tư duy thiết kế hạ tầng mở rộng:** Định hướng đóng gói ứng dụng bằng Docker và chuẩn bị lộ trình quản lý container để đáp ứng khả năng tự động mở rộng khi lượng truy cập tăng cao.
+Thay vì hỏi:
+
+> "Tại sao hệ thống của em không chạy?"
+
+em cần xác định rõ hơn:
+
+> "Em đang giả định vấn đề nằm ở network vì container vẫn chạy nhưng không thể kết nối tới service X. Em đã kiểm tra A và B nhưng chưa xác định được nguyên nhân ở đâu."
+
+Cách tư duy này sẽ giúp em làm việc hiệu quả hơn khi trao đổi với các thành viên có kinh nghiệm trong team.
+
+#### Về định hướng nghề nghiệp
+
+Sự kiện giúp em nhận ra rằng năng lực kỹ thuật và khả năng kết nối cần được phát triển song song. Việc tham gia các sự kiện công nghệ, cộng đồng và chủ động trao đổi với những người trong ngành giúp em hiểu thêm về công việc thực tế cũng như mở rộng network.
+
+Bên cạnh đó, em cũng cần duy trì việc học lâu dài thay vì chỉ tập trung hoàn thành các môn học ở trường. Những công nghệ như Docker, Kubernetes, CI/CD và các mô hình triển khai Cloud cần được tiếp tục tìm hiểu thông qua project thực tế.
 
 ### Trải Nghiệm Trong Event
 
-Đây là lần đầu tiên em tham gia một sự kiện kỹ thuật được tổ chức trực tiếp tại văn phòng AWS Việt Nam. Không khí của buổi chia sẻ khá cởi mở, các diễn giả dành nhiều thời gian trao đổi với sinh viên về kinh nghiệm triển khai dự án cũng như định hướng nghề nghiệp.
+Đây là lần đầu tiên em tham gia một sự kiện kỹ thuật được tổ chức trực tiếp tại văn phòng AWS Việt Nam. So với việc chỉ học AWS thông qua tài liệu hoặc các khóa học trực tuyến, việc được trực tiếp nghe các kỹ sư đang làm việc trong ngành chia sẻ giúp em có cái nhìn thực tế hơn về công việc Cloud.
 
-#### Học hỏi từ các chuyên gia đầu ngành
-- Được trực tiếp lắng nghe chia sẻ từ anh Nguyễn Gia Hưng cùng các chuyên gia giải pháp từ Cloud Kinetics và Renova Cloud về cách triển khai hạ tầng đám mây cho các hệ thống lớn.
-- Tiếp thu cái nhìn thực tế về tiêu chuẩn năng lực của kỹ sư Cloud trong giai đoạn hiện tại.
+Điều em ấn tượng nhất là nội dung của sự kiện không chỉ tập trung vào công nghệ. Các diễn giả chia sẻ cả về tuyển dụng, cách làm việc, cách đặt câu hỏi và cách xây dựng mối quan hệ trong ngành. Điều này giúp em nhận ra rằng để trở thành một kỹ sư Cloud, kiến thức kỹ thuật chỉ là một phần của quá trình phát triển.
 
-#### Trao đổi và kết nối cộng đồng
-- Bầu không khí cởi mở giúp sinh viên tự tin đặt câu hỏi, thảo luận về các khúc mắc kỹ thuật cũng như định hướng sự nghiệp.
-- Điều khiến em ấn tượng là tinh thần Pay it Forward của cộng đồng AWS First Cloud AI Journey. Nhiều anh chị từng tham gia chương trình quay trở lại để chia sẻ kinh nghiệm và giải đáp câu hỏi cho các bạn sinh viên.
+#### Học hỏi từ các chuyên gia
+
+Thông qua các phần chia sẻ của Swinburne, AWS, Cloud Kinetics và Renova Cloud, em có cơ hội nhìn vấn đề từ nhiều góc độ khác nhau: từ giáo dục và chuẩn bị kiến thức, yêu cầu tuyển dụng, thiết kế hệ thống doanh nghiệp cho đến cách làm việc và phát triển sự nghiệp.
+
+Đặc biệt, phần chia sẻ về **Pay it Forward** khiến em ấn tượng vì nhiều anh chị từng tham gia các chương trình trước đó quay trở lại để chia sẻ kinh nghiệm với sinh viên. Đây cũng là động lực để em chủ động tham gia nhiều hơn vào các cộng đồng công nghệ thay vì chỉ tự học một mình.
 
 #### Bài học rút ra
-- Cần có tầm nhìn sự nghiệp dài hạn, không dừng lại ở mức hoàn thành môn học mà phải liên tục cập nhật các công nghệ thực chiến như Kubernetes, CI/CD, Serverless.
-- Sau buổi chia sẻ, em nhận ra rằng kiến thức kỹ thuật chỉ là một phần. Việc chủ động tham gia cộng đồng, xây dựng mối quan hệ và duy trì việc học liên tục cũng quan trọng không kém khi tìm kiếm cơ hội nghề nghiệp.
 
-#### Hình ảnh tham gia sự kiện
+Sau sự kiện, em có ba thay đổi chính trong cách nhìn về Cloud:
 
-![AWS Study Tour Event](https://img.youtube.com/vi/FKtMkUqyny4/maxresdefault.jpg)
-***Hình 1: Toàn cảnh sự kiện Study Tour "AWS: Enterprise Cloud Architectures and Industry Application" tại văn phòng AWS Việt Nam.***
+- **Về kỹ thuật:** Cần củng cố Linux, Networking, Docker và Kubernetes thay vì chỉ tập trung vào từng dịch vụ AWS.
+- **Về cách làm việc:** Khi gặp vấn đề cần phân tích và đưa ra assumption trước khi đặt câu hỏi.
+- **Về sự nghiệp:** Cần kết hợp giữa năng lực chuyên môn, networking và sự kiên trì trong quá trình học tập.
 
-![Overview](/images/4-EventParticipated/event_2.jpeg)
-***Hình 2: Hình ảnh tập thể chụp cùng các diễn giả sự kiện.***
+![Meeting](/images/4-EventParticipated/Event_2/Meeting.jpeg)
 
-> Tổng thể, sự kiện không chỉ củng cố kiến thức kỹ thuật về AWS mà còn giúp em định hình rõ ràng tư duy thiết kế hệ thống SaaS cho dự án thực tập, đồng thời thay đổi phương pháp tiếp cận cơ hội nghề nghiệp trong tương lai.
+***Hình 5: Hình ảnh tập thể chụp cùng các diễn giả sự kiện.***
+
+> Tổng thể, sự kiện giúp em có cái nhìn thực tế hơn về Cloud từ nhiều góc độ: quá trình học tập, yêu cầu tuyển dụng, kiến trúc doanh nghiệp và cách phát triển sự nghiệp. Những nội dung này cũng giúp em nhìn lại project của mình và có định hướng rõ hơn về việc xây dựng một hệ thống Cloud có khả năng mở rộng thay vì chỉ tập trung làm cho ứng dụng hoạt động.

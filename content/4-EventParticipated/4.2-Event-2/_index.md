@@ -6,87 +6,106 @@ chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Enterprise cloud architectures and industry application
+# Enterprise Cloud Architectures and Industry Application
 
 ### Event objectives
 
-- Help students understand how enterprises design and operate systems on AWS while providing insights into industry hiring requirements and career opportunities in cloud computing.
-- Provide an overview of the current job market, practical technical expectations for junior cloud engineers, and effective ways to access career opportunities.
-- Continue the *"Pay it Forward"* spirit of the AWS First Cloud AI Journey community, where experienced members return to share their knowledge, provide guidance, and support the next generation.
+- Help students better understand how enterprises build and operate systems on AWS, as well as the practical expectations for students pursuing a cloud career.
+- Explore current hiring trends, technical skills expected from junior cloud engineers, and proactive approaches to accessing career opportunities.
+- Engage directly with industry experts working in cloud computing and experience the knowledge-sharing spirit of the AWS First Cloud AI Journey community.
 
 ### Speakers
 
-- **Mr.Nguyen Gia Hung** - Head of Solution Architect, AWS Việt Nam (Founder của AWS First Cloud AI Journey)
-- **Mr.Khang Nguyen** - Solution Architect, Cloud Kinetics
-- **Ms.Nhu Tran** - Account Manager, Amazon Web Services Việt Nam
-- **Mr.Vinh Banh** - Senior Data Engineer, Renova Cloud
-- Solution Architects and representatives from AWS partners **Cloud Kinetics** and **Renova Cloud**
+![AWS Study Tour Event](https://img.youtube.com/vi/FKtMkUqyny4/maxresdefault.jpg)
 
-### Key topics
+***Figure 1. Overview of the "AWS: Enterprise Cloud Architectures and Industry Application" study tour at the AWS Vietnam office.***
 
-#### Current cloud hiring trends
+- **Nguyen Tran Minh Duy** – Industry Liaison Officer, Swinburne Vietnam.
+- **Nguyen Gia Hung** – Head of Solution Architecture, AWS Vietnam.
+- **Khang Nguyen** – Solution Architect, Cloud Kinetics.
+- **Vinh Banh** – Senior Data Engineer, Renova Cloud.
 
-- **Rising entry requirements:** Expectations for intern and fresher positions are becoming increasingly demanding. Even internship candidates are expected to have a solid understanding of containerization, orchestration (such as Kubernetes), and networking fundamentals.
-- **Migration of core systems to the cloud:** Organizations are moving core banking, finance, insurance, and e-commerce systems to the cloud, requiring engineers to understand security, high availability, and scalability.
+### Event highlights
 
-#### Understanding the hidden job market
+#### 1. Education-enterprise connection and community spirit
 
-- **Hiring channels:** Approximately **90%–100%** of specialized cloud job opportunities are not advertised on public recruitment platforms.
-- **Internal referrals:** Many positions are filled through employee referrals, professional networks, and community connections.
-- **Community engagement:** Actively participating in technical communities is an effective way to discover valuable career opportunities.
+The sharing session by **Mr. Nguyen Tran Minh Duy** provided deeper insights into the connection between academic university coursework and actual industry demands.
 
-#### Enterprise cloud architecture trends
+Through the Study Tour program, Swinburne students had the opportunity to visit the AWS Vietnam office directly, explore the professional working environment, and learn from industry practitioners. Additionally, integrating **AWS Academy** curriculum into the *COS2019 Cloud Computing Architecture* course helps students build a solid foundation before tackling real-world scenarios.
 
-- Large enterprises are expanding from small-scale cloud adoption to deploying their core infrastructure on AWS.
-- System architectures must be designed with a strong focus on data security, cost optimization, and efficient resource allocation.
+One of the most impressive highlights was the **"Pay it Forward"** spirit of the AWS First Cloud AI Journey community. Experienced alumni return to share knowledge, offer guidance, and mentor the next generation of students. This demonstrated that learning in tech occurs not only in classrooms but also through active community connections.
 
-### What I learned
+#### 2. Current state of the Cloud/AI hiring market
 
-#### Technical mindset and engineering skills
+![Part-1](/images/4-EventParticipated/Event_2/Part-1.png)
+***Figure 2. Presentation by Mr. Nguyen Gia Hung.***
 
-- From the speakers' presentations, I realized that fundamental knowledge such as Linux, networking, Docker, Kubernetes, and Infrastructure as Code remains essential for cloud engineers. These foundations should be mastered before exploring more advanced AWS services.
-- When solving complex technical problems, it is important to make reasonable assumptions, refine the problem scope, and ask focused questions so that others can provide effective guidance.
+The presentation by **Mr. Nguyen Gia Hung** focused heavily on industry hiring requirements and how students can prepare for a cloud engineering career.
 
-#### Career development
+A notable insight was that expectations for intern positions now extend beyond knowing a few basic AWS services. Core foundational topics such as **Linux, Networking, Docker, and Kubernetes** have become essential. Learning individual AWS services alone is insufficient without understanding how real-world cloud systems operate as a whole.
 
-- **Build a professional presence:** Technical skills should be complemented by active networking. Building credibility within the community can create long-term career opportunities.
-- **Consistency matters:** Career growth is the result of continuous learning and persistent effort rather than luck.
-- **Cross-functional collaboration:** Real-world projects require close cooperation between engineering teams and business departments to deliver solutions that meet business needs.
+He also introduced the **Hidden Job Market**, highlighting that many job opportunities are not publicly posted on job boards but come from internal referrals and community networking. Building professional networks alongside technical competence is vital for career growth.
 
-### Applying the knowledge to my project
+#### 3. Enterprise cloud architecture and practical implementation
 
-- **Optimizing image storage:** After attending the event, I decided to separate image storage from the application server by using Amazon S3. This allows the backend to focus on business logic instead of handling large media files.
-- **Location-based features:** For the property management module, I integrated Amazon Location Service to support address search and interactive maps instead of relying on third-party mapping services.
-- **Centralized authentication and authorization:** I implemented Amazon Cognito User Pool to manage user identities and issue JWTs, then integrated NestJS Guards to enforce role-based access control (RBAC) in the Next.js application.
-- **Scalable infrastructure:** I planned to containerize the application with Docker as a foundation for future container orchestration and horizontal scaling.
+![Part-2](/images/4-EventParticipated/Event_2/Part-2.png)
+***Figure 3. Presentation by the Cloud Kinetics representative.***
+
+The presentation from the **Cloud Kinetics representative** offered a clear perspective on how cloud computing is applied across large enterprises.
+
+Organizations in banking, finance, insurance, and e-commerce are migrating critical core systems to the cloud. This transition requires addressing complex challenges around **security, High Availability, scalability, and legacy migration** rather than simply moving code to virtual servers.
+
+Designing enterprise cloud architecture requires balancing system requirements, scalability, reliability, security, and operational cost.
+
+#### 4. Problem-solving mindset and career development
+
+![Part-3](/images/4-EventParticipated/Event_2/Part-3.png)
+***Figure 4. Presentation by Ms. Nhu on problem-solving mindset.***
+
+A key lesson shared was the approach to asking technical questions. When facing an obstacle, engineers should avoid vague questions. Instead, they should define the problem, state explicit **assumptions**, analyze potential root causes, and ask focused questions.
+
+Furthermore, speakers emphasized that cloud engineers do not work in isolation. Real-world applications require close collaboration between engineering, **business, and marketing** teams to ensure technical solutions deliver true business value.
+
+Finally, the session underscored **consistency**. Growth in software engineering requires continuous learning and practice rather than cramming before exams or interviews.
+
+### Key takeaways
+
+#### Technical knowledge
+
+Core fundamentals remain paramount for cloud engineers. Concepts in **Linux, Networking, Docker, Kubernetes, and Infrastructure as Code** should be consolidated before diving deep into specialized AWS services. Enterprise cloud systems must evaluate security, scalability, availability, and cost holistically.
+
+#### Problem-solving approach
+
+Instead of asking broad questions such as:
+
+> "Why is my system not running?"
+
+a more structured approach involves framing specific assumptions:
+
+> "I assume the issue stems from networking because the container is running but cannot connect to service X. I have verified A and B, but have not identified the root cause."
+
+This structured approach streamlines technical troubleshooting and teamwork.
+
+#### Career growth
+
+Technical expertise and networking capability should be cultivated in parallel. Engaging in tech communities and maintaining long-term curiosity beyond university courses are essential for sustained career growth.
 
 ### Event experience
 
-This was my first time attending a technical event at the AWS Vietnam office. The atmosphere was welcoming, and the speakers spent a considerable amount of time discussing real-world projects and sharing career advice with students.
+Attending a technical event in person at the AWS Vietnam office provided a grounded, practical perspective compared to online courses. Listening directly to active industry engineers highlighted that technical knowledge is just one part of becoming a successful cloud engineer; problem-solving mindset, communication, and community connections are equally crucial.
 
-#### Learning from industry experts
+#### Learning from experts
 
-- I had the opportunity to learn directly from Mr. Nguyen Gia Hung and solution architects from Cloud Kinetics and Renova Cloud about designing cloud infrastructure for enterprise-scale systems.
-- Their presentations provided practical insights into the skills and knowledge expected of cloud engineers today.
+Presentations across Swinburne, AWS, Cloud Kinetics, and Renova Cloud provided multi-faceted viewpoints covering education, hiring expectations, enterprise architecture, and career progression. The **Pay it Forward** culture inspired active community participation.
 
-#### Networking and community engagement
+#### Summary takeaways
 
-- The open discussion sessions encouraged students to ask questions, exchange technical ideas, and seek career advice.
-- One of the most impressive aspects of the event was the **Pay it Forward** spirit of the AWS First Cloud AI Journey community. Many former participants returned to share their experiences and mentor new students.
+- **Technical:** Reinforce Linux, Networking, Docker, and Kubernetes fundamentals.
+- **Methodology:** Analyze context and state clear assumptions before asking for technical support.
+- **Career:** Combine technical proficiency, networking, and continuous learning.
 
-#### Key takeaways
+![Meeting](/images/4-EventParticipated/Event_2/Meeting.jpeg)
 
-- Building a long-term career requires continuous learning beyond university courses, especially in areas such as Kubernetes, CI/CD, and serverless computing.
-- I also realized that technical knowledge alone is not enough. Actively participating in professional communities, expanding my network, and maintaining a continuous learning mindset are equally important for future career development.
+***Figure 5. Group photo with speakers and participants.***
 
-#### Event photos
-
-![AWS Study Tour Event](https://img.youtube.com/vi/FKtMkUqyny4/maxresdefault.jpg)
-
-***Figure 1. Overview of the "Enterprise cloud architectures and industry application" study tour at the AWS Vietnam office.***
-
-![Overview](/images/4-EventParticipated/event_2.jpeg)
-
-***Figure 2. Participating in the study tour at the AWS Vietnam office.***
-
-> Overall, the event strengthened my understanding of AWS technologies while helping me shape the system design mindset for my project. It also broadened my perspective on professional development and future career opportunities.
+> Overall, the event provided a practical overview of cloud computing from multiple perspectives: education, hiring standards, enterprise architecture, and career growth. These takeaways helped refine the system design mindset for my internship project, focusing on scalable cloud architecture rather than just basic functionality.

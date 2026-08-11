@@ -23,7 +23,7 @@ pre: " <b> 4.1. </b> "
 - **Rapid AI adoption:** AI agents and AI coding assistants are significantly improving software development productivity. As a result, many companies are raising recruitment standards and placing greater emphasis on candidates who can effectively use AI tools.
 - **Infrastructure complexity:** As cloud systems grow, managing infrastructure becomes increasingly complex. AI alone cannot fully understand the complete context of source code, cloud infrastructure, and business logic within large enterprise systems.
 
-### Key takeaways
+### Key take-aways
 
 - **AI will not completely replace engineers:** Roles such as **Cloud Engineer**, **DevOps Engineer**, **Solution Architect**, and **Site Reliability Engineer** remain essential because they require practical experience, incident response, architectural decision-making, and business understanding.
 - **Develop AI collaboration skills:** Rather than viewing AI as a replacement, engineers should learn how to use AI to automate repetitive tasks while focusing on architecture design, optimization, and operational reliability.
@@ -70,5 +70,5 @@ When deploying enterprise AI solutions such as **Amazon Q Business** or an **MCP
 - **Capacity planning:** Infrastructure costs should be estimated based on the expected number of users and projected monthly data transfer before deploying the solution in production.
 
 ## 4. Event photos
-![Overview](/images/4-EventParticipated/event_1.jpeg)
+![Overview](/images/4-EventParticipated/Event_1/Meeting.jpeg)
 ***Figure 1. Group photo at the FCAJ Community Day - June 2026 event.***

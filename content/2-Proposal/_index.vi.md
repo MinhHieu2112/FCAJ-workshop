@@ -27,13 +27,15 @@ Về mặt kỹ thuật, hệ thống được xây dựng trên kiến trúc mo
 
 Thị trường cho thuê nhà ở hiện nay vẫn phụ thuộc nhiều vào các kênh không chính thức như nhóm mạng xã hội, tin nhắn cá nhân hoặc môi giới trung gian. Quy trình từ đăng tin, tìm kiếm, thỏa thuận đến ký hợp đồng thường kéo dài, thiếu công cụ quản lý chuyên biệt và tiềm ẩn nhiều rủi ro về thông tin.
 
-Cụ thể, các hạn chế nổi bật bao gồm:
+Cụ thể, các hạn chế bao gồm:
 
 - **Phía chủ nhà**: Không có bảng điều khiển tập trung để quản lý danh sách nhiều bất động sản; việc theo dõi trạng thái phòng trống, danh sách đơn xin thuê và thông tin hợp đồng phải thực hiện thủ công qua bảng tính hoặc sổ sách cá nhân.
 - **Phía người thuê**: Thiếu công cụ tìm kiếm kết hợp bản đồ vị trí trực quan và bộ lọc đa tiêu chí (giá thuê, diện tích, số phòng, tiện nghi); không có kênh theo dõi tiến độ xét duyệt đơn xin thuê và giao tiếp tập trung.
 - **Về giao tiếp và thông báo**: Việc trao đổi qua các ứng dụng nhắn tin cá nhân bên ngoài dễ làm thất lạc thông tin; thiếu cơ chế gửi email thông báo tự động khi phát sinh sự thay đổi trạng thái đơn thuê hoặc hợp đồng.
 
 #### Giải pháp đề xuất
+
+![Overview](/images/2-Proposal/Role.png)
 
 Hệ thống được phát triển nhằm giải quyết triệt để các hạn chế trên thông qua một ứng dụng web tập trung:
 
@@ -51,29 +53,7 @@ Hệ thống được tổ chức theo mô hình **monorepo** (`pnpm workspaces`
 
 #### Sơ đồ kiến trúc tổng thể
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Client Layer                         │
-│              Next.js App (App Router, SSR/CSR)              │
-│        React Components · Redux Toolkit / RTK Query         │
-└────────────────────────┬────────────────────────────────────┘
-                         │ HTTPS REST API + WebSocket
-┌────────────────────────▼────────────────────────────────────┐
-│                       Backend Layer                         │
-│              NestJS (TypeScript · Modular DI)               │
-│   Property · Application · Lease · Tenant · Manager ·       │
-│   Message (Chat Real-time) · Notification · Location        │
-│         AuthGuard · RolesGuard · Class-Validator            │
-└────┬──────────────┬──────────────┬──────────────┬───────────┘
-     │              │              │              │
-┌────▼────┐   ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼───────────┐
-│ AWS RDS │   │ Amazon S3 │  │ Amazon SES│  │ Amazon Location │
-│PostgreSQL│  │ (ảnh      │  │ (email    │  │ Service         │
-│+ PostGIS│   │ property) │  │ thông báo)│  │ (Geocode & Map) │
-└─────────┘   └───────────┘  └───────────┘  └─────────────────┘
-                     Amazon Cognito (User Pool & App Client)
-                     — xác thực client, phát hành token JWT —
-```
+![Architecture](/images/2-Proposal/AWS_architect.png)
 
 #### Các dịch vụ AWS sử dụng
 

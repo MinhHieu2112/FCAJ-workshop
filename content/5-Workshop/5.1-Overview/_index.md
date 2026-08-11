@@ -1,55 +1,26 @@
 ---
-title: "System Architecture & Overview"
+title: "System architecture & environment preparation"
 date: 2026-08-06
 weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 ---
 
-#### Monorepo Application Architecture
+#### Monorepo application architecture
 
-The **Real Estate Rental Management System** is structured as a monorepo (`pnpm workspaces`) comprising a **Next.js** frontend, a **NestJS** backend, and shared TypeScript type packages.
+The **Real Estate Rental Management System** is structured as a monorepo (`pnpm workspaces`) comprising a **Next.js** frontend, a **NestJS** backend, and shared TypeScript type packages (`@shared/types`).
 
-![System Architecture Diagram](/images/5-Workshop/5.1-Overview/architecture-diagram.png)
-> 💡 **Note for Author:** *[Bổ sung hình ảnh sơ đồ kiến trúc hệ thống kết nối giữa Next.js, NestJS và các dịch vụ AWS]*
+![System architecture diagram](/images/5-Workshop/5.1-Overview/AWS_architect.png)
 
-#### Key AWS Services & Integration Workflow
+#### Core cloud workflows
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Client Layer                         │
-│              Next.js App (App Router, SSR/CSR)              │
-│        React Components · Redux Toolkit / RTK Query         │
-└────────────────────────┬────────────────────────────────────┘
-                         │ HTTPS REST API + WebSocket
-┌────────────────────────▼────────────────────────────────────┐
-│                       Backend Layer                         │
-│              NestJS (TypeScript · Modular DI)               │
-│   Property · Application · Lease · Tenant · Manager ·       │
-│   Message (Chat Real-time) · Notification · Location        │
-│         AuthGuard · RolesGuard · Class-Validator            │
-└────┬──────────────┬──────────────┬──────────────┬───────────┘
-     │              │              │              │
-┌────▼────┐   ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼───────────┐
-│ AWS RDS │   │ Amazon S3 │  │ Amazon SES│  │ Amazon Location │
-│PostgreSQL│  │ (property │  │ (email    │  │ Service         │
-│+ PostGIS│   │ images)   │  │ notify)   │  │ (Geocode & Map) │
-└─────────┘   └───────────┘  └───────────┘  └─────────────────┘
-                     Amazon Cognito (User Pool & App Client)
-                     — Client authentication & JWT token issuance —
-```
+1. **User authentication & authorization**: Users authenticate through **Amazon Cognito User Pool**. Cognito issues Access Tokens containing custom role claims (`custom:role`). The NestJS backend verifies Bearer JWT tokens using `AuthGuard` and enforces role-based access (`TENANT` vs `MANAGER`) using `RolesGuard`.
 
-#### Core Cloud Workflows Covered in This Workshop
+2. **Media upload with S3 presigned URLs**: Rather than streaming large image files through the NestJS server, the backend requests a short-lived **Presigned PUT URL** from **Amazon S3**. The Next.js frontend uploads images directly to S3, reducing server workload and bandwidth.
 
-1. **User Authentication & Authorization**:
-   - Users authenticate against **Amazon Cognito User Pool**.
-   - Cognito issues Access Tokens and ID Tokens containing custom claims (`custom:role`).
-   - The NestJS backend verifies incoming Bearer JWT tokens using `AuthGuard` and enforces role access (`TENANT` vs `MANAGER`) using `RolesGuard`.
+3. **Geocoding & spatial mapping**: Text addresses entered during property creation are sent to **Amazon Location Service** for conversion to geographic coordinates `(Latitude, Longitude)`. Coordinates are stored in **Amazon RDS (PostgreSQL + PostGIS)** for radius-based spatial queries.
 
-2. **Media Upload with S3 Presigned URLs**:
-   - Rather than streaming large image files through the NestJS server, the backend requests a short-lived **Presigned PUT URL** from **Amazon S3**.
-   - The Next.js frontend uploads the binary image directly to S3, reducing server workload and bandwidth.
+#### Module steps
 
-3. **Geocoding & Spatial Mapping**:
-   - When a landlord creates a property listing, text addresses are converted into geographic coordinates `(Latitude, Longitude)` via **Amazon Location Service Place Index**.
-   - Coordinates are stored in **Amazon RDS (PostgreSQL + PostGIS)** for radius distance queries.
+1. [Setting up VPC, public/private subnets & security groups](5.1.1-vpc-subnet/)
+2. [Configuring IAM roles for EC2 & services](5.1.2-iam-roles/)

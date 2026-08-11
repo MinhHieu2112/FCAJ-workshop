@@ -33,7 +33,9 @@ Specifically, key challenges include:
 - **For Tenants**: Absence of intuitive map-integrated search tools with multi-criteria filters (price, area, bedroom count, amenities); lack of centralized application status tracking and communication channels.
 - **For Communication & Notifications**: Exchanges via personal messaging apps lead to scattered information; lack of automated email alerts when rental application or lease contract statuses change.
 
-#### Proposed Solution
+#### Proposed solution
+
+![Overview](/images/2-Proposal/Role.png)
 
 The system resolves these limitations through a centralized web application:
 
@@ -45,37 +47,15 @@ The system resolves these limitations through a centralized web application:
 
 ---
 
-### 3. Solution Architecture
+### 3. Solution architecture
 
 The system is structured as a **monorepo** (`pnpm workspaces`), containing backend services (`apps/server`), frontend client (`apps/client`), and shared data types (`packages/types`, `@shared/types`) to ensure strict type consistency between client and server layers.
 
-#### System Architecture Diagram
+#### System architecture diagram
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Client Layer                         │
-│              Next.js App (App Router, SSR/CSR)              │
-│        React Components · Redux Toolkit / RTK Query         │
-└────────────────────────┬────────────────────────────────────┘
-                         │ HTTPS REST API + WebSocket
-┌────────────────────────▼────────────────────────────────────┐
-│                       Backend Layer                         │
-│              NestJS (TypeScript · Modular DI)               │
-│   Property · Application · Lease · Tenant · Manager ·       │
-│   Message (Chat Real-time) · Notification · Location        │
-│         AuthGuard · RolesGuard · Class-Validator            │
-└────┬──────────────┬──────────────┬──────────────┬───────────┘
-     │              │              │              │
-┌────▼────┐   ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼───────────┐
-│ AWS RDS │   │ Amazon S3 │  │ Amazon SES│  │ Amazon Location │
-│PostgreSQL│  │ (property │  │ (email    │  │ Service         │
-│+ PostGIS│   │ images)   │  │ notify)   │  │ (Geocode & Map) │
-└─────────┘   └───────────┘  └───────────┘  └─────────────────┘
-                     Amazon Cognito (User Pool & App Client)
-                     — Client authentication & JWT token issuance —
-```
+![Architecture](/images/2-Proposal/AWS_architect.png)
 
-#### AWS Services Utilized
+#### AWS services utilized
 
 | Service | Role in the System |
 |---------|--------------------|

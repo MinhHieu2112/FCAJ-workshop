@@ -1,0 +1,12 @@
+{{ $src := .Destination }}
+{{ if not (or (hasPrefix $src "http://") (hasPrefix $src "https://")) }}
+  {{ $baseURL := urls.Parse site.BaseURL }}
+  {{ $basePath := $baseURL.Path }}
+  {{ $cleanSrc := strings.TrimPrefix "/" $src }}
+  {{ if and $basePath (not (hasPrefix $src $basePath)) }}
+    {{ $src = printf "%s/%s" (strings.TrimSuffix "/" $basePath) $cleanSrc }}
+  {{ else if not (hasPrefix $src "/") }}
+    {{ $src = printf "/%s" $cleanSrc }}
+  {{ end }}
+{{ end }}
+<img src="{{ $src }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }} />

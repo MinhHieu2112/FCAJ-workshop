@@ -19,7 +19,7 @@ I attended the event to learn how different teams developed AI solutions within 
 - Learn about current trends in Agentic AI and its real-world applications.
 - Understand how to build a Proof of Concept (PoC) that can evolve into a scalable solution.
 - Learn from the experiences shared by Hackathon teams.
-- Understand the key considerations when deploying AI applications in production.
+- Understand key considerations when deploying AI applications in production.
 
 ## Speakers
 
@@ -37,19 +37,18 @@ The evaluation focused not only on whether a Proof of Concept (PoC) worked corre
 
 During the 48-hour development period, each team designed and implemented a solution to solve a practical problem. Every team was given approximately five minutes to present its idea, system architecture, and product demonstration.
 
-## Selected team presentations
+### Selected team presentations
 
 Throughout the event, participating teams introduced various Agentic AI solutions for real-world problems. Each team presented its architecture, implementation approach, and future scalability.
 
-### 1. Agentic AI for online ordering
+#### 1. Agentic AI for online ordering
 
-The AI-Power team focused on improving the online ordering experience. According to the team, users often need to register an account, provide payment information, and navigate multiple menus before completing an order, resulting in unnecessary friction.
+The team focused on improving the online ordering experience. According to the team, users often need to register an account, provide payment information, and navigate multiple menus before completing an order, resulting in unnecessary friction.
 
-![Overview](/images/4-EventParticipated/AI-power.png)
+![Overview](/images/4-EventParticipated/Event_3/oneTeam.png)
+***Figure 1. AWS architecture presented by the team.***
 
-***Figure 1. AWS architecture presented by the AI-Power team.***
-
-To address this problem, the team developed an AI Agent capable of assisting users through natural conversations. The solution included:
+To address this problem, the team developed an AI Agent capable of assisting users through natural conversations. Key features included:
 
 - Collecting restaurant menus from official websites through web scraping and storing the data on AWS.
 - Implementing a memory mechanism so the AI could remember each user's previous orders and preferences.
@@ -57,12 +56,11 @@ To address this problem, the team developed an AI Agent capable of assisting use
 
 The presentation demonstrated how Agentic AI can act as a virtual assistant that completes user tasks instead of simply answering questions.
 
-### 2. Agentic AI for data analysis
+#### 2. Agentic AI for data analysis
 
 Another team focused on helping Data Analysts automate repetitive reporting and data analysis tasks. The objective was to reduce manual work while supporting better decision-making.
 
-![Overview](/images/4-EventParticipated/Data-analysis.png)
-
+![Overview](/images/4-EventParticipated/Event_3/Data-analysis.png)
 ***Figure 2. AWS architecture presented by the data analysis team.***
 
 The proposed Proof of Concept (PoC) included the following capabilities:
@@ -72,6 +70,22 @@ The proposed Proof of Concept (PoC) included the following capabilities:
 - Applying Guardrails to validate generated results before presenting them to users.
 
 The presentation showed how Agentic AI can collaborate with human analysts to improve both efficiency and report quality.
+
+#### 3. Agentic AI for passenger traffic tracking
+
+A third team focused on building a solution for tracking passenger foot traffic in corporate locations and airport facilities.
+
+![Overview](/images/4-EventParticipated/Event_3/Guest.png)
+***Figure 3. AWS architecture presented by the traffic tracking team.***
+
+- The architecture utilizes Amazon Kinesis Video Streams to ingest camera feed imagery into the AWS processing pipeline.
+- Data is processed using Amazon ECS, Amazon ECR, and Amazon SageMaker Endpoints to analyze video frames and identify passenger traffic metrics.
+- Event results and analytical metrics are stored using Amazon S3 and Amazon DynamoDB.
+- Amazon CloudFront, Amazon API Gateway, and AWS Lambda manage and process end-user requests.
+- AgentCore Runtime combined with Amazon Bedrock supports building AI Agents capable of interacting with and analyzing stream data.
+- Amazon Cognito, AWS IAM, AWS Secrets Manager, AWS CloudTrail, and Amazon CloudWatch manage authentication, authorization, security, and system observability.
+
+Through this architecture, I gained a clearer picture of how diverse AWS services integrate into a unified end-to-end cloud platform.
 
 ## Knowledge gained
 
@@ -112,11 +126,11 @@ After attending the event, I drew several conclusions:
 
 ![FCAJ x Agentic AI Build Week Event](https://img.youtube.com/vi/hz32VBrvW7M/maxresdefault.jpg)
 
-***Figure 3. Overview of the FCAJ x Agentic AI Build Week event.***
+***Figure 4. Overview of the FCAJ x Agentic AI Build Week event.***
 
-![Overview](/images/4-EventParticipated/event_3.jpeg)
+![Overview](/images/4-EventParticipated/Event_3/Meeting.jpeg)
 
-***Figure 4. Group photo with the participating Hackathon teams.***
+***Figure 5. Group photo with the participating Hackathon teams.***
 
 ## Conclusion
 

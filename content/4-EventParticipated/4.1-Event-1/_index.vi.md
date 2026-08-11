@@ -17,11 +17,11 @@ pre: " <b> 4.1. </b> "
 
 ## 1. Xu Hướng Nghề Nghiệp: Kỷ Nguyên Agentic AI & Lập Trình Viên
 
-### Thực trạng & Thách thức
+### Thực trạng & thách thức
 * **Tốc độ tự động hóa:** Các AI agent và công cụ AI coding hiện nay có tốc độ triển khai và viết code nhanh chóng, dẫn đến việc doanh nghiệp có xu hướng nâng cao tiêu chuẩn tuyển dụng hoặc ưu tiên các vị trí Senior am hiểu sâu về công cụ AI.
-* **Độ phức tạp hạ tầng (Complexity):** Khi doanh nghiệp mở rộng quy mô hệ thống Cloud, độ phức tạp của hạ tầng tăng cao. AI đơn thuần chưa thể hiểu trọn vẹn toàn bộ bối cảnh (context) từ Source Code, Cloud Infrastructure đến Business Logic phức tạp của từng doanh nghiệp.
+* **Độ phức tạp hạ tầng:** Khi doanh nghiệp mở rộng quy mô hệ thống Cloud, độ phức tạp của hạ tầng tăng cao. AI đơn thuần chưa thể hiểu trọn vẹn toàn bộ bối cảnh (context) từ Source Code, Cloud Infrastructure đến Business Logic phức tạp của từng doanh nghiệp.
 
-### Bài học thực tiễn & Định hướng phát triển
+### Bài học thực tiễn & định hướng phát triển
 * **AI không thay thế con người hoàn toàn:** Các vị trí như **Cloud Engineer, DevOps, Solution Architect, Reliability Engineering** vẫn cực kỳ quan trọng và không thể thay thế hoàn toàn. Nguyên nhân là các hệ thống Cloud đòi hỏi khả năng phản ứng incident nhanh chóng, ra quyết định chính xác và xử lý các bài toán bối cảnh doanh nghiệp.
 * **Tư duy cốt lõi:** Thay vì lo lắng bị thay thế, kỹ sư cần học cách phối hợp với AIAgent để tự động hóa các công việc lặp đi lặp lại và tập trung vào thiết kế kiến trúc, tối ưu vận hành.
 
@@ -42,9 +42,9 @@ pre: " <b> 4.1. </b> "
 
 ---
 
-## 3. Bài toán hóa đơn & Chi phí triển khai mạng riêng (Amazon Q / MCP)
+## 3. Bài toán hóa đơn & chi phí triển khai mạng riêng (Amazon Q / MCP)
 
-### Mô hình kiến trúc & Bảng chi phí ước tính (Cost Estimate)
+### Mô hình kiến trúc & bảng chi phí ước tính
 
 Khi triển khai các giải pháp AI như Amazon Q Business hay Model Context Protocol (MCP) Server trong mạng nội bộ (Private VPC) để đảm bảo an toàn dữ liệu, doanh nghiệp cần lưu ý các khoản chi phí cố định hạ tầng:
 
@@ -58,10 +58,10 @@ Khi triển khai các giải pháp AI như Amazon Q Business hay Model Context P
 
 > **Tổng chi phí hạ tầng cố định ban đầu:** Ước tính từ **$250 – $350 USD/tháng** (chưa tính chi phí truy xuất dữ liệu thực tế).
 
-### Bài học thực tiễn khi ước tính chi phí (Cost Estimation)
+### Bài học thực tiễn khi ước tính chi phí
 * **Cạm bẫy chi phí ẩn:** Nhiều dự án AI Private chỉ tính tiền chạy Model/LLM mà quên mất chi phí hạ tầng mạng riêng (VPC Endpoints, Route 53 Resolver, ALB, Secrets Manager).
 * **Phương pháp tính toán:** Cần căn cứ vào lượng người dùng thực tế (ví dụ: 500 nhân viên) và dung lượng dữ liệu truy xuất trung bình mỗi tháng (GB/tháng) để đưa ra bài toán kinh tế chính xác trước khi bấm nút triển khai trên AWS.
 
 ## 4. Hình ảnh tham gia sự kiện
-![Overview](/images/4-EventParticipated/event_1.jpeg)
+![Overview](/images/4-EventParticipated/Event_1/Meeting.jpeg)
 ***Hình 1: Hình ảnh tại sự kiện FCAJ Community Day - June 2026.***
