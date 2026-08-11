@@ -31,9 +31,13 @@ chapter: false
 ### Report Content
 
 1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
+2.  [Proposal & Live Application](2-Proposal/) ([Try Live Demo](2-Proposal/2.1-Project/))
 3.  [BlogsPosted](3-BlogsPosted/)
 4.  [Events Participated](4-EventParticipated/)
 5.  [Workshop](5-Workshop/)
 6.  [Self-evaluation](6-Self-evaluation/)
 7.  [Sharing and Feedback](7-Feedback/)
+
+{{% notice tip %}}
+🚀 **Live Production Application:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
+{{% /notice %}}

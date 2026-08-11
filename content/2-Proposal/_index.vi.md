@@ -19,6 +19,11 @@ Hệ thống phục vụ hai nhóm người dùng chính: **chủ nhà/quản l�
 
 Về mặt kỹ thuật, hệ thống được xây dựng trên kiến trúc monorepo (`pnpm workspaces`) với backend **NestJS** (TypeScript), frontend **Next.js** (App Router) dùng **Redux Toolkit / RTK Query**, cơ sở dữ liệu **PostgreSQL** mở rộng phần không gian **PostGIS** truy cập qua **Prisma ORM**, cùng sự tích hợp của các dịch vụ AWS bao gồm **Amazon Cognito** (xác thực người dùng), **Amazon S3** (lưu trữ hình ảnh), **Amazon RDS** (cơ sở dữ liệu đám mây), **Amazon SES** (gửi email thông báo) và **Amazon Location Service** (geocoding địa chỉ và hiển thị bản đồ). Dự án hướng đến việc triển khai một giải pháp phần mềm hoàn chỉnh về chức năng, tối ưu về hiệu năng và tuân thủ các tiêu chuẩn bảo mật trong môi trường đám mây.
 
+{{% notice tip %}}
+🌐 **Trải nghiệm ứng dụng thực tế (Production App):** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)  
+👉 Xem thông tin chi tiết tài khoản thử nghiệm và tính năng tại mục **[2.1. Trải nghiệm ứng dụng thực tế](2.1-Project/)**.
+{{% /notice %}}
+
 ---
 
 ### 2. Đặt vấn đề
