@@ -1,5 +1,5 @@
 ---
-title: "Triển khai hệ thống quản lý bất động sản trên AWS"
+title: "Workshop"
 date: 2026-08-06
 weight: 5
 chapter: false
@@ -19,10 +19,6 @@ Bài lab hướng dẫn thiết lập mạng, tính toán, cơ sở dữ liệu,
 - **Amazon Location Service** – Chuyển đổi địa chỉ thành tọa độ và hiển thị bản đồ tương tác.
 - **Amazon SES** – Gửi email thông báo tự động.
 - **GitHub Actions & Amazon CloudWatch** – Tự động hóa CI/CD và giám sát hệ thống.
-
-{{% notice tip %}}
-Bài workshop được thiết kế bám sát quy trình triển khai thực tế. Mỗi phần xây dựng tiếp nối phần trước, vì vậy nên thực hiện theo thứ tự.
-{{% /notice %}}
 
 #### Nội dung bài lab
 

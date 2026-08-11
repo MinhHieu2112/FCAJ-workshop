@@ -26,7 +26,7 @@ Chương trình Bootcamp đem lại giá trị học tập vượt trội: từ 
 Văn hóa làm việc chuẩn AWS với các nguyên tắc *Leadership Principles* (như *Customer Obsession*, *Learn and Be Curious*, *Ownership*) được thể hiện rất rõ nét. Các thực tập sinh trong khóa FCAJ luôn sẵn sàng chia sẻ kiến thức, hỗ trợ lẫn nhau trong các bài lab khó và cùng hoàn thành các mốc dự án đúng tiến độ.
 
 **6. Chính sách & phúc lợi cho thực tập sinh**  
-Công ty hỗ trợ đầy đủ các tài nguyên điện toán AWS (AWS Credits/Accounts), tài liệu học tập chính hãng, cũng như linh hoạt về thời gian để đảm bảo sinh viên cân bằng tốt giữa lịch học tại trường và lịch thực tập.
+Công ty hỗ trợ đầy đủ các tài nguyên điện toán AWS (AWS Credits/Accounts), tài liệu học tập cũng như linh hoạt về thời gian để đảm bảo sinh viên cân bằng tốt giữa lịch học tại trường và lịch thực tập.
 
 ---
 

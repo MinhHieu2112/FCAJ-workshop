@@ -38,6 +38,3 @@ chapter: false
 6.  [Self-evaluation](6-Self-evaluation/)
 7.  [Sharing and Feedback](7-Feedback/)
 
-{{% notice tip %}}
-🚀 **Live Production Application:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
-{{% /notice %}}

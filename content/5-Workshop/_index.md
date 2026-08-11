@@ -1,5 +1,5 @@
 ---
-title: "Deploying a real estate management system on AWS"
+title: "Workshop"
 date: 2026-08-06
 weight: 5
 chapter: false
@@ -20,9 +20,6 @@ You will set up networking, compute, database, authentication, storage, observab
 - **Amazon SES** – Automated transactional email notifications.
 - **GitHub Actions & Amazon CloudWatch** – CI/CD pipeline automation and system observability.
 
-{{% notice tip %}}
-This workshop mirrors a real-world production deployment. Each section builds on the previous one, so it is recommended to follow the steps in order.
-{{% /notice %}}
 
 #### Content
 

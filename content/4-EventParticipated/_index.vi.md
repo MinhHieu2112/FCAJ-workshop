@@ -25,6 +25,7 @@ Trong quá trình thực tập, em đã tham gia 3 events, với mỗi event là
 &emsp;**Thời gian:** 04/07/2026
 
 &emsp;**Địa điểm:** Tầng 26, Tòa nhà Bitexco số 2 đường Hải Triều, phường Sài Gòn, TP. Hồ Chí Minh
+
 &emsp;**Vai trò trong sự kiện:** Người tham dự
 
 ---

@@ -28,7 +28,7 @@ pre: " <b> 1.3. </b> "
 
 ---
 
-### Kết quả đạt me tuần 3:
+### Kết quả đạt được tuần 3:
 
 * Hoàn thành thiết kế **ERD** và **Prisma schema** đầy đủ cho các entity cốt lõi: User, Tenant, Manager, Application, Lease, Payment; chạy migration thành công trên cơ sở dữ liệu PostgreSQL.
 
