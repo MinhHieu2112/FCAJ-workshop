@@ -11,21 +11,9 @@ pre: " <b> 2.1. </b> "
 The **Real Estate Rental Management System** is fully deployed and accessible online. You can interact with the live client application hosted on Vercel and connected to the AWS cloud backend:
 
 {{% notice tip %}}
-🚀 **Live Production URL:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
+**Live Production URL:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
 {{% /notice %}}
 
----
-
-#### Demo accounts for reviewer testing
-
-To test the application's role-based access control (RBAC) and workflows, use the pre-configured accounts below:
-
-| Role | Email address | Password | Accessible features |
-|---|---|---|---|
-| **Tenant** | `tenant.demo@example.com` | `Password123!` | Search properties on map, filter listings, submit rental applications, real-time chat with landlord, view lease status |
-| **Manager / Landlord** | `manager.demo@example.com` | `Password123!` | Create & edit listings, upload S3 photos, review rental applications, generate leases, sign contracts digitally |
-
----
 
 #### System architecture & technology stack
 

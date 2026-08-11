@@ -11,21 +11,8 @@ pre: " <b> 2.1. </b> "
 **Hệ thống quản lý bất động sản cho thuê** đã được triển khai hoàn chỉnh và sẵn sàng trải nghiệm trực tiếp. Bạn có thể truy cập ứng dụng client được deploy trên Vercel và kết nối với backend đám mây AWS:
 
 {{% notice tip %}}
-🚀 **Đường dẫn ứng dụng thực tế (Production):** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
+**Đường dẫn ứng dụng thực tế (Production):** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
 {{% /notice %}}
-
----
-
-#### Tài khoản thử nghiệm dành cho người đánh giá
-
-Để kiểm tra các luồng nghiệp vụ và phân quyền dựa trên vai trò (RBAC), bạn có thể sử dụng các tài khoản thử nghiệm được cấu hình sẵn dưới đây:
-
-| Vai trò | Địa chỉ email | Mật khẩu | Các chức năng có thể trải nghiệm |
-|---|---|---|---|
-| **Người thuê (Tenant)** | `tenant.demo@example.com` | `Password123!` | Tìm kiếm bất động sản trên bản đồ, lọc tin đăng, nộp đơn xin thuê, trò chuyện trực tiếp với chủ nhà, xem trạng thái hợp đồng |
-| **Quản lý / Chủ nhà (Manager)** | `manager.demo@example.com` | `Password123!` | Đăng tin & chỉnh sửa bất động sản, tải ảnh S3, duyệt đơn xin thuê, khởi tạo hợp đồng thuê, ký hợp đồng số |
-
----
 
 #### Kiến trúc hệ thống & stack công nghệ
 
