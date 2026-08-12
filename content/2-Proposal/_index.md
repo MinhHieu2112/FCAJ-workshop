@@ -11,7 +11,7 @@ pre: " <b> 2. </b> "
 
 ---
 
-### 1. Executive Summary
+### 1. Executive summary
 
 The Real Estate Rental Management System is a unified software platform supporting the end-to-end lifecycle of residential rental transactions — from property listing, map-based search, application submission, application review, automated lease creation, payment tracking, to real-time messaging and automated email notifications.
 
@@ -26,7 +26,7 @@ Technically, the system is built on a monorepo architecture (`pnpm workspaces`) 
 
 ---
 
-### 2. Problem Statement
+### 2. Problem statement
 
 #### Context
 
@@ -70,7 +70,7 @@ The system is structured as a **monorepo** (`pnpm workspaces`), containing backe
 | **Amazon SES** | Dispatches automated transactional emails to users upon rental application status changes or lease creations |
 | **Amazon Location Service** | Geocodes text addresses into coordinates (latitude, longitude), powers place autocomplete, and renders interactive map tiles |
 
-#### Backend Module Design
+#### Backend module design
 
 The NestJS backend is organized into modular domain components:
 
@@ -85,9 +85,9 @@ The NestJS backend is organized into modular domain components:
 
 ---
 
-### 4. Technical Implementation
+### 4. Technical implementation
 
-#### Technology Stack & Rationale
+#### Technology stack & rationale
 
 **Backend — NestJS (TypeScript)**
 
@@ -101,27 +101,27 @@ The NestJS backend is organized into modular domain components:
 
 **PostgreSQL** perfectly fits the relational domain model of rental property management. The **PostGIS** extension enables storing coordinates as spatial `geography` types and performing distance calculations directly in SQL queries. **Prisma ORM** manages database migrations cleanly while allowing raw SQL execution (`$queryRaw`) when combining standard filter predicates with PostGIS spatial functions.
 
-#### Key Engineering Achievements
+#### Key engineering achievements
 
-**Role-Based Authentication & Authorization**
+**Role-based authentication & authorization**
 
 The system relies on JWT tokens issued by **Amazon Cognito**. At the NestJS backend, `AuthGuard` extracts and verifies JWT token validity, while `RolesGuard` enforces role permissions (TENANT or MANAGER). The system implements **Refresh Token Rotation** to invalidate old refresh tokens upon rotation, preventing session hijacking.
 
-**Eliminating N+1 Queries**
+**Eliminating N+1 queries**
 
 During development, fetching property listings alongside images and landlord details initially caused N+1 query performance hits. This was resolved by utilizing Prisma's **include** feature to eager-load related models in a single JOIN query. Combined with database **indexes** on frequently queried columns (`location`, `price`, `status`), P95 response times dropped from ~800ms to ~120ms.
 
-**Concurrency Control (Race Condition Prevention)**
+**Concurrency control (race condition prevention)**
 
 Concurrent application approvals for the same property could lead to duplicate lease creation or data inconsistency. This was resolved by wrapping approval workflows in a **`prisma.$transaction`** combined with **Pessimistic Locking (`SELECT ... FOR UPDATE`)**. When a transaction begins, the target property record is locked until completion, guaranteeing absolute data consistency.
 
-**Geocoding & Interactive Maps**
+**Geocoding & interactive maps**
 
 Text addresses entered during property creation are sent to **Amazon Location Service** to convert into geographic coordinates (latitude, longitude). These coordinates are stored in PostGIS-enabled location tables. During user property searches, the backend executes `ST_DWithin` spatial distance queries to return properties within the selected radius on the Next.js interactive map.
 
-#### 8-Week Development Timeline
+#### 8-week development timeline
 
-| Week | Phase | Key Tasks |
+| Week | Phase | Key tasks |
 |------|-------|-----------|
 | 1 | Onboarding & Setup | FCAJ policy review, AWS fundamentals, AWS Free Tier registration, $200 AWS Credits receipt, AWS Budget creation |
 | 2 | Architecture & Cognito | Requirements analysis, architecture design, monorepo refactoring, Amazon Cognito integration, `AuthGuard` & `RolesGuard` implementation |
@@ -134,7 +134,7 @@ Text addresses entered during property creation are sent to **Amazon Location Se
 
 ---
 
-### 5. Roadmap & Milestones
+### 5. Roadmap & milestones
 
 ```
 Week 1    │ ████ Onboarding · AWS Fundamentals · AWS Budget
@@ -147,7 +147,7 @@ Week 7    │ ████ N+1 Query Optimization · Race Condition Locking · A
 Week 8    │ ████ E2E Testing · README & Swagger Docs · Proposal & Demo Handover
 ```
 
-**Key Milestones:**
+**Key milestones:**
 
 - **Week 2**: Completed onboarding, received $200 AWS Credits, configured AWS Budget, and finalized Cognito authentication flows.
 - **Week 4**: Finalized property listing workflow with Amazon S3 image uploads and multi-criteria search filtering.
@@ -158,24 +158,32 @@ Week 8    │ ████ E2E Testing · README & Swagger Docs · Proposal & De
 
 ---
 
-### 6. Budget Estimation
+### 6. Budget estimation
 
 System operational costs throughout the 8-week internship were managed strictly within the **AWS Free Tier** allocation and the **$200 USD AWS Credits** provided by the student program.
 
-#### AWS Infrastructure Costs (Estimated Development Environment)
+#### AWS Infrastructure costs (Estimated development environment)
 
-| Service | Utilization Configuration | Estimated Monthly Cost |
+| Service | Utilization configuration | Estimated monthly cost |
 |---------|---------------------------|------------------------|
-| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~$15.00 / month |
-| Amazon S3 | ~5 GB image storage, ~10,000 requests/month | ~$0.15 / month |
-| Amazon SES | ~500 notification emails/month (Sandbox environment) | $0.00 (Free Tier) |
-| Amazon Cognito | <50,000 Monthly Active Users (MAU) | $0.00 (Free Tier) |
-| Amazon Location Service | Address geocoding and map tile requests within tier limits | ~$0.50 / month |
-| **Total Estimated Cost** | | **~$15.65 / month** |
+| **AWS Amplify** | Frontend Next.js app hosting (Build & Static/SSR hosting) | $0.00 (Free Tier) |
+| **Amazon Route 53** | DNS lookup & custom domain routing (1 Hosted Zone) | ~$0.50 / month |
+| **AWS WAF** | Web Application Firewall protecting ingress traffic (1 Web ACL) | ~$6.00 / month |
+| **AWS ACM** | SSL/TLS certificate management for HTTPS domain encryption | $0.00 (Free AWS Service) |
+| **Application Load Balancer (ALB)** | Ingress traffic routing to EC2 backend in Public Subnet | $0.00 (Free Tier) / ~$16.00 / month |
+| **Amazon EC2** | NestJS backend REST & WebSocket server in Private Subnet (`t3.micro`, 8 GB EBS) | $0.00 (Free Tier) / ~$7.50 / month |
+| **Amazon RDS (PostgreSQL)** | Primary database + PostGIS extension (`db.t3.micro`, 20 GB SSD, Single-AZ) | $0.00 (Free Tier) / ~$15.00 / month |
+| **Amazon S3** | Property image uploads (~5 GB storage, ~10,000 requests/month) | $0.00 (Free Tier) / ~$0.15 / month |
+| **Amazon Cognito** | User registration, authentication & JWT token issuance (<50,000 MAU) | $0.00 (Free Tier - Always Free) |
+| **Amazon SES** | Transactional email notifications (~500 emails/month in Sandbox) | $0.00 (Free Tier - Always Free) |
+| **AWS IAM** | Access management, EC2 execution roles & S3 bucket policies | $0.00 (Free AWS Service) |
+| **Amazon CloudWatch** | Application logging, metrics collection & basic alarm monitoring (<5 GB logs) | $0.00 (Free Tier - Always Free) |
+| **Amazon Location Service** | Address geocoding and interactive map tile rendering within tier limits | ~$0.50 / month |
+| **Total Estimated Cost** | **Development Environment (with AWS Free Tier applied)** | **~$7.00 - $16.00 / month** |
 
 > Total actual expenditure across 8 weeks of development and testing was approximately $32.00, fully covered by the $200 AWS Credits allocation.
 
-#### Cost Management Strategy
+#### Cost management strategy
 
 - Configured **AWS Budget** automated email alerts triggered at $50 and $100 spending thresholds.
 - Provisioned **Single-AZ RDS** instances for development to minimize costs compared to Multi-AZ setups.
@@ -184,9 +192,9 @@ System operational costs throughout the 8-week internship were managed strictly 
 
 ---
 
-### 7. Risk Assessment & Mitigation
+### 7. Risk assessment & mitigation
 
-#### Risk Matrix
+#### Risk matrix
 
 | Identified Risk | Severity | Likelihood | Mitigation Strategy |
 |-----------------|----------|------------|---------------------|
@@ -196,7 +204,7 @@ System operational costs throughout the 8-week internship were managed strictly 
 | Real-time WebSocket chat disconnection | Medium | Low | Implemented client auto-reconnection logic and stored message history in PostgreSQL |
 | Excessive file upload sizes to Amazon S3 | Low | Low | Enforced payload size and MIME-type validation at Controller layer prior to SDK calls |
 
-#### Contingency Plans
+#### Contingency plans
 
 - **Amazon RDS Database**: Configured automated daily snapshots on Amazon RDS to enable rapid point-in-time recovery if data corruption occurs.
 - **Amazon S3 Uploads**: Implemented backend retry logic with exponential backoff for transient S3 connection issues.
@@ -204,18 +212,18 @@ System operational costs throughout the 8-week internship were managed strictly 
 
 ---
 
-### 8. Expected Outcomes
+### 8. Expected outcomes
 
-#### Technical Deliverables
+#### Technical deliverables
 
 At the conclusion of the 8-week project, the system achieved the following outcomes:
 
-- **Fully Functional Business Workflows**: Tenants search properties on interactive maps, submit applications, and engage in real-time chat; Landlords manage listings, edit images, review applications, and automatically generate leases.
-- **Standardized Authentication & Security**: 100% of API endpoints protected via `AuthGuard` and `RolesGuard`, implementing Refresh Token Rotation and strict payload validation.
-- **Optimized System Performance**: N+1 queries eliminated, reducing listing API response times to ~120ms; concurrency issues eliminated using Pessimistic Locking.
-- **Comprehensive Documentation**: Complete deployment `README.md`, **Swagger API documentation** covering 40+ endpoints, and standardized system architecture diagrams.
+- **Fully functional business workflows**: Tenants search properties on interactive maps, submit applications, and engage in real-time chat; Landlords manage listings, edit images, review applications, and automatically generate leases.
+- **Standardized authentication & security**: 100% of API endpoints protected via `AuthGuard` and `RolesGuard`, implementing Refresh Token Rotation and strict payload validation.
+- **Optimized system performance**: N+1 queries eliminated, reducing listing API response times to ~120ms; concurrency issues eliminated using Pessimistic Locking.
+- **Comprehensive documentation**: Complete deployment `README.md`, **Swagger API documentation** covering 40+ endpoints, and standardized system architecture diagrams.
 
-#### Learning Outcomes & Skill Development
+#### Learning outcomes & skill development
 
 The internship project provided extensive hands-on experience in full-stack cloud engineering:
 
@@ -224,10 +232,10 @@ The internship project provided extensive hands-on experience in full-stack clou
 - Relational database query optimization, PostGIS spatial data handling, and database transaction concurrency control.
 - Professional technical writing, worklogging, and product demonstration capabilities.
 
-#### Future Enhancements
+#### Future enhancements
 
 The modular NestJS and Next.js architecture enables seamless future expansion:
 
 - Online payment gateway integration (VNPay, ZaloPay, Stripe) for automated monthly rent processing.
-- Cross-platform Mobile Application development utilizing React Native.
+- Cross-platform mobile application development utilizing React Native.
 - Application containerization using Docker and deployment onto Amazon ECS / EKS for automated cloud scaling.

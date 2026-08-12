@@ -15,5 +15,5 @@ In this module, you will set up production-ready CI/CD automation and system obs
 
 #### Module steps
 
-1. [Configuring GitHub Actions CI/CD workflow](5.6.1-github-actions/)
+1. [Configuring GitHub Actions CI/CD workflow](5.6.1-build-docker-CICD/)
 2. [Configuring Amazon CloudWatch logs & metrics](5.6.2-cloudwatch/)

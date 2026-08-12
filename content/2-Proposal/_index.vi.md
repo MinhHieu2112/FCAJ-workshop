@@ -166,12 +166,20 @@ Toàn bộ chi phí vận hành hệ thống trong suốt 8 tuần thực tập 
 
 | Dịch vụ | Cấu hình sử dụng | Chi phí ước tính |
 |---------|------------------|------------------|
-| Amazon RDS (PostgreSQL) | db.t3.micro, 20 GB SSD, Single-AZ | ~15 USD/tháng |
-| Amazon S3 | ~5 GB lưu trữ hình ảnh, ~10,000 lượt yêu cầu/tháng | ~0.15 USD/tháng |
-| Amazon SES | ~500 email thông báo/tháng (môi trường Sandbox) | 0 USD (Free Tier) |
-| Amazon Cognito | <50,000 người dùng hoạt động hàng tháng (MAU) | 0 USD (Free Tier) |
-| Amazon Location Service | Yêu cầu geocoding địa chỉ và nạp bản đồ trong hạn mức trải nghiệm | ~0.50 USD/tháng |
-| **Tổng chi phí ước tính** | | **~15.65 USD/tháng** |
+| **AWS Amplify** | Hosting ứng dụng frontend Next.js (Build & triển khai Static/SSR) | 0 USD (Free Tier) |
+| **Amazon Route 53** | Điều hướng DNS và quản lý tên miền (1 Hosted Zone) | ~0.50 USD/tháng |
+| **AWS WAF** | Tường lửa bảo vệ lưu lượng web đầu vào ALB (1 Web ACL) | ~6.00 USD/tháng |
+| **AWS ACM** | Quản lý chứng chỉ SSL/TLS mã hóa HTTPS | 0 USD (Dịch vụ miễn phí AWS) |
+| **Application Load Balancer (ALB)** | Phân phối lưu lượng HTTP/HTTPS tới EC2 ở Public Subnet | 0 USD (Free Tier) / ~16.00 USD/tháng |
+| **Amazon EC2** | Server backend NestJS REST & WebSocket ở Private Subnet (`t3.micro`, 8 GB EBS) | 0 USD (Free Tier) / ~7.50 USD/tháng |
+| **Amazon RDS (PostgreSQL)** | Cơ sở dữ liệu chính + phần mở rộng PostGIS (`db.t3.micro`, 20 GB SSD, Single-AZ) | 0 USD (Free Tier) / ~15.00 USD/tháng |
+| **Amazon S3** | Lưu trữ hình ảnh bất động sản (~5 GB lưu trữ, ~10,000 request/tháng) | 0 USD (Free Tier) / ~0.15 USD/tháng |
+| **Amazon Cognito** | Quản lý đăng ký, xác thực người dùng và phát hành JWT token (<50,000 MAU) | 0 USD (Free Tier - Miễn phí vĩnh viễn) |
+| **Amazon SES** | Gửi email thông báo giao dịch (~500 email/tháng trong môi trường Sandbox) | 0 USD (Free Tier - Miễn phí vĩnh viễn) |
+| **AWS IAM** | Quản lý quyền truy cập dịch vụ, S3 bucket policy & role thực thi EC2 | 0 USD (Dịch vụ miễn phí AWS) |
+| **Amazon CloudWatch** | Thu thập log hệ thống, giám sát metric & cảnh báo cơ bản (<5 GB log) | 0 USD (Free Tier - Miễn phí vĩnh viễn) |
+| **Amazon Location Service** | Geocoding địa chỉ và hiển thị bản đồ trong hạn mức trải nghiệm | ~0.50 USD/tháng |
+| **Tổng chi phí ước tính** | **Môi trường Development (khi áp dụng AWS Free Tier)** | **~7.00 - 16.00 USD/tháng** |
 
 > Tổng chi phí thực tế cho 8 tuần phát triển và kiểm thử ước tính khoảng 32 USD, được chi trả hoàn toàn bằng gói 200 USD AWS Credits.
 

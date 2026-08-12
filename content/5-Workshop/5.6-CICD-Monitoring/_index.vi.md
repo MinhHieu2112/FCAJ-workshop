@@ -15,5 +15,5 @@ Phần này hướng dẫn thiết lập quy trình tự động hóa CI/CD và 
 
 #### Các bước thực hiện
 
-1. [Thiết lập GitHub Actions workflow (Build, push Docker Hub & deploy EC2)](5.6.1-github-actions/)
-2. [Cấu hình CloudWatch logs & metrics](5.6.2-cloudwatch/)
+1. [Configuring GitHub Actions CI/CD workflow](5.6.1-build-docker-CICD/)
+2. [Configuring Amazon CloudWatch logs & metrics](5.6.2-cloudwatch/)
