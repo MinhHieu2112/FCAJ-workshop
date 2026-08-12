@@ -8,7 +8,7 @@ pre: " <b> 5.6.2. </b> "
 
 #### Tổng quan khả năng quan sát với CloudWatch
 
-Giám sát tình trạng sức khỏe ứng dụng và ghi lại log thời gian thực là thành phần không thể thiếu đối với môi trường production. Trong phần này, bạn sẽ cài đặt **CloudWatch Logs Agent** trên EC2 và thiết lập các cảnh báo dựa trên chỉ số hiệu năng.
+Giám sát tình trạng ứng dụng và ghi lại log thời gian thực là thành phần không thể thiếu đối với môi trường production. Trong phần này, bạn sẽ cài đặt **CloudWatch Logs Agent** trên EC2 và thiết lập các cảnh báo dựa trên chỉ số hiệu năng.
 
 #### Bước 1: Cài đặt CloudWatch Agent trên EC2
 

@@ -85,3 +85,7 @@ jobs:
 1. Push a commit to the `main` branch.
 2. Monitor progress under the **Actions** tab in GitHub.
 3. Check application logs on EC2: `docker logs -f nestjs-backend`.
+
+#### Architecture diagram
+
+![Architecture](/images/5-Workshop/5.7-Pipeline/architecture-pipeline.gif)

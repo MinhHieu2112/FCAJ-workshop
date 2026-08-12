@@ -85,3 +85,8 @@ jobs:
 1. Thực hiện push commit lên nhánh `main`.
 2. Theo dõi tiến trình build tại tab **Actions** trên GitHub.
 3. Kiểm tra log ứng dụng trên máy chủ EC2: `docker logs -f nestjs-backend`.
+
+#### Sơ đồ mô phỏng quy trình
+
+![Architecture](/images/5-Workshop/5.7-Pipeline/architecture-pipeline.gif)
+
