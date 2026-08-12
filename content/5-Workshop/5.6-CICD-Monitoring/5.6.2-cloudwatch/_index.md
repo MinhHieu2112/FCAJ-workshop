@@ -3,7 +3,7 @@ title: "Amazon CloudWatch logs & metrics"
 date: 2026-08-06
 weight: 2
 chapter: false
-pre: " <b> 5.6.3. </b> "
+pre: " <b> 5.6.2. </b> "
 ---
 
 #### CloudWatch observability overview

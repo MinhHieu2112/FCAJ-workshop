@@ -8,7 +8,7 @@ pre: " <b> 3.1. </b> "
 
 # HỆ THỐNG XÁC THỰC VỚI AWS COGNITO
 
-Trong quá trình phát triển hệ thống quản lý cho thuê bất động sản, nhóm lựa chọn **Amazon Cognito** để quản lý xác thực người dùng thay vì tự xây dựng cơ chế đăng nhập bằng JWT. Quá trình tích hợp không chỉ dừng lại ở việc đăng nhập thành công mà còn phải giải quyết bài toán phân quyền giữa **Manager** và **Tenant** trong toàn bộ hệ thống.
+Trong quá trình phát triển hệ thống quản lý cho thuê bất động sản, em lựa chọn **Amazon Cognito** để quản lý xác thực người dùng thay vì tự xây dựng cơ chế đăng nhập bằng JWT. Quá trình tích hợp không chỉ dừng lại ở việc đăng nhập thành công mà còn phải giải quyết bài toán phân quyền giữa **Manager** và **Tenant** trong toàn bộ hệ thống.
 
 Một trong những khó khăn gặp phải là xác định loại token phù hợp để gửi đến Backend. Ban đầu, hệ thống chỉ sử dụng **Access Token** để xác thực, tuy nhiên token này không chứa thuộc tính `custom:role` được cấu hình trong Cognito. Điều này khiến `RolesGuard` không thể xác định vai trò của người dùng và nhiều yêu cầu bị từ chối với mã lỗi **401 Unauthorized** hoặc **403 Forbidden**.
 

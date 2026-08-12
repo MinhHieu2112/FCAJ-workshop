@@ -7,7 +7,6 @@ pre: " <b> 2. </b> "
 ---
 
 # Real Estate Rental Management System
-## AWS-Integrated Software Solution for the Residential Rental Market
 
 ---
 
@@ -20,8 +19,8 @@ The system serves two primary user roles: **property managers/landlords (manager
 Technically, the system is built on a monorepo architecture (`pnpm workspaces`) featuring a **NestJS** (TypeScript) backend, a **Next.js** (App Router) frontend utilizing **Redux Toolkit / RTK Query**, a **PostgreSQL** database with **PostGIS** spatial extensions accessed via **Prisma ORM**, and integrated AWS cloud services including **Amazon Cognito** (user authentication), **Amazon S3** (image storage), **Amazon RDS** (managed cloud database), **Amazon SES** (automated email notifications), and **Amazon Location Service** (address geocoding and map rendering). The project aims to deliver a fully functional, high-performance, and secure application tailored for cloud environments.
 
 {{% notice tip %}}
-🌐 **Live Production Application:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)  
-👉 View testing demo accounts and feature walkthroughs in section **[2.1. Live project application](2.1-Project/)**.
+**Live Production Application:** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)  
+View testing demo accounts and feature walkthroughs in section **[2.1. Live project application](2.1-Project/)**.
 {{% /notice %}}
 
 ---

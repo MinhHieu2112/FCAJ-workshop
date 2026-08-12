@@ -8,14 +8,14 @@ pre: " <b> 4.1. </b> "
 
 # FCAJ Community Day - June 2026
 
-## Tổng Quan Sự Kiện
+## Tổng quan sự kiện
 * **Tên sự kiện:** FCAJ Community Day - June 2026
 * **Đơn vị tổ chức:** AWS Study Group / FCAJ Community
 * **Chủ đề chính:** Xu hướng nghề nghiệp Cloud & AI Engineering, ứng dụng FinOps & Security bằng AI và kiến trúc triển khai Amazon Q Business / MCP Server thực tế.
 
 ---
 
-## 1. Xu Hướng Nghề Nghiệp: Kỷ Nguyên Agentic AI & Lập Trình Viên
+## 1. Xu hướng nghề nghiệp: kỷ nguyên Agentic AI & lập trình viên
 
 ### Thực trạng & thách thức
 * **Tốc độ tự động hóa:** Các AI agent và công cụ AI coding hiện nay có tốc độ triển khai và viết code nhanh chóng, dẫn đến việc doanh nghiệp có xu hướng nâng cao tiêu chuẩn tuyển dụng hoặc ưu tiên các vị trí Senior am hiểu sâu về công cụ AI.
@@ -27,7 +27,7 @@ pre: " <b> 4.1. </b> "
 
 ---
 
-## 2. Giải Pháp AI Trong FinOps Và Cloud Security
+## 2. Giải pháp AI trong FinOps & Cloud Security
 
 ### Tự động hóa FinOps (Cost Optimization)
 * **Thực trạng:** Người làm tài chính/kế toán truyền thống thường thiếu kiến thức kỹ thuật sâu về dịch vụ Cloud, trong khi kỹ sư hệ thống lại không chuyên về mô hình chi phí tài chính.

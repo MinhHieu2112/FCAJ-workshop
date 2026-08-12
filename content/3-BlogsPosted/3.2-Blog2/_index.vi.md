@@ -7,7 +7,7 @@ pre: " <b> 3.2. </b> "
 ---
 # QUẢN LÝ HÌNH ẢNH VỚI AMAZON S3 
 
-Trong hệ thống quản lý cho thuê bất động sản, mỗi tài sản có thể bao gồm hàng loạt hình ảnh chất lượng cao (`photoUrls`) để mô tả chi tiết. Nếu lưu trữ tệp trực tiếp trên máy chủ ứng dụng (NestJS), dung lượng bộ nhớ sẽ tăng nhanh và dễ gây nghẽn I/O khi có nhiều request đồng thời. Vì vậy, nhóm lựa chọn **Amazon S3** làm dịch vụ lưu trữ hình ảnh chuyên dụng.
+Trong hệ thống quản lý cho thuê bất động sản, mỗi tài sản có thể bao gồm hàng loạt hình ảnh chất lượng cao (`photoUrls`) để mô tả chi tiết. Nếu lưu trữ tệp trực tiếp trên máy chủ ứng dụng (NestJS), dung lượng bộ nhớ sẽ tăng nhanh và dễ gây nghẽn I/O khi có nhiều request đồng thời. Vì vậy, em lựa chọn **Amazon S3** làm dịch vụ lưu trữ hình ảnh chuyên dụng.
 
 Để tối ưu hiệu năng và bảo mật, quy trình xử lý hình ảnh được thiết kế theo hướng:
 
@@ -17,7 +17,7 @@ Trong hệ thống quản lý cho thuê bất động sản, mỗi tài sản c�
 * Tích hợp **Next.js Image (`<Image />`)** kết hợp cấu hình `remotePatterns` trong `next.config.js` để tự động nén, lazy-loading và tối ưu định dạng ảnh (WebP/AVIF) phía Client.
 * Xây dựng bộ ảnh mặc định (Placeholder Image) để xử lý mượt mà các trường hợp liên kết ảnh hỏng hoặc không tồn tại.
 
-Trong quá trình triển khai, nhóm đã giải quyết vấn đề lỗi **403 Forbidden** do Bucket Policy và CORS trên S3 chưa cho phép domain của Next.js gọi request. Sau khi cấu hình chính xác `AllowedHeaders`, `AllowedOrigins` trên S3 Bucket và rà soát IAM Policy, hệ thống đã vận hành upload và hiển thị hình ảnh ổn định, tốc độ cao.
+Trong quá trình triển khai, em đã giải quyết vấn đề lỗi **403 Forbidden** do Bucket Policy và CORS trên S3 chưa cho phép domain của Next.js gọi request. Sau khi cấu hình chính xác `AllowedHeaders`, `AllowedOrigins` trên S3 Bucket và rà soát IAM Policy, hệ thống đã vận hành upload và hiển thị hình ảnh ổn định, tốc độ cao.
 
 ## Hình ảnh minh họa
 

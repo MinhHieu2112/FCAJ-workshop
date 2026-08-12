@@ -106,8 +106,6 @@ Sau sự kiện, em có thêm một số định hướng để cải thiện d�
 
 ## Trải nghiệm của em
 
-Đây là lần đầu tiên em tham gia một Hackathon về Agentic AI. Điều khiến em ấn tượng nhất không phải là các sản phẩm được trình diễn mà là cách Ban Giám khảo đánh giá khả năng áp dụng của sản phẩm vào thực tế.
-
 Qua phần trao đổi giữa các đội thi và các chuyên gia, em hiểu rõ hơn rằng để một hệ thống AI có thể sử dụng lâu dài thì ngoài việc hoạt động đúng còn cần đáp ứng các yêu cầu về bảo mật, khả năng mở rộng và chi phí vận hành.
 
 Bên cạnh đó, em cũng có cơ hội gặp gỡ nhiều bạn sinh viên và kỹ sư đang quan tâm đến AI và AWS. Những cuộc trao đổi ngắn trong sự kiện giúp em có thêm nhiều góc nhìn về cách học tập cũng như định hướng phát triển trong thời gian tới.

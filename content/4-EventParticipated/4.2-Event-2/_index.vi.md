@@ -8,13 +8,13 @@ pre: " <b> 4.2. </b> "
 
 # Enterprise Cloud Architectures and Industry Application
 
-### Mục Đích Sự Kiện
+### Mục đích sự kiện
 
 - Giúp em hiểu rõ hơn cách doanh nghiệp xây dựng và vận hành hệ thống trên nền tảng AWS, cũng như những yêu cầu thực tế đối với sinh viên muốn theo đuổi lĩnh vực Cloud.
 - Tìm hiểu thêm về xu hướng tuyển dụng, các kỹ năng mà doanh nghiệp đang kỳ vọng ở kỹ sư Cloud trẻ và cách chủ động tiếp cận các cơ hội nghề nghiệp.
 - Có cơ hội trực tiếp trao đổi với các chuyên gia đang làm việc trong lĩnh vực Cloud và hiểu thêm về tinh thần chia sẻ kiến thức của cộng đồng AWS First Cloud AI Journey.
 
-### Danh Sách Diễn Giả
+### Danh sách diễn giả
 
 ![AWS Study Tour Event](https://img.youtube.com/vi/FKtMkUqyny4/maxresdefault.jpg)
 
@@ -25,7 +25,7 @@ pre: " <b> 4.2. </b> "
 - **Khang Nguyen** – Solution Architect, Cloud Kinetics.
 - **Vinh Banh** – Senior Data Engineer, Renova Cloud.
 
-### Nội Dung Nổi Bật
+### Nội dung nổi bật
 
 #### 1. Kết nối giáo dục - Doanh nghiệp và tinh thần cộng đồng
 
@@ -39,6 +39,7 @@ Một điểm em ấn tượng là tinh thần **"Pay it Forward"** của cộng
 
 ![Part-1](/images/4-EventParticipated/Event_2/Part-1.png)
 ***Hình 2: Phần chia sẻ của anh Nguyễn Gia Hưng.***
+
 Phần chia sẻ của **anh Nguyễn Gia Hưng** tập trung nhiều vào yêu cầu của thị trường tuyển dụng và cách sinh viên chuẩn bị cho sự nghiệp Cloud.
 
 Một điều khiến em khá bất ngờ là yêu cầu dành cho vị trí Intern hiện nay không chỉ dừng lại ở việc biết sử dụng một số dịch vụ AWS. Các kiến thức nền như **Linux, Networking, Docker và Kubernetes** ngày càng trở nên quan trọng. Qua đó, em nhận ra rằng việc chỉ học từng dịch vụ AWS riêng lẻ là chưa đủ nếu muốn hiểu và làm việc với một hệ thống Cloud thực tế.
@@ -67,7 +68,7 @@ Bên cạnh đó, các diễn giả cũng nhấn mạnh rằng kỹ sư Cloud kh
 
 Cuối cùng là bài học về **Consistency**. Việc phát triển trong ngành công nghệ cần một quá trình học tập và thực hành liên tục. Thay vì chỉ học khi có yêu cầu hoặc trước một kỳ thi, em cần duy trì việc học, thử nghiệm và rút kinh nghiệm sau mỗi dự án hoặc sự kiện.
 
-### Những Gì Học Được
+### Những gì học được
 
 #### Về kiến thức kỹ thuật
 
@@ -95,7 +96,7 @@ Sự kiện giúp em nhận ra rằng năng lực kỹ thuật và khả năng k
 
 Bên cạnh đó, em cũng cần duy trì việc học lâu dài thay vì chỉ tập trung hoàn thành các môn học ở trường. Những công nghệ như Docker, Kubernetes, CI/CD và các mô hình triển khai Cloud cần được tiếp tục tìm hiểu thông qua project thực tế.
 
-### Trải Nghiệm Trong Event
+### Trải nghiệm trong Event
 
 Đây là lần đầu tiên em tham gia một sự kiện kỹ thuật được tổ chức trực tiếp tại văn phòng AWS Việt Nam. So với việc chỉ học AWS thông qua tài liệu hoặc các khóa học trực tuyến, việc được trực tiếp nghe các kỹ sư đang làm việc trong ngành chia sẻ giúp em có cái nhìn thực tế hơn về công việc Cloud.
 

@@ -1,6 +1,6 @@
-baseURL = "https://minhhieu2112.github.io/"
+baseURL = "https://minhhieu2112.github.io/FCAJ-workshop/"
 relativeURLs = false
-canonifyURLs = true
+canonifyURLs = false
 defaultContentLanguage = "en"
 
 # Change the default theme to be use when building the site with Hugo

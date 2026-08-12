@@ -23,23 +23,22 @@ In your GitHub repository, navigate to **Settings** → **Secrets and variables*
 #### Step 2: Create `.github/workflows/deploy.yml`
 
 ```yaml
-name: CI/CD Pipeline - Real Estate Server
+name: Build Docker & Deploy to EC2
 
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'apps/server/**'
-      - 'packages/**'
-      - '.github/workflows/deploy.yml'
+      - master
+
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-and-push:
+    name: Build Docker Image on GitHub & Push to Docker Hub
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
@@ -51,32 +50,35 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./apps/server/Dockerfile
           push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/real-estate-server:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/real-estate-server:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/real-estate-server:latest
 
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@v1.0.3
+  deploy-ec2:
+    needs: build-and-push
+    name: Pull Image & Restart Container on EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Executing remote SSH commands to deploy
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script_stop: true 
           script: |
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/real-estate-server:latest
-            docker stop nestjs-backend || true
-            docker rm nestjs-backend || true
-            docker run -d \
-              --name nestjs-backend \
-              --restart unless-stopped \
-              -p 4000:4000 \
-              --env-file /home/ec2-user/apps/server/.env \
-              ${{ secrets.DOCKERHUB_USERNAME }}/real-estate-server:latest
+            cd ~/Real-estate
+            git checkout master
+            git fetch origin master
+            git reset --hard origin/master
+            docker compose pull server
+            docker compose up -d --force-recreate server
             docker image prune -f
 ```
 

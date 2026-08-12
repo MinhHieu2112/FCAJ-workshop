@@ -10,7 +10,7 @@ pre: " <b> 3.3. </b> "
 
 Trong hệ thống quản lý cho thuê bất động sản, vị trí là một trong những yếu tố quan trọng ảnh hưởng đến quyết định của người thuê. Người dùng không chỉ cần xem thông tin về căn hộ mà còn muốn biết bất động sản nằm ở đâu, khu vực xung quanh như thế nào và có thuận tiện cho việc di chuyển hay không. Vì vậy, hệ thống cần hỗ trợ hiển thị vị trí bất động sản trên bản đồ và cho phép người quản lý lựa chọn địa điểm một cách trực quan khi đăng tin.
 
-Để đáp ứng yêu cầu đó, nhóm lựa chọn **AWS Location Service** kết hợp với **MapLibre GL JS** nhằm xây dựng chức năng bản đồ và tìm kiếm vị trí. Giải pháp này giúp tận dụng hạ tầng AWS, dễ dàng tích hợp với các dịch vụ khác trong hệ thống và đáp ứng tốt nhu cầu hiển thị dữ liệu không gian.
+Để đáp ứng yêu cầu đó, em lựa chọn **AWS Location Service** kết hợp với **MapLibre GL JS** nhằm xây dựng chức năng bản đồ và tìm kiếm vị trí. Giải pháp này giúp tận dụng hạ tầng AWS, dễ dàng tích hợp với các dịch vụ khác trong hệ thống và đáp ứng tốt nhu cầu hiển thị dữ liệu không gian.
 
 Trong quá trình triển khai, hệ thống được xây dựng theo các hướng sau:
 
@@ -20,7 +20,7 @@ Trong quá trình triển khai, hệ thống được xây dựng theo các hư�
 - Lưu tọa độ địa lý vào PostgreSQL để phục vụ việc hiển thị và tìm kiếm theo vị trí.
 - Quản lý quyền truy cập tài nguyên Location Service thông qua **AWS IAM**, đảm bảo chỉ các thành phần được cấp quyền mới có thể sử dụng dịch vụ.
 
-Trong quá trình phát triển, nhóm gặp một số khó khăn như cấu hình quyền truy cập AWS IAM, xử lý chữ ký xác thực **AWS Signature Version 4 (SigV4)** và tối ưu số lượng yêu cầu Geocoding khi người dùng nhập địa chỉ. Sau khi hoàn thiện các cấu hình và áp dụng kỹ thuật **Debounce** trong React, chức năng tìm kiếm và hiển thị vị trí hoạt động ổn định với trải nghiệm người dùng tốt hơn.
+Trong quá trình phát triển, em gặp một số khó khăn như cấu hình quyền truy cập AWS IAM, xử lý chữ ký xác thực **AWS Signature Version 4 (SigV4)** và tối ưu số lượng yêu cầu Geocoding khi người dùng nhập địa chỉ. Sau khi hoàn thiện các cấu hình và áp dụng kỹ thuật **Debounce** trong React, chức năng tìm kiếm và hiển thị vị trí hoạt động ổn định với trải nghiệm người dùng tốt hơn.
 
 ## Hình ảnh minh họa
 

@@ -107,8 +107,6 @@ After the event, I identified several ideas that could improve my personal proje
 
 ## Personal experience
 
-This was my first time attending a Hackathon focused on Agentic AI. What impressed me most was not only the product demonstrations but also the judges' discussions about whether each solution could be deployed in a real business environment.
-
 Through the presentations and discussions, I realized that building an AI application requires much more than implementing machine learning models. Security, scalability, reliability, and operational cost are equally important when moving from a prototype to production.
 
 The event also gave me the opportunity to meet students and software engineers who share similar interests in AI and AWS. These conversations provided valuable insights into both technical learning and career development.
