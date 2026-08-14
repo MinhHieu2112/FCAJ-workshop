@@ -1,68 +1,84 @@
 ---
-title: "Trải nghiệm ứng dụng thực tế"
+title: "Rentiful - Ứng dụng quản lý cho thuê bất động sản"
 date: 2026-08-06
 weight: 1
 chapter: false
 pre: " <b> 2.1. </b> "
 ---
 
-#### Trải nghiệm ứng dụng thực tế
+### 1. Đặt vấn đề
 
-**Hệ thống quản lý bất động sản cho thuê** đã được triển khai hoàn chỉnh và sẵn sàng trải nghiệm trực tiếp. Bạn có thể truy cập ứng dụng client được deploy trên Vercel và kết nối với backend đám mây AWS:
+Thị trường cho thuê nhà ở hiện nay vẫn phụ thuộc nhiều vào các kênh truyền thống không chính thức như nhóm mạng xã hội, tin nhắn cá nhân hoặc nhà môi giới trung gian. Quy trình từ tìm kiếm tin đăng, thỏa thuận đến ký kết hợp đồng thường kéo dài, thiếu công cụ quản lý chuyên biệt và tiềm ẩn nhiều rủi ro cho cả hai bên.
 
-{{% notice tip %}}
-**Đường dẫn ứng dụng thực tế (Production):** [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
-{{% /notice %}}
-
-#### Kiến trúc hệ thống & stack công nghệ
-
-Dự án được thiết kế theo mô hình monorepo (`pnpm workspaces`) kết hợp giao diện hiện đại, dịch vụ REST & WebSocket backend mạnh mẽ và các dịch vụ đám mây AWS tiêu chuẩn doanh nghiệp.
-
-![Sơ đồ kiến trúc](/images/2-Proposal/AWS_architect.png)
-
-#### Phân tích stack công nghệ
-
-| Tầng hệ thống | Công nghệ & thư viện | Mục đích sử dụng |
-|---|---|---|
-| **Frontend** | Next.js 14 (App Router), TypeScript, Redux Toolkit / RTK Query, Tailwind CSS | Giao diện người dùng hiệu năng cao, hỗ trợ rendering phía server (SSR) và quản lý trạng thái client |
-| **Backend** | NestJS, TypeScript, Socket.IO, Class-Validator | RESTful API dạng module hóa và cổng WebSocket giao tiếp thời gian thực |
-| **Database & ORM** | Amazon RDS PostgreSQL, PostGIS, Prisma ORM | Lưu trữ dữ liệu quan hệ kết hợp truy vấn dữ liệu không gian vị trí (`ST_DWithin`) |
-| **Xác thực** | Amazon Cognito User Pool, AWS Amplify SDK | Quản lý định danh người dùng, phát hành chuỗi mã JWT và phân quyền theo vai trò |
-| **Lưu trữ media** | Amazon S3, AWS SDK v3 (Presigned URLs) | Tải ảnh trực tiếp an toàn từ trình duyệt lên S3 thông qua presigned URL có thời hạn ngắn |
-| **Định vị & bản đồ** | Amazon Location Service | Chuyển đổi địa chỉ thành tọa độ (geocoding), gợi ý địa chỉ tự động và hiển thị bản đồ |
-| **Thông báo** | Amazon SES (Simple Email Service) | Gửi email thông báo tự động khi trạng thái đơn xin thuê hoặc hợp đồng thay đổi |
+Các hạn chế chính bao gồm:
+- Phía chủ nhà và quản lý bất động sản: Thiếu bảng điều khiển tập trung để theo dõi danh mục bất động sản, trạng thái phòng trống, danh sách đơn xin thuê và lịch sử hợp đồng.
+- Phía người thuê: Thiếu công cụ tìm kiếm kết hợp vị trí bản đồ trực quan và bộ lọc đa tiêu chí (mức giá, số phòng, tiện nghi); không có kênh theo dõi tiến độ xét duyệt đơn và giao tiếp tập trung.
+- Giao tiếp và thông báo: Việc trao đổi qua các ứng dụng tin nhắn bên ngoài dễ gây thất lạc thông tin; thiếu cơ chế tự động gửi email thông báo khi trạng thái đơn xin thuê hoặc hợp đồng có sự thay đổi.
 
 ---
 
-#### Các mô-đun chức năng cốt lõi
+### 2. Giải pháp
+![Sơ đồ phân quyền vai trò người dùng](/images/2-Proposal/Role.png)
+Hệ thống quản lý cho thuê bất động sản được phát triển nhằm giải quyết triệt để các hạn chế trên thông qua một nền tảng ứng dụng web tập trung.
 
-#### 1. Tìm kiếm bất động sản & bản đồ không gian tương tác
-
-Người thuê có thể tìm kiếm bất động sản thông qua bộ lọc đa tiêu chí (khoảng giá, số phòng ngủ, tiện nghi) kết hợp với bản đồ vị trí trực quan.
-
-- **Tích hợp geocoding:** Chuỗi địa chỉ nhập vào khi tạo tin đăng được tự động chuyển đổi thành tọa độ địa lý `(Vĩ độ, Kinh độ)` thông qua **Amazon Location Service**.
-- **Truy vấn không gian:** Chỉ mục PostGIS cho phép tìm kiếm các bất động sản nằm trong bán kính chỉ định tính từ vị trí bất kỳ trên bản đồ.
-
-![Demo Amazon Location Service](/images/5-Workshop/5.5-Location-Service/5.5.4-demo.png)
-
-#### 2. Quyền trình duyệt đơn thuê & hợp đồng số
-
-Hệ thống tự động hóa toàn bộ vòng đời của giao dịch cho thuê nhà ở:
-
-1. **Gửi đơn:** Người thuê nộp đơn xin thuê kèm thông tin cá nhân và ngày dự kiến chuyển vào.
-2. **Xét duyệt:** Chủ nhà nhận thông báo thời gian thực trên bảng điều khiển để chấp thuận hoặc từ chối đơn.
-3. **Khởi tạo hợp đồng:** Khi đơn được chấp thuận, hệ thống tự động tạo hợp đồng thuê trong một transaction CSDL an toàn (`prisma.$transaction`).
-4. **Chữ ký số:** Chủ nhà ký hợp đồng trực tiếp trên bảng vẽ chữ ký số. Sau khi ký, hợp đồng được khóa và chuyển đến người thuê để xác nhận cuối cùng.
-
-#### 3. Nhắn tin thời gian thực & email thông báo
-
-- **Trò chuyện trong ứng dụng:** Kênh nhắn tin WebSocket tích hợp sẵn cho phép người thuê và chủ nhà trao đổi trực tiếp theo từng bất động sản.
-- **Cảnh báo email:** Email tự động được gửi qua **Amazon SES** khi có thay đổi trạng thái đơn thuê (ví dụ: đã nhận đơn, đơn được duyệt, hoặc hợp đồng được khởi tạo).
+Các chức năng chính bao gồm:
+- Quản lý danh mục bất động sản: Chủ nhà có thể tạo tin đăng, chỉnh sửa thông tin, tải lên hình ảnh và quản lý trạng thái các bất động sản đang cho thuê.
+- Tìm kiếm bất động sản và tương tác bản đồ: Người thuê tìm kiếm bất động sản theo bộ lọc đa tiêu chí kết hợp bản đồ địa lý không gian.
+- Quản lý đơn xin thuê: Người thuê nộp đơn xin thuê trực tuyến; chủ nhà nhận thông báo và thực hiện xét duyệt (chấp thuận hoặc từ chối) đơn trên bảng điều khiển.
+- Khởi tạo hợp đồng và chữ ký số: Khi đơn xin thuê được chấp thuận, hệ thống tự động lập hợp đồng thuê trong một giao dịch cơ sở dữ liệu an toàn và hỗ trợ ký hợp đồng trực tiếp trên giao diện.
+- Trò chuyện thời gian thực: Tích hợp kênh nhắn tin trực tiếp qua kết nối WebSocket giữa người thuê và chủ nhà cho từng bất động sản.
+- Tự động hóa thông báo: Tự động gửi email thông báo qua giao thức SMTP (hoặc Amazon SES) khi có cập nhật về trạng thái đơn xin thuê hoặc hợp đồng.
 
 ---
 
-#### Điểm sáng kỹ thuật & tối ưu hiệu năng
+### 3. Các công nghệ sử dụng
 
-- **Xóa bỏ N+1 query:** Sử dụng eager loading với Prisma `include` giúp giảm thời gian phản hồi API từ ~800ms xuống còn ~120ms (P95).
-- **Kiểm soát truy cập đồng thời:** Transaction CSDL kết hợp khóa bi quan (`SELECT ... FOR UPDATE`) ngăn ngừa tình trạng trùng lặp đơn thuê hoặc race condition.
-- **Tải ảnh trực tiếp lên S3:** Giảm 90% băng thông máy chủ backend bằng cách cho phép client tải tệp trực tiếp lên S3 qua presigned URL.
+Hệ thống được phát triển theo mô hình monorepo với các công nghệ hiện đại:
+
+- Frontend: Next.js (App Router), TypeScript, Redux Toolkit, RTK Query và Tailwind CSS.
+- Backend: NestJS, TypeScript, Socket.IO (WebSocket) và Class-Validator.
+- Cơ sở dữ liệu: Amazon RDS PostgreSQL tích hợp phần mở rộng không gian PostGIS, truy cập qua Prisma ORM.
+- Xác thực và phân quyền: Amazon Cognito User Pool kết hợp NestJS AuthGuard và RolesGuard (phân quyền vai trò `TENANT` và `MANAGER`).
+- Lưu trữ tệp media: Amazon S3 (tải ảnh trực tiếp từ trình duyệt qua Presigned URL).
+- Định vị địa lý và bản đồ: Amazon Location Service (geocoding địa chỉ và hiển thị bản đồ).
+- Dịch vụ thông báo email: Gửi email tự động qua SMTP (Nodemailer) / Amazon SES.
+- Máy chủ và reverse proxy: Amazon EC2 chạy Docker runtime và Caddy HTTP/HTTPS reverse proxy.
+
+---
+
+### 4. Kiến trúc hạ tầng
+
+Hệ thống được triển khai trên hạ tầng điện toán đám mây AWS với mô hình mạng VPC hai tầng (public subnet và private subnet):
+
+- Frontend Vercel (HTTPS): Ứng dụng client Next.js được triển khai trên Vercel, giao tiếp an toàn với backend thông qua tên miền DuckDNS và chứng chỉ SSL/TLS tự động từ Caddy.
+- Tầng Public Subnet: Gắn Elastic IP cố định, chạy Caddy reverse proxy trên EC2 để tiếp nhận traffic HTTP/HTTPS (port 80/443) và chuyển tiếp tới ứng dụng backend NestJS trong container Docker.
+- Tầng Private Subnet: Khởi tạo Amazon RDS PostgreSQL (PostGIS) trong private subnet, chỉ cho phép kết nối nội bộ từ máy chủ EC2 thông qua quy tắc security group (`sg-rds-private`).
+- Quản lý bí mật và quyền truy cập: Lưu trữ các biến môi trường nhạy cảm trên AWS Secrets Manager và gán IAM Role (`RentifulEC2SecretManagerRole`) cho EC2 instance để đọc secret tự động khi khởi động.
+
+Sơ đồ kiến trúc tổng thể:
+
+![Sơ đồ kiến trúc](/images/5-Workshop/5.1-Overview/AWS_architect.png)
+
+---
+
+### 5. Chi phí dự kiến
+
+Toàn bộ chi phí vận hành hệ thống được tối ưu nhằm nằm trong hạn mức AWS Free Tier và gói hỗ trợ AWS Credits:
+![Estimated cost](/images/2-Proposal/Cost.png)
+Biện pháp kiểm soát chi phí:
+- Thiết lập cảnh báo AWS Budget tự động gửi email khi chi phí chạm mốc 50 USD và 100 USD.
+- Sử dụng mô hình RDS Single-AZ trong giai đoạn phát triển.
+- Áp dụng kỹ thuật debounce ở phía client nhằm giảm số lượng request geocoding gửi đến Amazon Location Service.
+
+---
+
+### 6. Demo
+
+Ứng dụng thực tế đã được triển khai hoàn chỉnh trên môi trường production và sẵn sàng truy cập trải nghiệm:
+
+- Đường dẫn ứng dụng thực tế (Production App): [https://real-estate-client-one-eta.vercel.app/](https://real-estate-client-one-eta.vercel.app/)
+
+Hình ảnh minh họa chức năng hệ thống:
+
+![Bản đồ vị trí bất động sản](/images/5-Workshop/5.5-Location-Service/5.5.4-demo.png)
+

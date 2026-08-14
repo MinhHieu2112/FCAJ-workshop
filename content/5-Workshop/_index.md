@@ -8,25 +8,23 @@ pre: " <b> 5. </b> "
 
 #### Overview
 
-In this hands-on workshop, you will build and deploy a production-grade **Real Estate Rental Management System** built with **NestJS** and **Next.js** on AWS cloud infrastructure.
+In this hands-on workshop, you will build and deploy a production-grade **Real Estate Rental Management System** using an authentic deployment architecture:
 
-You will set up networking, compute, database, authentication, storage, observability, and CI/CD automation using core enterprise AWS services:
-
-- **Amazon VPC, EC2, RDS** – Networking, compute, and managed relational database.
-- **Application Load Balancer (ALB) & AWS WAF** – HTTPS routing and layer-7 web application firewall.
-- **Amazon Cognito** – User identity management, authentication, and role-based access control (RBAC).
-- **Amazon S3** – Secure media storage for property images using short-lived presigned URLs.
-- **Amazon Location Service** – Address geocoding and interactive map rendering.
-- **Amazon SES** – Automated transactional email notifications.
-- **GitHub Actions & Amazon CloudWatch** – CI/CD pipeline automation and system observability.
-
+- **Next.js Frontend** – Deployed on **Vercel** (`https://real-estate-client-one-eta.vercel.app`) operating natively over **HTTPS**.
+- **NestJS Backend** – Packaged into a Docker container running on **Amazon EC2** listening internally on port **4000**.
+- **Elastic IP & DuckDNS** – Assigned a static Elastic IP to EC2 and mapped to a free **DuckDNS** domain (`https://nestro.duckdns.org`).
+- **Caddy Web Server** – Operating as a reverse proxy on EC2, automatically provisioning and renewing SSL/TLS certificates for `https://nestro.duckdns.org` and proxying incoming HTTPS traffic to port 4000.
+- **Mixed Content & CORS Resolution** – Resolving browser Mixed Content blocking caused by HTTPS frontend calling HTTP backend IPs, while configuring dynamic CORS in NestJS using `CORS_ORIGIN`.
+- **Amazon RDS (PostgreSQL + PostGIS)** – Managed database storing relational entities and PostGIS spatial coordinates.
+- **Amazon Cognito, S3 & SES** – Managed identity pools, presigned URL media uploads, and automated transactional emails.
+- **GitHub Actions & CloudWatch** – Automated CI/CD pipeline deployment and system monitoring.
 
 #### Content
 
-1. [System architecture & environment preparation](5.1-Overview/)
-2. [Database & backend server deployment](5.2-DB-Backend/)
-3. [Routing, security & HTTPS](5.3-Routing-Security/)
-4. [Authentication & authorization with Amazon Cognito](5.4-Cognito-Auth/)
-5. [Storage management & extended services](5.5-Storage-Services/)
-6. [CI/CD automation & monitoring](5.6-CICD-Monitoring/)
+1. [Network & IAM foundation](5.1-Network-IAM-Foundation/)
+2. [Configuration & storage](5.2-Configuration-Storage/)
+3. [Compute & backend deployment](5.3-Compute-Backend/)
+4. [Security & authentication](5.4-Security-authentication/)
+5. [DuckDNS domain, Caddy HTTPS reverse proxy & CORS](5.5-Routing-Domain-SSL/)
+6. [DevOps & observability](5.6-DevOps-Observability/)
 7. [Resource cleanup](5.7-Cleanup/)

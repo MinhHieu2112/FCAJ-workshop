@@ -23,7 +23,7 @@ To objectively reflect on my 2-month internship, I evaluate my performance based
 | 5   | **Discipline**                      | Strict adherence to work hours, corporate guidelines, and professional communication standards   | ✅    | ☐    | ☐       |
 | 6   | **Progressive mindset**             | Actively receiving feedback from Mentors/Admins to continuously refine work quality               | ✅    | ☐    | ☐       |
 | 7   | **Communication**                   | Presenting system architecture, reporting progress, and writing clear technical documentation    | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Supporting peers in the Bootcamp program and collaborating effectively in team settings         | ✅    | ☐    | ☐       |
+| 8   | **Teamwork**                        | Supporting peers in the Bootcamp program and collaborating effectively in team settings         | ☐    | ☐    | ✅       |
 | 9   | **Professional conduct**            | Upholding AWS corporate culture standards and professional etiquette                             | ✅    | ☐    | ☐       |
 | 10  | **Problem-solving skills**          | Analyzing real-world challenges, optimizing cost and performance of cloud architecture            | ☐    | ✅    | ☐       |
 | 11  | **Contribution to project/team**    | Delivering a comprehensive, reusable AWS Workshop guide for the FCAJ initiative                  | ✅    | ☐    | ☐       |

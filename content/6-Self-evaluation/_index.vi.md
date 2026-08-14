@@ -23,7 +23,7 @@ Về tác phong, em luôn tuân thủ nội quy công ty, hoàn thành công vi�
 | 5   | **Kỷ luật**                         | Tuân thủ nghiêm túc giờ giấc, quy trình làm việc và chuẩn mực giao tiếp                           | ✅   | ☐   | ☐          |
 | 6   | **Tính cầu tiến**                   | Sẵn sàng lắng nghe góp ý từ Mentor/Admin và cải thiện chất lượng công việc                      | ✅   | ☐   | ☐          |
 | 7   | **Giao tiếp**                       | Trình bày kiến trúc hệ thống, báo cáo tiến độ và viết tài liệu kỹ thuật rõ ràng                   | ☐   | ✅   | ☐          |
-| 8   | **Hợp tác nhóm**                    | Hỗ trợ đồng nghiệp trong chương trình Bootcamp, làm việc nhóm hiệu quả                           | ✅   | ☐   | ☐          |
+| 8   | **Hợp tác nhóm**                    | Hỗ trợ đồng nghiệp trong chương trình Bootcamp, làm việc nhóm hiệu quả                           |  ☐  | ☐  |    ✅       |
 | 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng chuẩn mực văn hóa doanh nghiệp của AWS và các đối tác                                  | ✅   | ☐   | ☐          |
 | 10  | **Tư duy giải quyết vấn đề**        | Phân tích bài toán thực tế, tối ưu hóa chi phí & hiệu năng các dịch vụ AWS                       | ☐   | ✅   | ☐          |
 | 11  | **Đóng góp vào dự án/tổ chức**      | Đóng góp bộ tài liệu thực hành Workshop hoàn chỉnh phục vụ chương trình FCAJ                     | ✅   | ☐   | ☐          |
